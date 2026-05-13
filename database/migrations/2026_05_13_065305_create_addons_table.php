@@ -8,17 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('themes', function (Blueprint $table) {
+        Schema::create('addons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            // Price stored in Rupiah as integer — never use float/decimal for money
-            // e.g. Rp 149.000 = 149000
+            // Price in Rupiah integer — Rp 29.000 = 29000
             $table->unsignedInteger('price')->default(0);
             $table->text('description')->nullable();
-            $table->string('preview_image')->nullable();
-            // Blade template name — e.g. 'elegant-ivory' maps to themes.elegant-ivory
-            $table->string('blade_template')->nullable();
+            // Icon shown in the builder UI — emoji or icon name
+            $table->string('icon')->nullable();
             $table->boolean('is_active')->default(true);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
@@ -27,6 +25,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('themes');
+        Schema::dropIfExists('addons');
     }
 };
