@@ -53,6 +53,9 @@ return new class extends Migration
             // Mirrors Midtrans status: pending, settlement, deny, cancel, expire, failure
             $table->string('status', 30)->default('pending');
 
+            // Locked paid amount in Rupiah integer (e.g. Rp 149.000 = 149000)
+            $table->unsignedInteger('amount')->default(0);
+
             // Full webhook payload — NEVER discard this, needed for disputes
             $table->json('raw_response')->nullable();
 
