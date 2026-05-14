@@ -35,7 +35,22 @@ class DashboardController extends Controller
         // Create empty config row (1-1)
         $invitation->config()->create([]);
 
-        return redirect()->route('dashboard')
+        return redirect()->route('builder.edit', $invitation)
             ->with('success', 'Undangan draft berhasil dibuat. Silakan lengkapi datanya.');
+    }
+
+    public function destroy(Request $request, Invitation $invitation): RedirectResponse
+    {
+        abort_unless($invitation->user_id === $request->user()->id, 403);
+
+        if ($invitation->status === Invitation::STATUS_ACTIVE) {
+            return redirect()->route('dashboard')
+                ->with('error', 'Undangan yang sudah aktif tidak dapat dihapus.');
+        }
+
+        $invitation->delete();
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Undangan berhasil dihapus.');
     }
 }

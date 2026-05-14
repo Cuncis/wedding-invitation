@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
+    Route::delete('/dashboard/{invitation}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
     Route::get('/builder/{invitation}/edit', [BuilderController::class, 'edit'])->name('builder.edit');
     Route::put('/builder/{invitation}/config', [BuilderController::class, 'updateConfig'])->name('builder.config');

@@ -54,7 +54,15 @@
                     <a href="{{ url('/' . $invitation->slug) }}" target="_blank"
                        class="text-sm px-3 py-1 border border-slate-300 rounded hover:bg-slate-50">Lihat</a>
                 @endif
-                <a href="#" class="text-sm bg-rose-600 text-white px-3 py-1 rounded hover:bg-rose-700">Edit</a>
+                <a href="{{ route('builder.edit', $invitation) }}" class="text-sm bg-rose-600 text-white px-3 py-1 rounded hover:bg-rose-700">Edit</a>
+                @if($invitation->status !== 'active')
+                    <form method="POST" action="{{ route('dashboard.destroy', $invitation) }}"
+                          onsubmit="return confirm('Yakin ingin menghapus undangan ini? Tindakan ini tidak dapat dibatalkan.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-sm border border-red-300 text-red-600 px-3 py-1 rounded hover:bg-red-50">Hapus</button>
+                    </form>
+                @endif
             </div>
         </div>
     @empty
