@@ -2,20 +2,18 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Console\Command;
 
 class ExpireOrders extends Command
 {
     protected $signature = 'orders:expire';
 
-    protected $description = 'Expire pending orders that passed their expiry time';
+    protected $description = 'Expire pending orders that passed their expiry time and reset invitations to draft';
 
-    public function handle(): int
+    public function handle(OrderService $orderService): int
     {
-        $count = Order::where('status', 'pending')
-            ->where('expires_at', '<', now())
-            ->update(['status' => 'expired']);
+        $count = $orderService->expireOldOrders();
 
         $this->info("Expired {$count} order(s).");
 

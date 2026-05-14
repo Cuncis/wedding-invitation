@@ -17,13 +17,14 @@ class OrderInfolist
                 TextEntry::make('invitation.id')
                     ->label('Invitation'),
                 TextEntry::make('theme_price')
-                    ->money(),
+                    ->money('IDR', locale: 'id_ID'),
                 TextEntry::make('addon_price')
-                    ->money(),
+                    ->money('IDR', locale: 'id_ID'),
                 TextEntry::make('animation_price')
-                    ->money(),
+                    ->money('IDR', locale: 'id_ID'),
                 TextEntry::make('total_amount')
-                    ->numeric(),
+                    ->money('IDR', locale: 'id_ID')
+                    ->weight('bold'),
                 TextEntry::make('status')
                     ->badge(),
                 TextEntry::make('expires_at')

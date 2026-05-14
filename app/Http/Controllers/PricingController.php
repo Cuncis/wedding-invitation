@@ -14,19 +14,19 @@ class PricingController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request->validate([
-            'base_price' => ['nullable', 'integer', 'min:0'],
-            'addon_prices' => ['nullable', 'array'],
-            'addon_prices.*' => ['integer', 'min:0'],
-            'discount' => ['nullable', 'integer', 'min:0'],
+        $data = $request->validate([
+            'theme_id' => ['nullable', 'integer', 'exists:themes,id'],
+            'addon_ids' => ['nullable', 'array'],
+            'addon_ids.*' => ['integer', 'exists:addons,id'],
+            'animation_pack_id' => ['nullable', 'integer', 'exists:animation_packs,id'],
         ]);
 
-        $total = $this->pricingService->calculate(
-            (int) $request->integer('base_price', 0),
-            (array) $request->input('addon_prices', []),
-            (int) $request->integer('discount', 0)
+        $result = $this->pricingService->calculate(
+            themeId: isset($data['theme_id']) ? (int) $data['theme_id'] : null,
+            addonIds: $data['addon_ids'] ?? [],
+            animationPackId: isset($data['animation_pack_id']) ? (int) $data['animation_pack_id'] : null,
         );
 
-        return response()->json(['total' => $total]);
+        return response()->json($result);
     }
 }

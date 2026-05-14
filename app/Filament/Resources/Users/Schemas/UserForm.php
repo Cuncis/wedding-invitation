@@ -29,8 +29,10 @@ class UserForm
                 DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
                     ->password()
-                    ->required(),
-                DateTimePicker::make('last_login_at'),
+                    ->dehydrateStateUsing(fn($state) => filled($state) ? \Illuminate\Support\Facades\Hash::make($state) : null)
+                    ->dehydrated(fn($state) => filled($state))
+                    ->required(fn(string $operation): bool => $operation === 'create')
+                    ->helperText('Kosongkan jika tidak ingin mengubah password.'),
             ]);
     }
 }

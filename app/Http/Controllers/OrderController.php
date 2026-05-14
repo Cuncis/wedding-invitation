@@ -3,15 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
+use App\Models\Invitation;
 use App\Models\Order;
 use App\Services\OrderService;
+use App\Services\PricingService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    public function __construct(private readonly OrderService $orderService)
+    public function __construct(
+        private readonly OrderService $orderService,
+        private readonly PricingService $pricingService,
+    ) {
+    }
+
+    /**
+     * GET /invitations/{invitation}/checkout — show the pricing summary page.
+     */
+    public function showCheckout(Request $request, Invitation $invitation): View
     {
+        $this->authorize('checkout', $invitation);
+
+        $pricing = $this->pricingService->calculateFromInvitation($invitation);
+
+        return view('orders.checkout', compact('invitation', 'pricing'));
+    }
+
+    /**
+     * POST /invitations/{invitation}/checkout — create the order.
+     */
+    public function storeCheckout(Request $request, Invitation $invitation): RedirectResponse
+    {
+        $this->authorize('checkout', $invitation);
+
+        try {
+            $order = $this->orderService->createOrder($invitation);
+        } catch (\RuntimeException $e) {
+            return back()->withErrors(['checkout' => $e->getMessage()]);
+        }
+
+        return redirect()->route('orders.show', $order)
+            ->with('success', 'Order berhasil dibuat. Silakan selesaikan pembayaran.');
+    }
+
+    /**
+     * GET /orders/{order} — show a single order (web).
+     */
+    public function showOrder(Request $request, Order $order): View
+    {
+        $this->authorize('view', $order);
+
+        $order->load('invitation', 'payments');
+
+        return view('orders.show', compact('order'));
     }
 
     public function index(Request $request): JsonResponse
@@ -23,7 +70,13 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request): JsonResponse
     {
-        $order = $this->orderService->create($request->user()?->id, $request->validated());
+        $invitation = \App\Models\Invitation::findOrFail($request->validated()['invitation_id']);
+
+        try {
+            $order = $this->orderService->createOrder($invitation);
+        } catch (\RuntimeException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
 
         return response()->json($order, 201);
     }

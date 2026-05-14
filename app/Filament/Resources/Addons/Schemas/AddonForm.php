@@ -24,14 +24,15 @@ class AddonForm
                 TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('Rp')
+                    ->helperText('Harga dalam Rupiah. Contoh: 29000 = Rp 29.000'),
                 Select::make('category')
                     ->options([
-            'media' => 'Media',
-            'interactive' => 'Interactive',
-            'social' => 'Social',
-            'utility' => 'Utility',
-        ])
+                        'media' => 'Media',
+                        'interactive' => 'Interactive',
+                        'social' => 'Social',
+                        'utility' => 'Utility',
+                    ])
                     ->default('utility')
                     ->required(),
                 Toggle::make('is_active')

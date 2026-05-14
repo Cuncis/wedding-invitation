@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,4 +24,9 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
+
+    Route::get('/invitations/{invitation}/checkout', [OrderController::class, 'showCheckout'])->name('checkout.show');
+    Route::post('/invitations/{invitation}/checkout', [OrderController::class, 'storeCheckout'])->name('checkout.store');
+
+    Route::get('/orders/{order}', [OrderController::class, 'showOrder'])->name('orders.show');
 });

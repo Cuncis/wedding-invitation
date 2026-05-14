@@ -20,7 +20,7 @@ class AnimationPacksTable
                 TextColumn::make('key')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('IDR', locale: 'id_ID')
                     ->sortable(),
                 IconColumn::make('is_active')
                     ->boolean(),

@@ -21,4 +21,10 @@ class InvitationPolicy
     {
         return $invitation->user_id === $user->id;
     }
+
+    public function checkout(User $user, Invitation $invitation): bool
+    {
+        return $invitation->user_id === $user->id
+            && $invitation->status !== Invitation::STATUS_ACTIVE;
+    }
 }

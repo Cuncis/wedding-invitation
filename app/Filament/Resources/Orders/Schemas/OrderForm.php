@@ -25,20 +25,21 @@ class OrderForm
                     ->required()
                     ->numeric()
                     ->default(0)
-                    ->prefix('$'),
+                    ->prefix('Rp'),
                 TextInput::make('addon_price')
                     ->required()
                     ->numeric()
                     ->default(0)
-                    ->prefix('$'),
+                    ->prefix('Rp'),
                 TextInput::make('animation_price')
                     ->required()
                     ->numeric()
                     ->default(0)
-                    ->prefix('$'),
+                    ->prefix('Rp'),
                 TextInput::make('total_amount')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('Rp'),
                 Select::make('status')
                     ->options(['pending' => 'Pending', 'paid' => 'Paid', 'failed' => 'Failed', 'refunded' => 'Refunded'])
                     ->default('pending')

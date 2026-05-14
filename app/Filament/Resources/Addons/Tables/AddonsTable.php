@@ -22,7 +22,7 @@ class AddonsTable
                 TextColumn::make('icon')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('IDR', locale: 'id_ID')
                     ->sortable(),
                 TextColumn::make('category')
                     ->badge(),

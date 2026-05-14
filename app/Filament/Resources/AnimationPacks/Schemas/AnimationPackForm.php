@@ -19,11 +19,14 @@ class AnimationPackForm
                     ->required(),
                 Textarea::make('description')
                     ->columnSpanFull(),
-                TextInput::make('features'),
+                \Filament\Forms\Components\TagsInput::make('features')
+                    ->placeholder('Tambahkan fitur, tekan Enter')
+                    ->columnSpanFull(),
                 TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('Rp')
+                    ->helperText('Harga dalam Rupiah. 0 untuk tier gratis.'),
                 Toggle::make('is_active')
                     ->required(),
             ]);

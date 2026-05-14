@@ -22,17 +22,21 @@ class OrdersTable
                 TextColumn::make('invitation.id')
                     ->searchable(),
                 TextColumn::make('theme_price')
-                    ->money()
-                    ->sortable(),
+                    ->money('IDR', locale: 'id_ID')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('addon_price')
-                    ->money()
-                    ->sortable(),
+                    ->money('IDR', locale: 'id_ID')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('animation_price')
-                    ->money()
-                    ->sortable(),
+                    ->money('IDR', locale: 'id_ID')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('total_amount')
-                    ->numeric()
-                    ->sortable(),
+                    ->money('IDR', locale: 'id_ID')
+                    ->sortable()
+                    ->weight('bold'),
                 TextColumn::make('status')
                     ->badge(),
                 TextColumn::make('expires_at')

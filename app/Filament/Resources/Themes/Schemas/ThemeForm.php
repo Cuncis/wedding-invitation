@@ -25,9 +25,16 @@ class ThemeForm
                 TextInput::make('base_price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
-                TextInput::make('default_colors'),
-                TextInput::make('default_fonts'),
+                    ->prefix('Rp')
+                    ->helperText('Harga dalam Rupiah (tanpa desimal). Contoh: 99000 = Rp 99.000'),
+                \Filament\Forms\Components\KeyValue::make('default_colors')
+                    ->keyLabel('Slot')
+                    ->valueLabel('Hex color')
+                    ->columnSpanFull(),
+                \Filament\Forms\Components\KeyValue::make('default_fonts')
+                    ->keyLabel('Role')
+                    ->valueLabel('Font family')
+                    ->columnSpanFull(),
                 Toggle::make('is_active')
                     ->required(),
                 TextInput::make('sort_order')

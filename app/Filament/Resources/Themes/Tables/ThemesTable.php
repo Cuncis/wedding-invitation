@@ -22,7 +22,7 @@ class ThemesTable
                     ->searchable(),
                 ImageColumn::make('preview_image'),
                 TextColumn::make('base_price')
-                    ->money()
+                    ->money('IDR', locale: 'id_ID')
                     ->sortable(),
                 IconColumn::make('is_active')
                     ->boolean(),
