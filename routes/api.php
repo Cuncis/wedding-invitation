@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/auth/logout', LogoutController::class);
     Route::post('/auth/verify-email', VerifyEmailController::class);
 
-    Route::get('/dashboard', DashboardController::class);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::apiResource('invitations', InvitationController::class);
     Route::patch('/invitations/{invitation}/config', InvitationConfigController::class);
     Route::post('/invitations/{invitation}/publish', InvitationPublishController::class);

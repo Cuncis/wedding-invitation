@@ -7,15 +7,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_SETTLEMENT = 'settlement';
+    public const STATUS_EXPIRE = 'expire';
+    public const STATUS_CANCEL = 'cancel';
+    public const STATUS_DENY = 'deny';
+    public const STATUS_REFUND = 'refund';
+
     protected $fillable = [
         'order_id',
         'gateway',
-        'gateway_transaction_id',
-        'snap_token',
-        'payment_type',
-        'amount',
+        'external_id',
+        'payment_method',
         'status',
-        'raw_response',
+        'amount',
+        'raw_payload',
         'paid_at',
     ];
 
@@ -23,7 +29,7 @@ class Payment extends Model
     {
         return [
             'amount' => 'integer',
-            'raw_response' => 'array',
+            'raw_payload' => 'array',
             'paid_at' => 'datetime',
         ];
     }

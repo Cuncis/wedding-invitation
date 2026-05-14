@@ -5,19 +5,35 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function store(RegisterRequest $request): JsonResponse
+    public function show(): View
     {
-        $user = User::create($request->validated());
+        return view('auth.register');
+    }
 
-        $token = $user->createToken($request->userAgent() ?? 'api-token')->plainTextToken;
+    public function store(RegisterRequest $request)
+    {
+        $data = $request->validated();
+        $data['role'] = User::ROLE_CUSTOMER;
 
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ], 201);
+        $user = User::create($data);
+
+        if ($request->wantsJson()) {
+            $token = $user->createToken($request->userAgent() ?? 'api-token')->plainTextToken;
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+            ], 201);
+        }
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return redirect()->route('dashboard');
     }
 }

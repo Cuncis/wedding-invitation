@@ -3,22 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invitation;
-use App\Models\Order;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function __invoke(Request $request): JsonResponse
+    public function index(Request $request): View
     {
         $user = $request->user();
 
-        return response()->json([
-            'message' => 'Dashboard data loaded.',
-            'data' => [
-                'invitations_count' => Invitation::where('user_id', $user?->id)->count(),
-                'active_orders_count' => Order::where('user_id', $user?->id)->where('status', 'pending')->count(),
-            ],
+        $invitations = $user->invitations()->latest()->get();
+
+        $stats = [
+            'total' => $invitations->count(),
+            'active' => $invitations->where('status', Invitation::STATUS_ACTIVE)->count(),
+            'draft' => $invitations->where('status', Invitation::STATUS_DRAFT)->count(),
+        ];
+
+        return view('dashboard.index', compact('invitations', 'stats'));
+    }
+
+    public function create(Request $request): RedirectResponse
+    {
+        $invitation = $request->user()->invitations()->create([
+            'groom_name' => '',
+            'bride_name' => '',
+            'status' => Invitation::STATUS_DRAFT,
         ]);
+
+        // Create empty config row (1-1)
+        $invitation->config()->create([]);
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Undangan draft berhasil dibuat. Silakan lengkapi datanya.');
     }
 }
