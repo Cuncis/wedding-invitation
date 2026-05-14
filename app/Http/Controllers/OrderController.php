@@ -45,8 +45,23 @@ class OrderController extends Controller
             return back()->withErrors(['checkout' => $e->getMessage()]);
         }
 
-        return redirect()->route('orders.show', $order)
-            ->with('success', 'Order berhasil dibuat. Silakan selesaikan pembayaran.');
+        return redirect()->route('orders.checkout', $order);
+    }
+
+    /**
+     * GET /orders/{order}/checkout — payment page with Midtrans Snap token.
+     */
+    public function checkout(Request $request, Order $order): View
+    {
+        $this->authorize('view', $order);
+
+        if ($order->isPaid()) {
+            return view('orders.show', compact('order'));
+        }
+
+        $result = $this->pricingService->calculateFromInvitation($order->invitation);
+
+        return view('orders.payment', compact('order', 'result'));
     }
 
     /**

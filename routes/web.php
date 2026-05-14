@@ -28,5 +28,6 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/invitations/{invitation}/checkout', [OrderController::class, 'showCheckout'])->name('checkout.show');
     Route::post('/invitations/{invitation}/checkout', [OrderController::class, 'storeCheckout'])->name('checkout.store');
 
+    Route::get('/orders/{order}/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
     Route::get('/orders/{order}', [OrderController::class, 'showOrder'])->name('orders.show');
 });

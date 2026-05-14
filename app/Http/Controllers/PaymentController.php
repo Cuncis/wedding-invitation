@@ -16,8 +16,12 @@ class PaymentController extends Controller
     {
         $this->authorize('view', $order);
 
-        $payment = $this->paymentService->createForOrder($order);
+        $result = $this->paymentService->initiate($order);
 
-        return response()->json($payment, 201);
+        return response()->json([
+            'snap_token' => $result->snapToken,
+            'external_id' => $result->externalId,
+            'redirect_url' => $result->redirectUrl,
+        ], 201);
     }
 }

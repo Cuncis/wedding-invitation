@@ -2,57 +2,45 @@
 
 namespace App\Services;
 
-use App\Events\PaymentFailed;
-use App\Events\PaymentSucceeded;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Services\Gateways\MidtransGateway;
+use App\Services\Payment\MidtransGateway;
+use App\Services\Payment\PaymentGateway;
+use App\Services\Payment\PaymentResult;
 
 class PaymentService
 {
-    public function __construct(private readonly MidtransGateway $gateway)
+    /** @var array<string, PaymentGateway> */
+    private array $gateways = [];
+
+    public function __construct(private readonly MidtransGateway $midtrans)
     {
+        $this->gateways['midtrans'] = $midtrans;
     }
 
-    public function createForOrder(Order $order): Payment
+    public function gateway(string $name = 'midtrans'): PaymentGateway
     {
-        $payload = $this->gateway->createCharge($order);
+        return $this->gateways[$name]
+            ?? throw new \InvalidArgumentException("Unknown payment gateway: {$name}");
+    }
 
-        return Payment::create([
+    /**
+     * Initiate a payment — calls gateway, creates Payment record, returns PaymentResult.
+     */
+    public function initiate(Order $order, string $gatewayName = 'midtrans'): PaymentResult
+    {
+        $gateway = $this->gateway($gatewayName);
+        $result = $gateway->createPayment($order);
+
+        Payment::create([
             'order_id' => $order->id,
-            'gateway' => 'midtrans',
+            'gateway' => $gatewayName,
+            'external_id' => $result->externalId,
             'amount' => $order->total_amount,
-            'status' => 'pending',
-            'gateway_transaction_id' => $payload['reference'] ?? null,
-            'snap_token' => $payload['snap_token'] ?? null,
-            'raw_response' => $payload,
+            'status' => Payment::STATUS_PENDING,
+            'raw_payload' => ['snap_token' => $result->snapToken],
         ]);
-    }
 
-    public function handleWebhook(array $payload): bool
-    {
-        $payment = Payment::query()
-            ->where('gateway_transaction_id', '=', $payload['reference'] ?? null)
-            ->first();
-
-        if (! $payment) {
-            return false;
-        }
-
-        $payment->status = (string) ($payload['status'] ?? 'failed');
-        $payment->payment_type = $payload['payment_type'] ?? $payment->payment_type;
-        $payment->raw_response = $payload;
-        $payment->paid_at = $payment->status === 'paid' ? now() : null;
-        $payment->save();
-
-        if ($payment->status === 'paid') {
-            PaymentSucceeded::dispatch($payment);
-
-            return true;
-        }
-
-        PaymentFailed::dispatch($payment, (string) ($payload['message'] ?? 'Payment failed.'));
-
-        return true;
+        return $result;
     }
 }

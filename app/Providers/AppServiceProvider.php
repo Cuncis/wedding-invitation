@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
+use App\Events\PaymentSucceeded;
+use App\Listeners\PublishInvitationAfterPayment;
+use App\Services\InvitationPublisher;
 use App\Services\OrderService;
+use App\Services\Payment\MidtransGateway;
+use App\Services\PaymentService;
 use App\Services\PricingService;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\ServiceProvider;
+use Midtrans\Config as MidtransConfig;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +26,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(OrderService::class, function ($app) {
             return new OrderService($app->make(PricingService::class));
         });
+
+        $this->app->singleton(MidtransGateway::class);
+
+        $this->app->singleton(PaymentService::class, function ($app) {
+            return new PaymentService($app->make(MidtransGateway::class));
+        });
+
+        $this->app->singleton(InvitationPublisher::class);
     }
 
     /**
@@ -26,6 +41,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        MidtransConfig::$serverKey = config('midtrans.server_key');
+        MidtransConfig::$clientKey = config('midtrans.client_key');
+        MidtransConfig::$isProduction = config('midtrans.is_production');
+        MidtransConfig::$isSanitized = true;
+        MidtransConfig::$is3ds = true;
+
+        Event::listen(PaymentSucceeded::class, PublishInvitationAfterPayment::class);
+
         Schedule::command('orders:expire')->hourly();
     }
 }
