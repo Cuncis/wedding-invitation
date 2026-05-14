@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CachePublicInvitation;
+use App\Http\Middleware\NoCache;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
             'webhooks/*',
+        ]);
+
+        $middleware->alias([
+            'cache.public' => CachePublicInvitation::class,
+            'cache.nocache' => NoCache::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

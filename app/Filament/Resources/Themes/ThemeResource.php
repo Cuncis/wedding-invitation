@@ -18,7 +18,15 @@ class ThemeResource extends Resource
 {
     protected static ?string $model = Theme::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSwatch;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Katalog';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Tema';
+
+    protected static ?string $pluralModelLabel = 'Tema';
 
     protected static ?string $recordTitleAttribute = 'name';
 

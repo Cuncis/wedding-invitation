@@ -6,7 +6,9 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class ThemeForm
 {
@@ -15,9 +17,13 @@ class ThemeForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state ?? ''))),
                 TextInput::make('slug')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->helperText('Otomatis dari nama, atau isi manual.'),
                 Textarea::make('description')
                     ->columnSpanFull(),
                 FileUpload::make('preview_image')

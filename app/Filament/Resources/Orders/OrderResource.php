@@ -20,9 +20,32 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Penjualan';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Order';
+
+    protected static ?string $pluralModelLabel = 'Orders';
 
     protected static ?string $recordTitleAttribute = 'order_number';
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -50,9 +73,7 @@ class OrderResource extends Resource
     {
         return [
             'index' => ListOrders::route('/'),
-            'create' => CreateOrder::route('/create'),
             'view' => ViewOrder::route('/{record}'),
-            'edit' => EditOrder::route('/{record}/edit'),
         ];
     }
 }

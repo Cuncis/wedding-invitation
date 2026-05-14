@@ -2,11 +2,9 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class OrdersTable
@@ -16,52 +14,52 @@ class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('order_number')
-                    ->searchable(),
+                    ->label('No. Order')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('user.name')
+                    ->label('Pelanggan')
                     ->searchable(),
-                TextColumn::make('invitation.id')
-                    ->searchable(),
-                TextColumn::make('theme_price')
-                    ->money('IDR', locale: 'id_ID')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('addon_price')
-                    ->money('IDR', locale: 'id_ID')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('animation_price')
-                    ->money('IDR', locale: 'id_ID')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('invitation_couple')
+                    ->label('Mempelai')
+                    ->getStateUsing(fn($record) => $record->invitation?->coupleNames() ?? '—')
+                    ->searchable(false),
                 TextColumn::make('total_amount')
-                    ->money('IDR', locale: 'id_ID')
+                    ->label('Total')
+                    ->formatStateUsing(fn($state) => 'Rp ' . number_format((int) $state, 0, ',', '.'))
                     ->sortable()
                     ->weight('bold'),
                 TextColumn::make('status')
-                    ->badge(),
-                TextColumn::make('expires_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->badge()
+                    ->color(fn(string $state) => match ($state) {
+                        'paid' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        'refunded' => 'gray',
+                        default => 'gray',
+                    }),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Tanggal')
+                    ->dateTime('d M Y H:i')
+                    ->sortable(),
+                TextColumn::make('expires_at')
+                    ->label('Kadaluarsa')
+                    ->dateTime('d M Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'failed' => 'Failed',
+                        'refunded' => 'Refunded',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }

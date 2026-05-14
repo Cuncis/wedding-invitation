@@ -18,7 +18,15 @@ class AnimationPackResource extends Resource
 {
     protected static ?string $model = AnimationPack::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSparkles;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Katalog';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $modelLabel = 'Animation Pack';
+
+    protected static ?string $pluralModelLabel = 'Animation Packs';
 
     protected static ?string $recordTitleAttribute = 'name';
 

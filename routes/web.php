@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BuilderController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\InvitationShowController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RsvpController;
@@ -42,10 +43,16 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/rsvp/{invitation}/responses', [RsvpController::class, 'index'])->name('rsvp.index');
 });
 
-// Public RSVP submit (no auth)
-Route::post('/rsvp/{slug}', [RsvpController::class, 'store'])->name('rsvp.store');
+// Health check
+Route::get('/health', HealthController::class)->name('health');
 
-// Public invitation pages — MUST be last to avoid catching other routes
+// Public RSVP submit — throttle to 10 req/min per IP
+Route::post('/rsvp/{slug}', [RsvpController::class, 'store'])
+    ->name('rsvp.store')
+    ->middleware('throttle:rsvp');
+
+// Public invitation pages — cached at CDN, MUST be last to avoid catching other routes
 Route::get('/{slug}', InvitationShowController::class)
     ->name('invitation.show')
-    ->where('slug', '[a-z][a-z0-9-]*');
+    ->where('slug', '[a-z][a-z0-9-]*')
+    ->middleware('cache.public');

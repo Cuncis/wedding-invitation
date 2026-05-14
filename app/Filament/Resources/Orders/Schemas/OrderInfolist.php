@@ -10,32 +10,50 @@ class OrderInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(2)
             ->components([
-                TextEntry::make('order_number'),
+                TextEntry::make('order_number')
+                    ->label('No. Order')
+                    ->copyable(),
+                TextEntry::make('status')
+                    ->badge()
+                    ->color(fn(string $state) => match ($state) {
+                        'paid' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        'refunded' => 'gray',
+                        default => 'gray',
+                    }),
                 TextEntry::make('user.name')
-                    ->label('User'),
-                TextEntry::make('invitation.id')
-                    ->label('Invitation'),
+                    ->label('Pelanggan'),
+                TextEntry::make('user.email')
+                    ->label('Email Pelanggan'),
+                TextEntry::make('couple_names')
+                    ->label('Mempelai')
+                    ->getStateUsing(fn($record) => $record->invitation?->coupleNames() ?? '—'),
+                TextEntry::make('invitation.slug')
+                    ->label('Slug Undangan')
+                    ->placeholder('—'),
                 TextEntry::make('theme_price')
+                    ->label('Harga Tema')
                     ->money('IDR', locale: 'id_ID'),
                 TextEntry::make('addon_price')
+                    ->label('Harga Addon')
                     ->money('IDR', locale: 'id_ID'),
                 TextEntry::make('animation_price')
+                    ->label('Harga Animasi')
                     ->money('IDR', locale: 'id_ID'),
                 TextEntry::make('total_amount')
+                    ->label('Total')
                     ->money('IDR', locale: 'id_ID')
                     ->weight('bold'),
-                TextEntry::make('status')
-                    ->badge(),
-                TextEntry::make('expires_at')
-                    ->dateTime()
-                    ->placeholder('-'),
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->label('Dibuat')
+                    ->dateTime('d M Y H:i'),
+                TextEntry::make('expires_at')
+                    ->label('Kadaluarsa')
+                    ->dateTime('d M Y H:i')
+                    ->placeholder('—'),
             ]);
     }
 }

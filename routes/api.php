@@ -18,15 +18,20 @@ use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('auth')->group(function (): void {
-    Route::post('/register', [RegisterController::class, 'store']);
-    Route::post('/login', [LoginController::class, 'store']);
+Route::middleware('throttle:api')->group(function (): void {
+    Route::prefix('auth')->group(function (): void {
+        Route::post('/register', [RegisterController::class, 'store']);
+        Route::post('/login', [LoginController::class, 'store']);
+    });
+
+    Route::get('/invitations/{slug}', PublicInvitationController::class);
+    Route::get('/pricing', PricingController::class);
 });
 
 Route::post('/webhooks/midtrans', WebhookController::class);
-Route::get('/invitations/{slug}', PublicInvitationController::class);
-Route::post('/invitations/{invitation}/rsvp', [RsvpController::class, 'store']);
-Route::get('/pricing', PricingController::class);
+
+Route::post('/invitations/{invitation}/rsvp', [RsvpController::class, 'store'])
+    ->middleware('throttle:rsvp');
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/auth/logout', LogoutController::class);
