@@ -14,11 +14,11 @@ class StoreRsvpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:30'],
-            'attendance_status' => ['required', 'in:attending,not_attending,maybe'],
-            'guest_count' => ['nullable', 'integer', 'min:0', 'max:10'],
-            'message' => ['nullable', 'string', 'max:1000'],
+            'guest_name' => ['required', 'string', 'max:100'],
+            'guest_phone' => ['nullable', 'string', 'max:20'],
+            'attendance' => ['required', 'in:hadir,tidak_hadir,mungkin'],
+            'pax' => ['integer', 'min:1', 'max:10'],
+            'message' => ['nullable', 'string', 'max:500'],
         ];
     }
 }

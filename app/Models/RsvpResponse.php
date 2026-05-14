@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RsvpResponse extends Model
 {
+    use HasFactory;
     public const ATTENDANCE_HADIR = 'hadir';
     public const ATTENDANCE_TIDAK_HADIR = 'tidak_hadir';
     public const ATTENDANCE_MUNGKIN = 'mungkin';

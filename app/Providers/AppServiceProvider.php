@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Events\PaymentSucceeded;
 use App\Listeners\PublishInvitationAfterPayment;
+use App\Listeners\SendPaymentReceiptEmail;
 use App\Services\InvitationPublisher;
+use App\Services\NotificationService;
 use App\Services\OrderService;
 use App\Services\Payment\MidtransGateway;
 use App\Services\PaymentService;
@@ -33,7 +35,11 @@ class AppServiceProvider extends ServiceProvider
             return new PaymentService($app->make(MidtransGateway::class));
         });
 
-        $this->app->singleton(InvitationPublisher::class);
+        $this->app->singleton(NotificationService::class);
+
+        $this->app->singleton(InvitationPublisher::class, function ($app) {
+            return new InvitationPublisher($app->make(NotificationService::class));
+        });
     }
 
     /**
@@ -48,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         MidtransConfig::$is3ds = true;
 
         Event::listen(PaymentSucceeded::class, PublishInvitationAfterPayment::class);
+        Event::listen(PaymentSucceeded::class, SendPaymentReceiptEmail::class);
 
         Schedule::command('orders:expire')->hourly();
     }

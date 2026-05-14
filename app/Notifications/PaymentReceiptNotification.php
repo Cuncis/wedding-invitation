@@ -22,11 +22,27 @@ class PaymentReceiptNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject('Payment Receipt')
-            ->line('Your payment has been successfully received.')
-            ->line('Reference: ' . ($this->payment->gateway_transaction_id ?? '-'))
-            ->line('Amount: Rp ' . number_format((int) $this->payment->amount, 0, ',', '.'));
+        $invitation = $this->payment->order?->invitation;
+        $couple = $invitation?->coupleNames() ?? 'Undangan Digital';
+        $amount = 'Rp ' . number_format((int) $this->payment->amount, 0, ',', '.');
+        $ref = $this->payment->gateway_transaction_id ?? $this->payment->external_id ?? '-';
+        $invitationUrl = $invitation?->slug ? url('/' . $invitation->slug) : null;
+
+        $mail = (new MailMessage)
+            ->subject("Pembayaran Berhasil — Undangan {$couple}")
+            ->greeting('Halo!')
+            ->line("Pembayaran untuk undangan **{$couple}** telah berhasil dikonfirmasi.")
+            ->line("**Referensi:** {$ref}")
+            ->line("**Total:** {$amount}")
+            ->line("**Metode:** " . ($this->payment->payment_method ?? 'Online Payment'));
+
+        if ($invitationUrl) {
+            $mail->action('Lihat Undangan Saya', $invitationUrl);
+        }
+
+        return $mail
+            ->line('Undangan Anda kini aktif dan dapat diakses oleh tamu.')
+            ->salutation('Terima kasih — Tim Undangan Digital');
     }
 
     public function toArray(object $notifiable): array

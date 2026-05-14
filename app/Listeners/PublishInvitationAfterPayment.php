@@ -15,10 +15,12 @@ class PublishInvitationAfterPayment
     {
         $invitation = $event->payment->order?->invitation;
 
-        if (! $invitation) {
+        if (!$invitation) {
             return;
         }
 
-        $this->publisher->publish($invitation);
+        $notifyUser = $event->payment->order?->user;
+
+        $this->publisher->publish($invitation, $notifyUser);
     }
 }

@@ -22,10 +22,18 @@ class InvitationLiveNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
+        $couple = $this->invitation->coupleNames();
+        $url = url('/' . $this->invitation->slug);
+        $expires = $this->invitation->expires_at?->isoFormat('D MMMM Y') ?? '-';
+
         return (new MailMessage)
-            ->subject('Your Invitation Is Live')
-            ->line('Your invitation has been published and is now publicly accessible.')
-            ->line('Slug: ' . $this->invitation->slug);
+            ->subject("Undangan {$couple} Sudah Aktif! 🎉")
+            ->greeting('Selamat!')
+            ->line("Undangan pernikahan **{$couple}** kini sudah aktif dan dapat diakses oleh tamu.")
+            ->action('Buka Undangan Saya', $url)
+            ->line("Link aktif hingga **{$expires}**.")
+            ->line('Bagikan link ini kepada tamu undangan Anda.')
+            ->salutation('Terima kasih — Tim Undangan Digital');
     }
 
     public function toArray(object $notifiable): array
