@@ -7,10 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * NOTE: Laravel 13 ships with a default users table migration.
-     * This migration ADDS the extra columns we need on top of it.
-     * Run this AFTER the default users migration.
      */
     public function up(): void
     {
@@ -23,10 +19,16 @@ return new class extends Migration {
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['phone', 'is_admin']);
+            $table->dropColumn('phone');
+            $table->dropColumn('whatsapp');
+            $table->dropColumn('role');
+            $table->dropColumn('last_login_at');
         });
     }
 };
