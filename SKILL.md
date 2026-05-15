@@ -602,7 +602,7 @@ TextColumn::make('base_price')
 2. ThemeSeeder          — elegant-rose (Rp 99K), modern-minimalist (Rp 119K), floral-garden (Rp 109K)
 3. AddonSeeder          — 8 addons with keys: music_player, photo_gallery, maps, countdown,
                           rsvp_form (Rp 0), digital_gift, love_story, live_stream
-4. AdminUserSeeder      — admin@undanganmu.com, role='admin', email_verified_at=now()
+4. AdminUserSeeder      — libradigital.team@gmail.com, role='admin', email_verified_at=now()
 ```
 
 **All seeders use `firstOrCreate` by unique key** — safe to re-run on production.

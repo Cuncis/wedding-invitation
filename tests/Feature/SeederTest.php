@@ -47,7 +47,7 @@ class SeederTest extends TestCase
         $this->seed(DatabaseSeeder::class);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'admin@undanganmu.com',
+            'email' => 'libradigital.team@gmail.com',
             'role'  => User::ROLE_ADMIN,
         ]);
     }

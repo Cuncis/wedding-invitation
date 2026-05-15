@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Undangan digital pernikahan yang elegan, modern, dan bisa dikustomisasi. Buat undangan impianmu dalam hitungan menit.">
 
-        <title>UndanganMu — Undangan Digital Pernikahan Elegan</title>
+        <title>Libra Digital — Undangan Digital Pernikahan Elegan</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,7 @@
                                 <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                             </svg>
                         </span>
-                        <span class="font-serif text-xl font-bold text-slate-800">UndanganMu</span>
+                        <span class="font-serif text-xl font-bold text-slate-800">Libra Digital</span>
                     </a>
 
                     {{-- Desktop nav --}}
@@ -108,7 +108,7 @@
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="{{ route('register') }}" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-full shadow-lg shadow-rose-200 transition-all hover:shadow-xl hover:-translate-y-0.5">
-                            Buat Undanganmu Gratis
+                            Buat Undangan Digital Gratis
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" /></svg>
                         </a>
                         <a href="#tema" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 border-2 border-rose-200 text-rose-600 hover:border-rose-400 font-semibold rounded-full transition-colors">
@@ -160,9 +160,9 @@
         <section id="fitur" class="py-24 bg-white">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <span class="text-rose-500 text-sm font-semibold uppercase tracking-widest">Mengapa UndanganMu?</span>
+                    <span class="text-rose-500 text-sm font-semibold uppercase tracking-widest">Mengapa Libra Digital?</span>
                     <h2 class="font-serif text-4xl font-bold text-slate-900 mt-3">Semua yang Kamu Butuhkan</h2>
-                    <p class="text-slate-500 mt-4 max-w-xl mx-auto">Dari desain hingga pengiriman, kami sediakan semua fitur yang membuat undanganmu spesial.</p>
+                    <p class="text-slate-500 mt-4 max-w-xl mx-auto">Dari desain hingga pengiriman, kami sediakan semua fitur yang membuat undangan Anda spesial.</p>
                 </div>
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -261,7 +261,7 @@
                     <div class="text-center relative">
                         <div class="w-20 h-20 rounded-full bg-rose-600 text-white flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-rose-200">3</div>
                         <h3 class="font-semibold text-slate-900 text-lg mb-2">Bayar & Bagikan</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed">Selesaikan pembayaran dan link undanganmu langsung aktif. Bagikan via WhatsApp ke semua tamu.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Selesaikan pembayaran dan link undangan Anda langsung aktif. Bagikan via WhatsApp ke semua tamu.</p>
                     </div>
                 </div>
             </div>
@@ -421,7 +421,7 @@
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <span class="text-rose-500 text-sm font-semibold uppercase tracking-widest">Testimoni</span>
-                    <h2 class="font-serif text-4xl font-bold text-slate-900 mt-3">Kata Mereka tentang UndanganMu</h2>
+                    <h2 class="font-serif text-4xl font-bold text-slate-900 mt-3">Kata Mereka tentang Libra Digital</h2>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
@@ -542,7 +542,7 @@
                                 <div>
                                     <p class="font-semibold text-slate-800">Email</p>
                                     {{-- Replace with your real email --}}
-                                    <a href="mailto:halo@undanganmu.com" class="text-rose-600 hover:underline text-sm">halo@undanganmu.com</a>
+                                    <a href="mailto:libradigital.team@gmail.com" class="text-rose-600 hover:underline text-sm">libradigital.team@gmail.com</a>
                                 </div>
                             </div>
 
@@ -597,7 +597,7 @@
             </div>
             <div class="max-w-3xl mx-auto px-4 text-center relative">
                 <h2 class="font-serif text-4xl font-bold text-white mb-4">Siap Membuat Undangan Impianmu?</h2>
-                <p class="text-rose-100 text-lg mb-8">Bergabung dengan ratusan pasangan yang telah mempercayakan momen spesial mereka kepada UndanganMu.</p>
+                <p class="text-rose-100 text-lg mb-8">Bergabung dengan ratusan pasangan yang telah mempercayakan momen spesial mereka kepada Libra Digital.</p>
                 <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-rose-600 hover:bg-rose-50 font-bold rounded-full shadow-xl transition-colors text-lg">
                     Buat Undangan Sekarang — Gratis!
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" /></svg>
@@ -617,7 +617,7 @@
                                     <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                                 </svg>
                             </span>
-                            <span class="font-serif text-xl font-bold text-white">UndanganMu</span>
+                            <span class="font-serif text-xl font-bold text-white">Libra Digital</span>
                         </div>
                         <p class="text-sm leading-relaxed max-w-xs">Platform undangan digital pernikahan terpercaya di Indonesia. Elegan, modern, dan mudah digunakan.</p>
                         <div class="flex gap-4 mt-5">
@@ -656,7 +656,7 @@
 
                 <hr class="border-slate-800 mb-6">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-                    <p>© {{ date('Y') }} UndanganMu. Hak cipta dilindungi undang-undang.</p>
+                    <p>© {{ date('Y') }} Libra Digital. Hak cipta dilindungi undang-undang.</p>
                     <p>Dibuat dengan ❤️ di Indonesia</p>
                 </div>
             </div>

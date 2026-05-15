@@ -11,9 +11,9 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         User::firstOrCreate(
-            ['email' => 'admin@undanganmu.com'],
+            ['email' => 'libradigital.team@gmail.com'],
             [
-                'name' => 'Admin Undangan',
+                'name' => 'Admin Libra Digital',
                 'password' => Hash::make('password'),
                 'phone' => '081234567890',
                 'whatsapp' => '6281234567890',
