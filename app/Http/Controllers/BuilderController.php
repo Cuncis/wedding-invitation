@@ -41,8 +41,15 @@ class BuilderController extends Controller
         $this->authorize('update', $invitation);
 
         $allowed = [
-            'theme_id', 'animation_pack_id', 'addon_ids',
-            'sections', 'colors', 'typography', 'content', 'music', 'maps',
+            'theme_id',
+            'animation_pack_id',
+            'addon_ids',
+            'sections',
+            'colors',
+            'typography',
+            'content',
+            'music',
+            'maps',
         ];
 
         $data = $request->only($allowed);
@@ -64,6 +71,13 @@ class BuilderController extends Controller
 
         $invitation->loadMissing('config.theme', 'config.animationPack');
 
-        return view('builder.preview', compact('invitation'));
+        $addonIds  = $invitation->config?->addon_ids ?? [];
+        $addonKeys = $addonIds
+            ? Addon::active()->whereIn('id', $addonIds)->pluck('key')->toArray()
+            : [];
+
+        $animationKey = $invitation->config?->animationPack?->key ?? AnimationPack::KEY_FREE;
+
+        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey'));
     }
 }
