@@ -26,13 +26,73 @@ const DEFAULT_CONFIG = {
         body: 'Lato',
     },
     content: {
-        cover: { opening_text: 'Bismillahirrahmanirrahim', tagline: 'Save the Date' },
-        couple: { groom_fullname: '', groom_parents: '', bride_fullname: '', bride_parents: '' },
-        event: {
-            akad: { date: '', time: '', venue: '', address: '' },
-            resepsi: { date: '', time: '', venue: '', address: '' },
+        cover: {
+            opening_text: 'Bismillahirrahmanirrahim',
+            tagline: 'Save the Date',
+            heading: 'The Wedding of',
+            groom_short: '',
+            bride_short: '',
+            date_text: '',
+            guest_label: 'Kepada Yth.\nTamu Undangan',
+            button_label: 'Buka Undangan',
+            photo_1: null,
+            photo_2: null,
         },
-        closing: { thank_you: '' },
+        doa: {
+            heading: 'Doa & Pengantar',
+            description: 'Bismillahirrahmanirrahim. Segala puji bagi Allah, Tuhan semesta alam. Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang.',
+            overlay: 0.45,
+        },
+        couple: {
+            intro_text: 'Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, serta kerabat sekalian, untuk menghadiri acara pernikahan kami:',
+            groom_fullname: '',
+            groom_parents: '',
+            groom_photo: null,
+            groom_social: { instagram: '', facebook: '', tiktok: '', twitter: '' },
+            bride_fullname: '',
+            bride_parents: '',
+            bride_photo: null,
+            bride_social: { instagram: '', facebook: '', tiktok: '', twitter: '' },
+        },
+        event: {
+            akad: {
+                date: '', time: '', day: '', venue: '', address: '',
+                maps_url: '', calendar_url: '',
+            },
+            resepsi: {
+                date: '', time: '', day: '', venue: '', address: '',
+                maps_url: '', calendar_url: '',
+            },
+        },
+        gallery: {
+            photos: [], // array of image URLs, max 30
+        },
+        gift: {
+            receiver_name: '',
+            address: '',
+            banks: [], // [{ name, logo, account_no, account_holder }]
+        },
+        wishes: {
+            heading: 'Ucapan & Doa Restu',
+            footer: 'Hope to see you soon, Stay safe and healthy!',
+        },
+        closing: {
+            heading: 'Terima Kasih',
+            thank_you: 'Atas Kehadiran & Doa Restunya',
+            watermark: 'Undangan Pernikahan Digital Created By Libradigital.id',
+        },
+        backgrounds: {
+            use_global: false,
+            global: null,
+            cover: null,
+            doa: null,
+            couple: null,
+            event: null,
+            gallery: null,
+            gift: null,
+            wishes: null,
+            closing: null,
+        },
     },
     music: null,
     maps: null,

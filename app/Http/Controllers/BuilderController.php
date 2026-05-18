@@ -78,6 +78,14 @@ class BuilderController extends Controller
 
         $animationKey = $invitation->config?->animationPack?->key ?? AnimationPack::KEY_FREE;
 
-        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey'));
+        // Mock wishes (ucapan & doa restu) — preview only. Real feature comes later.
+        $wishes = collect([
+            ['name' => 'Andi Pratama',   'message' => 'Selamat menempuh hidup baru! Semoga menjadi keluarga sakinah, mawaddah, warahmah.', 'attending' => 'hadir',       'created_at' => now()->subHours(2)],
+            ['name' => 'Sari Wulandari', 'message' => 'Barakallahu lakuma wa baraka alaykuma. Selamat ya kalian berdua!',                       'attending' => 'hadir',       'created_at' => now()->subHours(5)],
+            ['name' => 'Budi Santoso',   'message' => 'Maaf belum bisa hadir, doa terbaik selalu untuk kalian berdua.',                          'attending' => 'tidak_hadir', 'created_at' => now()->subDay()],
+            ['name' => 'Dewi Lestari',   'message' => 'Selamat ya! Akhirnya hari yang ditunggu-tunggu tiba juga. \xF0\x9F\xA5\xB0',              'attending' => 'hadir',       'created_at' => now()->subDays(2)],
+        ]);
+
+        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes'));
     }
 }
