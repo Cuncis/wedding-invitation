@@ -6,6 +6,48 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    /* Brand typography — Inter from Google Fonts */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* ── Brand palette (deep blue, anchored at #1C4965 as the 600 step) ── */
+    --color-brand-50:  #f0f6fa;
+    --color-brand-100: #d9e7f0;
+    --color-brand-200: #b3cee0;
+    --color-brand-300: #88b1ce;
+    --color-brand-400: #4e87b0;
+    --color-brand-500: #2d6388;
+    --color-brand-600: #1C4965;
+    --color-brand-700: #163a51;
+    --color-brand-800: #112d3f;
+    --color-brand-900: #0c1f2c;
+    --color-brand-950: #061320;
+
+    /* ── Accent palette (warm gold, anchored at #FFB904 as the 500 step) ── */
+    --color-accent-50:  #fffaeb;
+    --color-accent-100: #fff1c6;
+    --color-accent-200: #ffe389;
+    --color-accent-300: #ffce47;
+    --color-accent-400: #ffbe1f;
+    --color-accent-500: #ffb904;
+    --color-accent-600: #d68d00;
+    --color-accent-700: #b06700;
+    --color-accent-800: #8a4f06;
+    --color-accent-900: #74410a;
+    --color-accent-950: #432104;
+
+    /* ── Re-map Tailwind's rose-* scale onto the brand blue so every
+       existing `rose-*` utility instantly becomes the new brand colour
+       with zero HTML changes. ── */
+    --color-rose-50:  var(--color-brand-50);
+    --color-rose-100: var(--color-brand-100);
+    --color-rose-200: var(--color-brand-200);
+    --color-rose-300: var(--color-brand-300);
+    --color-rose-400: var(--color-brand-400);
+    --color-rose-500: var(--color-brand-500);
+    --color-rose-600: var(--color-brand-600);
+    --color-rose-700: var(--color-brand-700);
+    --color-rose-800: var(--color-brand-800);
+    --color-rose-900: var(--color-brand-900);
+    --color-rose-950: var(--color-brand-950);
 }

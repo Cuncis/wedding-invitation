@@ -1306,12 +1306,30 @@
     </footer>
 
     {{-- ════════════════════ Music player addon ════════════════════ --}}
-    @if (in_array('music_player', $addonKeys))
-        <div class="music-bar">
-            <button class="music-btn" id="music-btn">▶</button>
+    @if (in_array('music_player', $addonKeys) && !empty($music))
+        @php
+            $musicVideoId = $music['video_id'] ?? null;
+            $musicTitle = $music['title'] ?: 'Lagu Latar';
+            $musicArtist = $music['artist'] ?: '';
+            $musicAutoplay = !empty($music['autoplay']);
+            $musicLoop = !empty($music['loop']);
+            $musicStartAt = (int) ($music['start_at'] ?? 0);
+        @endphp
+
+        @if ($musicVideoId)
+            {{-- Hidden YouTube iframe host (positioned off-screen but still rendered
+            so the IFrame API can control it). --}}
+            <div id="yt-player-host"
+                style="position:fixed; left:-9999px; top:-9999px; width:1px; height:1px; pointer-events:none;"
+                data-video-id="{{ $musicVideoId }}" data-autoplay="{{ $musicAutoplay ? '1' : '0' }}"
+                data-loop="{{ $musicLoop ? '1' : '0' }}" data-start-at="{{ $musicStartAt }}"></div>
+        @endif
+
+        <div class="music-bar" id="music-bar">
+            <button class="music-btn" id="music-btn" type="button" aria-label="Putar/Jeda musik">▶</button>
             <div class="music-info">
-                <p class="song">Lagu Latar Belakang</p>
-                <p class="artist">Music Player Aktif</p>
+                <p class="song">{{ $musicTitle }}</p>
+                <p class="artist">{{ $musicArtist ?: 'Music Player' }}</p>
             </div>
         </div>
     @endif
@@ -1337,8 +1355,10 @@
                 coverBtn.addEventListener('click', function () {
                     document.body.classList.add('invitation-opened');
                     window.scrollTo({ top: 0, behavior: 'instant' });
-                    var music = document.getElementById('music-btn');
-                    if (music && music.textContent === '▶') music.click();
+                    // Start the music if autoplay is enabled and the player has booted.
+                    // The click here counts as a user gesture so autoplay is allowed
+                    // by the browser even without muting.
+                    if (window.__musicAutoplayOnOpen) window.__musicAutoplayOnOpen();
                 });
             }
 
@@ -1468,13 +1488,66 @@
                 render();
             }
 
-            // ─── Music player ───
+            // ─── Music player (YouTube IFrame API) ───
+            var ytHost = document.getElementById('yt-player-host');
             var musicBtn = document.getElementById('music-btn');
-            if (musicBtn) {
+            if (ytHost && musicBtn) {
+                var videoId = ytHost.dataset.videoId;
+                var wantAutoplay = ytHost.dataset.autoplay === '1';
+                var wantLoop = ytHost.dataset.loop === '1';
+                var startAt = parseInt(ytHost.dataset.startAt || '0', 10) || 0;
+                var ytPlayer = null;
+                var ytReady = false;
+                var pendingPlay = false;
+
+                // Load the IFrame API once, then construct a player.
+                if (!window.YT || !window.YT.Player) {
+                    var tag = document.createElement('script');
+                    tag.src = 'https://www.youtube.com/iframe_api';
+                    document.head.appendChild(tag);
+                }
+
+                function createPlayer() {
+                    ytPlayer = new YT.Player('yt-player-host', {
+                        videoId: videoId,
+                        width: '1', height: '1',
+                        playerVars: {
+                            controls: 0, disablekb: 1, modestbranding: 1, rel: 0,
+                            playsinline: 1, fs: 0, iv_load_policy: 3,
+                            start: startAt,
+                            // Loop a single video requires playlist=videoId.
+                            loop: wantLoop ? 1 : 0,
+                            playlist: wantLoop ? videoId : undefined,
+                        },
+                        events: {
+                            onReady: function () {
+                                ytReady = true;
+                                if (pendingPlay) { ytPlayer.playVideo(); pendingPlay = false; }
+                            },
+                            onStateChange: function (e) {
+                                if (e.data === YT.PlayerState.PLAYING) musicBtn.textContent = '⏸';
+                                else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) musicBtn.textContent = '▶';
+                            },
+                        },
+                    });
+                }
+
+                window.onYouTubeIframeAPIReady = createPlayer;
+                // If the API already loaded (e.g. cached), bootstrap immediately.
+                if (window.YT && window.YT.Player) createPlayer();
+
                 musicBtn.addEventListener('click', function () {
-                    var playing = musicBtn.textContent === '⏸';
-                    musicBtn.textContent = playing ? '▶' : '⏸';
+                    if (!ytReady || !ytPlayer) { pendingPlay = true; return; }
+                    var state = ytPlayer.getPlayerState();
+                    if (state === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+                    else ytPlayer.playVideo();
                 });
+
+                window.__musicAutoplayOnOpen = function () {
+                    if (!wantAutoplay) return;
+                    if (ytReady && ytPlayer) ytPlayer.playVideo();
+                    else pendingPlay = true;
+                };
             }
 
             // ─── Animation pack ───

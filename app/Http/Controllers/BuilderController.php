@@ -6,12 +6,15 @@ use App\Models\Addon;
 use App\Models\AnimationPack;
 use App\Models\Invitation;
 use App\Models\Theme;
+use App\Services\MusicService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class BuilderController extends Controller
 {
+    public function __construct(private readonly MusicService $musicService) {}
+
     /**
      * GET /builder/{invitation}/edit — show the Vue builder SPA.
      */
@@ -54,6 +57,12 @@ class BuilderController extends Controller
 
         $data = $request->only($allowed);
 
+        // Normalize per-addon settings server-side so the preview can rely
+        // on clean data (e.g. YouTube video_id extracted from any URL shape).
+        if (array_key_exists('music', $data)) {
+            $data['music'] = $this->musicService->normalize($data['music']);
+        }
+
         $invitation->config()->updateOrCreate(
             ['invitation_id' => $invitation->id],
             $data,
@@ -78,6 +87,11 @@ class BuilderController extends Controller
 
         $animationKey = $invitation->config?->animationPack?->key ?? AnimationPack::KEY_FREE;
 
+        // Music settings are only meaningful when the music_player addon is enabled.
+        $music = in_array('music_player', $addonKeys, true)
+            ? ($invitation->config?->music ?? null)
+            : null;
+
         // Mock wishes (ucapan & doa restu) — preview only. Real feature comes later.
         $wishes = collect([
             ['name' => 'Andi Pratama',   'message' => 'Selamat menempuh hidup baru! Semoga menjadi keluarga sakinah, mawaddah, warahmah.', 'attending' => 'hadir',       'created_at' => now()->subHours(2)],
@@ -86,6 +100,6 @@ class BuilderController extends Controller
             ['name' => 'Dewi Lestari',   'message' => 'Selamat ya! Akhirnya hari yang ditunggu-tunggu tiba juga. \xF0\x9F\xA5\xB0',              'attending' => 'hadir',       'created_at' => now()->subDays(2)],
         ]);
 
-        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes'));
+        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes', 'music'));
     }
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useBuilderStore } from '../store';
+import MusicSettings from './addons/MusicSettings.vue';
 
 const props = defineProps({
     addons: { type: Array, required: true },
@@ -46,12 +47,23 @@ const categoryLabels = {
     utility:     'Utilitas',
     lainnya:     'Lainnya',
 };
+
+// Per-addon settings panels only render when their addon is selected.
+const hasAddonKey = (key) =>
+    props.addons
+        .filter(a => selectedIds.value.includes(a.id))
+        .some(a => a.key === key);
+
+const isMusicSelected = computed(() => hasAddonKey('music_player'));
 </script>
 
 <template>
     <div>
         <h2 class="text-sm font-semibold text-slate-900 mb-1">Pilih Fitur Tambahan</h2>
         <p class="text-xs text-slate-500 mb-3">Subtotal addon: <span class="font-semibold text-rose-600">{{ runningTotal }}</span></p>
+
+        <!-- Per-addon settings render below the picker when their addon is checked. -->
+        <MusicSettings v-if="isMusicSelected" class="mb-5" />
 
         <div v-for="(items, category) in grouped" :key="category" class="mb-5">
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">{{ categoryLabels[category] || category }}</h3>

@@ -56,7 +56,7 @@
                             <a href="{{ url('/dashboard') }}" class="text-sm font-medium text-rose-600 hover:text-rose-700 transition-colors">Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors">Masuk</a>
-                            <a href="{{ route('register') }}" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium rounded-full transition-colors shadow-sm">Daftar Gratis</a>
+                            <a href="{{ route('register') }}" class="px-4 py-2 bg-accent-500 hover:bg-accent-600 text-slate-900 text-sm font-semibold rounded-full transition-colors shadow-sm">Daftar Gratis</a>
                         @endauth
                     </div>
 
@@ -81,7 +81,7 @@
                     <a href="{{ url('/dashboard') }}" class="block text-sm font-semibold text-rose-600">Dashboard</a>
                 @else
                     <a href="{{ route('login') }}" class="block text-sm font-medium text-slate-600">Masuk</a>
-                    <a href="{{ route('register') }}" class="block w-full text-center px-4 py-2 bg-rose-600 text-white text-sm font-medium rounded-full">Daftar Gratis</a>
+                    <a href="{{ route('register') }}" class="block w-full text-center px-4 py-2 bg-accent-500 hover:bg-accent-600 text-slate-900 text-sm font-semibold rounded-full">Daftar Gratis</a>
                 @endauth
             </div>
         </header>
@@ -107,7 +107,7 @@
                         Buat undangan digital yang elegan, interaktif, dan bisa dikustomisasi sepenuhnya. Bagikan via WhatsApp dalam hitungan menit. Tanpa coding, tanpa ribet.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ route('register') }}" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-full shadow-lg shadow-rose-200 transition-all hover:shadow-xl hover:-translate-y-0.5">
+                        <a href="{{ route('register') }}" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-accent-500 hover:bg-accent-600 text-slate-900 font-bold rounded-full shadow-lg shadow-accent-200 transition-all hover:shadow-xl hover:-translate-y-0.5">
                             Buat Undangan Digital Gratis
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" /></svg>
                         </a>
@@ -247,19 +247,19 @@
                     <div class="hidden md:block absolute top-10 left-1/3 right-1/3 h-0.5 bg-rose-200"></div>
 
                     <div class="text-center relative">
-                        <div class="w-20 h-20 rounded-full bg-rose-600 text-white flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-rose-200">1</div>
+                        <div class="w-20 h-20 rounded-full bg-accent-500 text-slate-900 flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-accent-200">1</div>
                         <h3 class="font-semibold text-slate-900 text-lg mb-2">Pilih Tema</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Pilih salah satu dari tema elegan kami, lalu sesuaikan warna dan font sesuai konsep pernikahanmu.</p>
                     </div>
 
                     <div class="text-center relative">
-                        <div class="w-20 h-20 rounded-full bg-rose-600 text-white flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-rose-200">2</div>
+                        <div class="w-20 h-20 rounded-full bg-accent-500 text-slate-900 flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-accent-200">2</div>
                         <h3 class="font-semibold text-slate-900 text-lg mb-2">Isi & Kustomisasi</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Masukkan detail pernikahan, foto, lokasi, dan pilih addon yang kamu inginkan. Preview langsung tersedia.</p>
                     </div>
 
                     <div class="text-center relative">
-                        <div class="w-20 h-20 rounded-full bg-rose-600 text-white flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-rose-200">3</div>
+                        <div class="w-20 h-20 rounded-full bg-accent-500 text-slate-900 flex items-center justify-center text-2xl font-bold font-serif mx-auto mb-6 shadow-lg shadow-accent-200">3</div>
                         <h3 class="font-semibold text-slate-900 text-lg mb-2">Bayar & Bagikan</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Selesaikan pembayaran dan link undangan Anda langsung aktif. Bagikan via WhatsApp ke semua tamu.</p>
                     </div>
@@ -374,20 +374,20 @@
 
                     {{-- Popular --}}
                     <div class="bg-rose-600 rounded-2xl p-8 flex flex-col relative shadow-2xl shadow-rose-900/50 scale-105">
-                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-amber-400 text-amber-900 text-xs font-bold rounded-full">PALING POPULER</div>
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent-500 text-slate-900 text-xs font-bold rounded-full shadow-md shadow-accent-900/30">PALING POPULER</div>
                         <div>
                             <p class="text-rose-200 text-sm font-medium">Paket Lengkap</p>
                             <p class="font-serif text-4xl font-bold text-white mt-2">Rp 199rb</p>
                             <p class="text-rose-200 text-sm mt-1">semua sudah termasuk</p>
                             <hr class="border-rose-500 my-6">
                             <ul class="space-y-3 text-sm text-rose-100">
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> 1 tema pilihan</li>
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> Form RSVP + Dashboard</li>
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> Animasi GSAP (Standard)</li>
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> Link aktif 12 bulan</li>
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> Notifikasi WhatsApp</li>
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> Galeri foto</li>
-                                <li class="flex items-center gap-2"><span class="text-amber-300">✓</span> Google Maps & Countdown</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> 1 tema pilihan</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Form RSVP + Dashboard</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Animasi GSAP (Standard)</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Link aktif 12 bulan</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Notifikasi WhatsApp</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Galeri foto</li>
+                                <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Google Maps & Countdown</li>
                             </ul>
                         </div>
                         <a href="{{ route('register') }}" class="mt-8 block text-center px-6 py-3 bg-white text-rose-600 hover:bg-rose-50 font-semibold rounded-full transition-colors shadow-md">Pilih Paket Ini</a>
@@ -580,7 +580,7 @@
                                 <label class="block text-sm font-medium text-slate-700 mb-1.5">Pesan</label>
                                 <textarea rows="4" name="pesan" placeholder="Halo, saya ingin tanya tentang..." class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent transition-shadow resize-none"></textarea>
                             </div>
-                            <a href="https://wa.me/628123456789" target="_blank" class="block w-full text-center px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-full transition-colors shadow-sm">
+                            <a href="https://wa.me/628123456789" target="_blank" class="block w-full text-center px-6 py-3 bg-accent-500 hover:bg-accent-600 text-slate-900 font-bold rounded-full transition-colors shadow-sm">
                                 Kirim via WhatsApp
                             </a>
                         </form>
@@ -598,7 +598,7 @@
             <div class="max-w-3xl mx-auto px-4 text-center relative">
                 <h2 class="font-serif text-4xl font-bold text-white mb-4">Siap Membuat Undangan Impianmu?</h2>
                 <p class="text-rose-100 text-lg mb-8">Bergabung dengan ratusan pasangan yang telah mempercayakan momen spesial mereka kepada Libra Digital.</p>
-                <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-rose-600 hover:bg-rose-50 font-bold rounded-full shadow-xl transition-colors text-lg">
+                <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-8 py-4 bg-accent-500 text-slate-900 hover:bg-accent-400 font-bold rounded-full shadow-xl transition-colors text-lg">
                     Buat Undangan Sekarang — Gratis!
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" /></svg>
                 </a>

@@ -30,7 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandName('Libra Digital Admin')
             ->colors([
-                'primary' => Color::Rose,
+                'primary' => Color::hex('#1C4965'),
+                'warning' => Color::hex('#FFB904'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

@@ -94,7 +94,16 @@ const DEFAULT_CONFIG = {
             closing: null,
         },
     },
-    music: null,
+    music: {
+        provider: 'youtube',
+        url: '',
+        video_id: null,
+        title: '',
+        artist: '',
+        autoplay: true,
+        loop: true,
+        start_at: 0,
+    },
     maps: null,
 };
 
