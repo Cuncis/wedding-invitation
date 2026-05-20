@@ -10,6 +10,9 @@ use App\Services\MusicService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
 
 class BuilderController extends Controller
 {
@@ -69,6 +72,45 @@ class BuilderController extends Controller
         );
 
         return response()->json(['status' => 'saved']);
+    }
+
+    /**
+     * POST /builder/{invitation}/gallery/upload — upload and compress a gallery photo.
+     */
+    public function uploadGalleryImage(Request $request, Invitation $invitation): JsonResponse
+    {
+        try {
+            $this->authorize('update', $invitation);
+
+            $request->validate([
+                'photo' => 'required|image|max:20480', // 20MB max
+            ]);
+
+            $file = $request->file('photo');
+            $filename = Str::uuid() . '.jpg';
+            $path = 'gallery/' . $invitation->id . '/' . $filename;
+
+            // Compress image: max 1200px wide, 80% quality, output as webp
+            $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $image = $manager->decode($file->getPathname());
+            $image->orient(); // fix EXIF rotation
+            if ($image->width() > 1200) {
+                $image->resize(1200, null);
+            }
+            $encoded = $image->encode(new \Intervention\Image\Drivers\Gd\Encoders\JpegEncoder(80));
+
+            // Always use R2 for gallery uploads
+            $diskName = 'r2';
+            Storage::disk($diskName)->put($path, (string) $encoded, ['visibility' => 'public']);
+
+            // Build URL from R2_PUBLIC_URL
+            $base = rtrim(env('R2_PUBLIC_URL', ''), '/');
+            $url = $base ? $base . '/' . $path : null;
+
+            return response()->json(['url' => $url]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**

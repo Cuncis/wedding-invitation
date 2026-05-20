@@ -1169,7 +1169,11 @@
 
     {{-- ════════════════════ Section 5: Galeri ════════════════════ --}}
     @if (!empty($gallerySafe) || in_array('photo_gallery', $addonKeys))
-        @php $bg = $sectionBg('gallery'); @endphp
+        @php
+            $bg = $sectionBg('gallery');
+            $galleryColumns = $gallery['columns'] ?? 3;
+            $galleryLightbox = $gallery['lightbox'] ?? true;
+        @endphp
         <section class="section anim {{ $bg ? 'has-bg' : '' }}"
             style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
             @if ($bg)
@@ -1177,7 +1181,8 @@
             <div class="section-inner">
                 <p class="subtitle">Our Moments</p>
                 <h2>Galeri Foto</h2>
-                <div class="gallery-grid" id="gallery-grid">
+                <div class="gallery-grid" id="gallery-grid" @if($galleryLightbox) data-lightbox="true" @endif
+                    style="grid-template-columns: repeat({{ $galleryColumns }}, 1fr);">
                     @if (!empty($gallerySafe))
                         @foreach ($gallerySafe as $photo)
                             <div class="cell" data-src="{{ $photo }}">

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useBuilderStore } from './store';
 import ThemePicker from './components/ThemePicker.vue';
 import AddonPanel from './components/AddonPanel.vue';
@@ -27,6 +27,19 @@ const props = defineProps({
 
 const store = useBuilderStore();
 
+const invitationTitle = computed(() => {
+    const groom = props.invitation.groom_name;
+    const bride = props.invitation.bride_name;
+    if (groom && bride) return `${groom} & ${bride}`;
+    if (groom) return `${groom} & Pasangan`;
+    if (bride) return `Pasangan & ${bride}`;
+    return 'Undangan Baru';
+});
+
+onMounted(() => {
+    document.title = `Builder - ${invitationTitle.value}`;
+});
+
 const tabs = [
     { key: 'theme',     label: 'Tema',    icon: 'theme' },
     { key: 'content',   label: 'Konten',  icon: 'content' },
@@ -53,7 +66,7 @@ const saveStatus = computed(() => {
                 <a href="/dashboard" class="text-slate-500 hover:text-slate-700">←</a>
                 <div>
                     <h1 class="text-base font-semibold text-slate-900">
-                        {{ invitation.groom_name || '???' }} &amp; {{ invitation.bride_name || '???' }}
+                        {{ invitationTitle }}
                     </h1>
                     <p :class="['text-xs', saveStatus.color]">{{ saveStatus.label }}</p>
                 </div>

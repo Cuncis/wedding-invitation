@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useBuilderStore } from '../store';
 import MusicSettings from './addons/MusicSettings.vue';
+import GallerySettings from './addons/GallerySettings.vue';
 
 const props = defineProps({
     addons: { type: Array, required: true },
@@ -55,6 +56,7 @@ const hasAddonKey = (key) =>
         .some(a => a.key === key);
 
 const isMusicSelected = computed(() => hasAddonKey('music_player'));
+const isGallerySelected = computed(() => hasAddonKey('photo_gallery'));
 </script>
 
 <template>
@@ -64,6 +66,7 @@ const isMusicSelected = computed(() => hasAddonKey('music_player'));
 
         <!-- Per-addon settings render below the picker when their addon is checked. -->
         <MusicSettings v-if="isMusicSelected" class="mb-5" />
+        <GallerySettings v-if="isGallerySelected" class="mb-5" />
 
         <div v-for="(items, category) in grouped" :key="category" class="mb-5">
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">{{ categoryLabels[category] || category }}</h3>

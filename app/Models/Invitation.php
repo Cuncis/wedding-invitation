@@ -57,7 +57,20 @@ class Invitation extends Model
 
     public function coupleNames(): string
     {
-        return trim($this->groom_name . ' & ' . $this->bride_name);
+        $groom = $this->groom_name;
+        $bride = $this->bride_name;
+
+        if ($groom && $bride) {
+            return trim($groom . ' & ' . $bride);
+        }
+        if ($groom) {
+            return trim($groom) . ' & Pasangan';
+        }
+        if ($bride) {
+            return 'Pasangan & ' . trim($bride);
+        }
+
+        return 'Undangan Baru';
     }
 
     public function user(): BelongsTo
