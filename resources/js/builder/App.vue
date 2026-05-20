@@ -9,6 +9,12 @@ import ColorPicker from './components/ColorPicker.vue';
 import TypographyPicker from './components/TypographyPicker.vue';
 import PriceBreakdown from './components/PriceBreakdown.vue';
 import PreviewFrame from './components/PreviewFrame.vue';
+import IconArt from './components/icons/IconArt.vue';
+import IconDocument from './components/icons/IconDocument.vue';
+import IconFont from './components/icons/IconFont.vue';
+import IconMagicWand from './components/icons/IconMagicWand.vue';
+import IconPuzzlePiece from './components/icons/IconPuzzlePiece.vue';
+import IconWaterDrop from './components/icons/IconWaterDrop.vue';
 
 const props = defineProps({
     invitation:     { type: Object, required: true },
@@ -22,12 +28,12 @@ const props = defineProps({
 const store = useBuilderStore();
 
 const tabs = [
-    { key: 'theme',     label: 'Tema',    icon: '🎨' },
-    { key: 'content',   label: 'Konten',  icon: '✍️' },
-    { key: 'addon',     label: 'Fitur',   icon: '✨' },
-    { key: 'animation', label: 'Animasi', icon: '🎬' },
-    { key: 'colors',    label: 'Warna',   icon: '🌈' },
-    { key: 'fonts',     label: 'Font',    icon: '🔤' },
+    { key: 'theme',     label: 'Tema',    icon: 'theme' },
+    { key: 'content',   label: 'Konten',  icon: 'content' },
+    { key: 'addon',     label: 'Fitur',   icon: 'addon' },
+    { key: 'animation', label: 'Animasi', icon: 'animation' },
+    { key: 'colors',    label: 'Warna',   icon: 'colors' },
+    { key: 'fonts',     label: 'Font',    icon: 'fonts' },
 ];
 const activeTab = ref('theme');
 
@@ -72,12 +78,19 @@ const saveStatus = computed(() => {
                     <button v-for="tab in tabs" :key="tab.key"
                         @click="activeTab = tab.key"
                         :class="[
-                            'flex-1 min-w-[80px] px-3 py-3 text-xs font-medium transition border-b-2',
+                            'flex flex-col items-center justify-center flex-1 min-w-[80px] px-3 py-3 text-xs font-medium transition border-b-2 gap-1',
                             activeTab === tab.key
                                 ? 'border-rose-500 text-rose-600 bg-rose-50/50'
                                 : 'border-transparent text-slate-500 hover:text-slate-800',
                         ]">
-                        <div class="text-lg">{{ tab.icon }}</div>
+                        <span class="w-6 h-6 block">
+                            <IconArt          v-if="tab.key === 'theme'"     class="w-full h-full" />
+                            <IconDocument     v-if="tab.key === 'content'"   class="w-full h-full" />
+                            <IconPuzzlePiece  v-if="tab.key === 'addon'"     class="w-full h-full" />
+                            <IconMagicWand    v-if="tab.key === 'animation'" class="w-full h-full" />
+                            <IconWaterDrop    v-if="tab.key === 'colors'"    class="w-full h-full" />
+                            <IconFont         v-if="tab.key === 'fonts'"     class="w-full h-full" />
+                        </span>
                         {{ tab.label }}
                     </button>
                 </nav>
