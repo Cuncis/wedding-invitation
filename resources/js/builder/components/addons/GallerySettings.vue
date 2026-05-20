@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useBuilderStore } from '../../store';
+import IconGallery from '../icons/IconGallery.vue';
 
 const store = useBuilderStore();
 
@@ -98,7 +99,7 @@ function onFileInput(e) {
 <template>
     <div class="mt-4 p-4 rounded-lg border-2 border-accent-300 bg-accent-50/40">
         <div class="flex items-center gap-2 mb-3">
-            <span class="text-lg">🖼️</span>
+            <IconGallery class="w-5 h-5 text-rose-500" />
             <h3 class="text-sm font-bold text-slate-900">Pengaturan Galeri Foto</h3>
         </div>
         <p class="text-xs text-slate-600 mb-4">
@@ -159,10 +160,10 @@ function onFileInput(e) {
         <!-- Photo thumbnails -->
         <div v-if="photos.length > 0" class="mt-3 grid grid-cols-4 gap-2">
             <div v-for="(url, i) in photos" :key="i" class="relative group">
-                <img :src="url" class="w-full h-16 object-cover rounded border border-slate-200">
+                <img :src="url" class="w-full h-auto block rounded border border-slate-200">
                 <button
                     @click="removePhoto(i)"
-                    class="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition">
+                    class="absolute top-0 right-0 w-5 h-5 bg-rose-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition">
                     ×
                 </button>
             </div>

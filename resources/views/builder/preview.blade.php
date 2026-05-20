@@ -518,7 +518,7 @@
         }
 
         .gallery-grid .cell {
-            aspect-ratio: 1;
+            height: 200px;
             border-radius: 0.5rem;
             overflow: hidden;
             background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
@@ -530,6 +530,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
+            display: block;
             transition: transform 0.4s;
         }
 

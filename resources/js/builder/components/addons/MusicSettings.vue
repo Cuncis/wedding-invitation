@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useBuilderStore } from '../../store';
+import IconMusic from '../icons/IconMusic.vue';
 
 const store = useBuilderStore();
 
@@ -55,7 +56,7 @@ const urlStatus = computed(() => {
 <template>
     <div class="mt-4 p-4 rounded-lg border-2 border-accent-300 bg-accent-50/40">
         <div class="flex items-center gap-2 mb-3">
-            <span class="text-lg">🎵</span>
+            <IconMusic class="w-5 h-5 text-rose-500" />
             <h3 class="text-sm font-bold text-slate-900">Pengaturan Music Player</h3>
         </div>
         <p class="text-xs text-slate-600 mb-4">
