@@ -104,7 +104,11 @@ const DEFAULT_CONFIG = {
         loop: true,
         start_at: 0,
     },
-    maps: null,
+    maps: {
+        address: '',
+        embed_url: '',
+        show_marker: true,
+    },
 };
 
 export const useBuilderStore = defineStore('builder', () => {

@@ -1169,6 +1169,50 @@
         </div>
     </section>
 
+    {{-- ════════════════════ Section 4b: Maps ════════════════════ --}}
+    @php
+        $mapsEmbedUrl = null;
+        if ($mapsConfig) {
+            $mapsAddress = $mapsConfig['address'] ?? null;
+            $mapsRawUrl = $mapsConfig['embed_url'] ?? null;
+            if ($mapsAddress) {
+                $mapsEmbedUrl = 'https://maps.google.com/maps?q=' . urlencode($mapsAddress) . '&t=&z=17&ie=UTF8&iwloc=&output=embed';
+            } elseif ($mapsRawUrl) {
+                if (str_contains($mapsRawUrl, 'maps.google.com/maps?q=') || str_contains($mapsRawUrl, 'maps.google.com/embed?')) {
+                    $mapsEmbedUrl = $mapsRawUrl;
+                } else {
+                    $mapsEmbedUrl = 'https://maps.google.com/maps?q=' . urlencode($mapsRawUrl) . '&t=&z=17&ie=UTF8&iwloc=&output=embed';
+                }
+            }
+        }
+    @endphp
+    @if ($mapsEmbedUrl)
+        @php $bg = $sectionBg('maps'); @endphp
+        <section class="section anim {{ $bg ? 'has-bg' : '' }}"
+            style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
+            @if ($bg)
+            <div class="overlay"></div> @endif
+            <div class="section-inner">
+                <p class="subtitle">Location</p>
+                <h2>Peta Lokasi</h2>
+                @if (!empty($mapsConfig['address']))
+                    <p class="text-center text-white/80 mb-4">{{ $mapsConfig['address'] }}</p>
+                @endif
+                <div class="map-embed">
+                    <iframe
+                        src="{{ $mapsEmbedUrl }}"
+                        width="100%"
+                        height="350"
+                        style="border:0; border-radius: 0.5rem;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- ════════════════════ Section 5: Galeri ════════════════════ --}}
     @if (!empty($gallerySafe) || in_array('photo_gallery', $addonKeys))
         @php

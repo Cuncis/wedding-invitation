@@ -142,6 +142,16 @@ class BuilderController extends Controller
             ['name' => 'Dewi Lestari',   'message' => 'Selamat ya! Akhirnya hari yang ditunggu-tunggu tiba juga. \xF0\x9F\xA5\xB0',              'attending' => 'hadir',       'created_at' => now()->subDays(2)],
         ]);
 
-        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes', 'music'));
+        // Maps settings are only meaningful when the maps addon is enabled.
+        $mapsAddon = Addon::where('key', 'maps')->first();
+        $mapsConfig = null;
+        if ($mapsAddon) {
+            $addonIds = $invitation->config?->addon_ids ?? [];
+            if (in_array($mapsAddon->id, $addonIds, true)) {
+                $mapsConfig = $invitation->config?->maps ?? null;
+            }
+        }
+
+        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes', 'music', 'mapsConfig'));
     }
 }
