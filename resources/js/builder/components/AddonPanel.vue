@@ -4,6 +4,7 @@ import { useBuilderStore } from '../store';
 import MusicSettings from './addons/MusicSettings.vue';
 import GallerySettings from './addons/GallerySettings.vue';
 import MapsSettings from './addons/MapsSettings.vue';
+import CountdownSettings from './addons/CountdownSettings.vue';
 
 const props = defineProps({
     addons: { type: Array, required: true },
@@ -59,6 +60,7 @@ const hasAddonKey = (key) =>
 const isMusicSelected = computed(() => hasAddonKey('music_player'));
 const isGallerySelected = computed(() => hasAddonKey('photo_gallery'));
 const isMapsSelected = computed(() => hasAddonKey('maps'));
+const isCountdownSelected = computed(() => hasAddonKey('countdown'));
 </script>
 
 <template>
@@ -70,6 +72,7 @@ const isMapsSelected = computed(() => hasAddonKey('maps'));
         <MusicSettings v-if="isMusicSelected" class="mb-5" />
         <GallerySettings v-if="isGallerySelected" class="mb-5" />
         <MapsSettings v-if="isMapsSelected" class="mb-5" />
+        <CountdownSettings v-if="isCountdownSelected" class="mb-5" />
 
         <div v-for="(items, category) in grouped" :key="category" class="mb-5">
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">{{ categoryLabels[category] || category }}</h3>

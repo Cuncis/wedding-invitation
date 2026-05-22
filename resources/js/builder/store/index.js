@@ -109,6 +109,11 @@ const DEFAULT_CONFIG = {
         embed_url: '',
         show_marker: true,
     },
+    countdown: {
+        target_date: '',
+        label: 'Menuju Hari Bahagia',
+        enabled: true,
+    },
 };
 
 export const useBuilderStore = defineStore('builder', () => {

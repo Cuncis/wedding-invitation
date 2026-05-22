@@ -1169,6 +1169,23 @@
         </div>
     </section>
 
+    {{-- ════════════════════ Countdown Timer Addon ════════════════════ --}}
+    @if ($countdownConfig && ($countdownConfig['enabled'] ?? true) && !empty($countdownConfig['target_date']))
+        <section class="section anim" style="background: var(--color-primary); padding: 3rem 1.5rem;">
+            <div class="section-inner">
+                @if (!empty($countdownConfig['label']))
+                    <p class="text-sm uppercase tracking-widest text-white/70 mb-4" style="letter-spacing: 0.15em;">{{ $countdownConfig['label'] }}</p>
+                @endif
+                <div class="countdown" data-target="{{ $countdownConfig['target_date'] }}" data-label="{{ $countdownConfig['label'] ?? '' }}">
+                    <div class="cd-box"><span class="num" data-cd="d">00</span><small>Hari</small></div>
+                    <div class="cd-box"><span class="num" data-cd="h">00</span><small>Jam</small></div>
+                    <div class="cd-box"><span class="num" data-cd="m">00</span><small>Menit</small></div>
+                    <div class="cd-box"><span class="num" data-cd="s">00</span><small>Detik</small></div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- ════════════════════ Section 4b: Maps ════════════════════ --}}
     @php
         $mapsEmbedUrl = null;
@@ -1196,14 +1213,16 @@
                 <p class="subtitle">Location</p>
                 <h2>Peta Lokasi</h2>
                 @if (!empty($mapsConfig['address']))
-                    <p class="text-center text-white/80 mb-4">{{ $mapsConfig['address'] }}</p>
+                    <div style="margin: 1.5rem 0 2rem;">
+                        <p class="text-sm" style="color: #163A51; font-style: italic; letter-spacing: 0.03em;">{{ $mapsConfig['address'] }}</p>
+                    </div>
                 @endif
                 <div class="map-embed">
                     <iframe
                         src="{{ $mapsEmbedUrl }}"
                         width="100%"
                         height="350"
-                        style="border:0; border-radius: 0.5rem;"
+                        style="border:0; border-radius: 0.5rem; display: block;"
                         allowfullscreen=""
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">

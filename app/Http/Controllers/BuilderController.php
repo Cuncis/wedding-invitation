@@ -56,6 +56,7 @@ class BuilderController extends Controller
             'content',
             'music',
             'maps',
+            'countdown',
         ];
 
         $data = $request->only($allowed);
@@ -152,6 +153,16 @@ class BuilderController extends Controller
             }
         }
 
-        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes', 'music', 'mapsConfig'));
+        // Countdown settings are only meaningful when the countdown_timer addon is enabled.
+        $countdownAddon = Addon::where('key', 'countdown')->first();
+        $countdownConfig = null;
+        if ($countdownAddon) {
+            $addonIds = $invitation->config?->addon_ids ?? [];
+            if (in_array($countdownAddon->id, $addonIds, true)) {
+                $countdownConfig = $invitation->config?->countdown ?? null;
+            }
+        }
+
+        return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes', 'music', 'mapsConfig', 'countdownConfig'));
     }
 }

@@ -30,6 +30,7 @@ class InvitationConfig extends Model
             'addon_ids' => 'array',
             'music' => 'array',
             'maps' => 'array',
+            'countdown' => 'array',
         ];
     }
 
