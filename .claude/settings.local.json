@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan *)",
+      "Bash(composer show *)",
+      "Bash(composer require *)",
+      "Bash(grep -n 'maps.*addon\\\\|maps.*section\\\\|$maps\\\\b' /home/cuncis/laravel-project/wedding-invitation/resources/views/builder/preview.blade.php)"
+    ]
+  }
+}
