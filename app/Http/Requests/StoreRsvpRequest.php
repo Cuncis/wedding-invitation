@@ -17,7 +17,7 @@ class StoreRsvpRequest extends FormRequest
             'guest_name' => ['required', 'string', 'max:100'],
             'guest_phone' => ['nullable', 'string', 'max:20'],
             'attendance' => ['required', 'in:hadir,tidak_hadir,mungkin'],
-            'pax' => ['integer', 'min:1', 'max:10'],
+            'pax' => ['nullable', 'integer', 'min:1', 'max:10'],
             'message' => ['nullable', 'string', 'max:500'],
         ];
     }

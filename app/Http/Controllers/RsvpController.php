@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRsvpRequest;
 use App\Jobs\SendRsvpNotification;
 use App\Models\Invitation;
-use App\Models\RsvpResponse;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -36,12 +34,22 @@ class RsvpController extends Controller
 
         $responses = $invitation->rsvpResponses()->latest()->paginate(25);
 
+        $agg = $invitation->rsvpResponses()
+            ->selectRaw("
+                COUNT(*) as total,
+                SUM(attendance = 'hadir') as hadir,
+                SUM(attendance = 'tidak_hadir') as tidak_hadir,
+                SUM(attendance = 'mungkin') as mungkin,
+                SUM(CASE WHEN attendance = 'hadir' THEN pax ELSE 0 END) as total_pax
+            ")
+            ->first();
+
         $stats = [
-            'total' => $invitation->rsvpResponses()->count(),
-            'hadir' => $invitation->rsvpResponses()->where('attendance', 'hadir')->count(),
-            'tidak_hadir' => $invitation->rsvpResponses()->where('attendance', 'tidak_hadir')->count(),
-            'mungkin' => $invitation->rsvpResponses()->where('attendance', 'mungkin')->count(),
-            'total_pax' => (int) $invitation->rsvpResponses()->where('attendance', 'hadir')->sum('pax'),
+            'total' => (int) $agg->total,
+            'hadir' => (int) $agg->hadir,
+            'tidak_hadir' => (int) $agg->tidak_hadir,
+            'mungkin' => (int) $agg->mungkin,
+            'total_pax' => (int) $agg->total_pax,
         ];
 
         return view('rsvp.dashboard', compact('invitation', 'responses', 'stats'));
@@ -56,7 +64,7 @@ class RsvpController extends Controller
 
         $responses = $invitation->rsvpResponses()->latest()->get();
 
-        $filename = 'rsvp-' . $invitation->slug . '-' . now()->format('Ymd') . '.csv';
+        $filename = 'rsvp-'.$invitation->slug.'-'.now()->format('Ymd').'.csv';
 
         $headers = [
             'Content-Type' => 'text/csv',

@@ -10,9 +10,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     use HasFactory;
+
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_PAID = 'paid';
+
     public const STATUS_FAILED = 'failed';
+
     public const STATUS_REFUNDED = 'refunded';
 
     protected $fillable = [
@@ -42,9 +46,7 @@ class Order extends Model
 
     public static function generateNumber(): string
     {
-        $count = static::count() + 1;
-
-        return 'UND-' . date('Y') . '-' . str_pad((string) $count, 5, '0', STR_PAD_LEFT);
+        return 'UND-'.date('Ymd').'-'.strtoupper(substr(uniqid('', true), -6));
     }
 
     public function isPaid(): bool

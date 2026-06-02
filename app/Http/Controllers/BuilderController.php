@@ -10,8 +10,11 @@ use App\Services\MusicService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Gd\Encoders\JpegEncoder;
 use Intervention\Image\ImageManager;
 
 class BuilderController extends Controller
@@ -27,8 +30,8 @@ class BuilderController extends Controller
 
         $invitation->loadMissing('config');
 
-        $themes         = Theme::active()->orderBy('sort_order')->get();
-        $addons         = Addon::active()->orderBy('sort_order')->get();
+        $themes = Theme::active()->orderBy('sort_order')->get();
+        $addons = Addon::active()->orderBy('sort_order')->get();
         $animationPacks = AnimationPack::active()->get();
 
         return view('builder.edit', compact(
@@ -88,29 +91,30 @@ class BuilderController extends Controller
             ]);
 
             $file = $request->file('photo');
-            $filename = Str::uuid() . '.jpg';
-            $path = 'gallery/' . $invitation->id . '/' . $filename;
+            $filename = Str::uuid().'.jpg';
+            $path = 'gallery/'.$invitation->id.'/'.$filename;
 
             // Compress image: max 1200px wide, 80% quality, output as webp
-            $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $manager = new ImageManager(new Driver);
             $image = $manager->decode($file->getPathname());
             $image->orient(); // fix EXIF rotation
             if ($image->width() > 1200) {
                 $image->resize(1200, null);
             }
-            $encoded = $image->encode(new \Intervention\Image\Drivers\Gd\Encoders\JpegEncoder(80));
+            $encoded = $image->encode(new JpegEncoder(80));
 
             // Always use R2 for gallery uploads
             $diskName = 'r2';
             Storage::disk($diskName)->put($path, (string) $encoded, ['visibility' => 'public']);
 
-            // Build URL from R2_PUBLIC_URL
-            $base = rtrim(env('R2_PUBLIC_URL', ''), '/');
-            $url = $base ? $base . '/' . $path : null;
+            $base = rtrim(config('services.r2.public_url', ''), '/');
+            $url = $base ? $base.'/'.$path : null;
 
             return response()->json(['url' => $url]);
         } catch (\Throwable $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Gallery upload failed', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+
+            return response()->json(['error' => 'Upload gagal. Silakan coba lagi.'], 500);
         }
     }
 
@@ -123,7 +127,7 @@ class BuilderController extends Controller
 
         $invitation->loadMissing('config.theme', 'config.animationPack');
 
-        $addonIds  = $invitation->config?->addon_ids ?? [];
+        $addonIds = $invitation->config?->addon_ids ?? [];
         $addonKeys = $addonIds
             ? Addon::active()->whereIn('id', $addonIds)->pluck('key')->toArray()
             : [];
@@ -143,25 +147,17 @@ class BuilderController extends Controller
             ['name' => 'Dewi Lestari',   'message' => 'Selamat ya! Akhirnya hari yang ditunggu-tunggu tiba juga. \xF0\x9F\xA5\xB0',              'attending' => 'hadir',       'created_at' => now()->subDays(2)],
         ]);
 
-        // Maps settings are only meaningful when the maps addon is enabled.
-        $mapsAddon = Addon::where('key', 'maps')->first();
-        $mapsConfig = null;
-        if ($mapsAddon) {
-            $addonIds = $invitation->config?->addon_ids ?? [];
-            if (in_array($mapsAddon->id, $addonIds, true)) {
-                $mapsConfig = $invitation->config?->maps ?? null;
-            }
-        }
+        $optionalAddons = Addon::whereIn('key', ['maps', 'countdown'])
+            ->get()
+            ->keyBy('key');
 
-        // Countdown settings are only meaningful when the countdown_timer addon is enabled.
-        $countdownAddon = Addon::where('key', 'countdown')->first();
-        $countdownConfig = null;
-        if ($countdownAddon) {
-            $addonIds = $invitation->config?->addon_ids ?? [];
-            if (in_array($countdownAddon->id, $addonIds, true)) {
-                $countdownConfig = $invitation->config?->countdown ?? null;
-            }
-        }
+        $mapsConfig = (($a = $optionalAddons->get('maps')) && in_array($a->id, $addonIds, true))
+            ? ($invitation->config?->maps ?? null)
+            : null;
+
+        $countdownConfig = (($a = $optionalAddons->get('countdown')) && in_array($a->id, $addonIds, true))
+            ? ($invitation->config?->countdown ?? null)
+            : null;
 
         return view('builder.preview', compact('invitation', 'addonKeys', 'animationKey', 'wishes', 'music', 'mapsConfig', 'countdownConfig'));
     }

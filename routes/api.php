@@ -15,7 +15,6 @@ use App\Http\Controllers\PublicInvitationController;
 use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\ThemeSwitcherController;
 use App\Http\Controllers\WebhookController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('throttle:api')->group(function (): void {
@@ -28,7 +27,8 @@ Route::middleware('throttle:api')->group(function (): void {
     Route::get('/pricing', PricingController::class);
 });
 
-Route::post('/webhooks/midtrans', WebhookController::class);
+Route::post('/webhooks/midtrans', WebhookController::class)
+    ->middleware('throttle:60,1');
 
 Route::post('/invitations/{invitation}/rsvp', [RsvpController::class, 'store'])
     ->middleware('throttle:rsvp');
@@ -46,7 +46,3 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::apiResource('orders', OrderController::class);
     Route::post('/orders/{order}/payments', [PaymentController::class, 'create']);
 });
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');

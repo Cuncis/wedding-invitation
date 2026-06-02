@@ -39,9 +39,9 @@ class DashboardController extends Controller
             ->with('success', 'Undangan draft berhasil dibuat. Silakan lengkapi datanya.');
     }
 
-    public function destroy(Request $request, Invitation $invitation): RedirectResponse
+    public function destroy(Invitation $invitation): RedirectResponse
     {
-        abort_unless($invitation->user_id === $request->user()->id, 403);
+        $this->authorize('delete', $invitation);
 
         if ($invitation->status === Invitation::STATUS_ACTIVE) {
             return redirect()->route('dashboard')

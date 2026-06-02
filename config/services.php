@@ -39,4 +39,8 @@ return [
         'token' => env('FONNTE_TOKEN'),
     ],
 
+    'r2' => [
+        'public_url' => env('R2_PUBLIC_URL', ''),
+    ],
+
 ];

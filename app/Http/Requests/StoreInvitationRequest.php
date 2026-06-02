@@ -16,7 +16,6 @@ class StoreInvitationRequest extends FormRequest
     {
         return [
             'theme_id' => ['nullable', 'integer', 'exists:themes,id'],
-            'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('invitations', 'slug')->ignore($this->route('invitation'))],
             'groom_name' => ['required', 'string', 'max:255'],
             'bride_name' => ['required', 'string', 'max:255'],

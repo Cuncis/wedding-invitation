@@ -18,6 +18,7 @@ class InvitationConfig extends Model
         'addon_ids',
         'music',
         'maps',
+        'countdown',
     ];
 
     protected function casts(): array
