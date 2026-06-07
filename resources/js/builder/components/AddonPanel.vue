@@ -1,13 +1,6 @@
 <script setup>
 import { computed } from 'vue';
 import { useBuilderStore } from '../store';
-import MusicSettings from './addons/MusicSettings.vue';
-import GallerySettings from './addons/GallerySettings.vue';
-import MapsSettings from './addons/MapsSettings.vue';
-import CountdownSettings from './addons/CountdownSettings.vue';
-import GiftSettings from './addons/GiftSettings.vue';
-import LoveStorySettings from './addons/LoveStorySettings.vue';
-import LiveStreamSettings from './addons/LiveStreamSettings.vue';
 
 const props = defineProps({
     addons: { type: Array, required: true },
@@ -54,19 +47,6 @@ const categoryLabels = {
     lainnya:     'Lainnya',
 };
 
-// Per-addon settings panels only render when their addon is selected.
-const hasAddonKey = (key) =>
-    props.addons
-        .filter(a => selectedIds.value.includes(a.id))
-        .some(a => a.key === key);
-
-const isMusicSelected    = computed(() => hasAddonKey('music_player'));
-const isGallerySelected  = computed(() => hasAddonKey('photo_gallery'));
-const isMapsSelected     = computed(() => hasAddonKey('maps'));
-const isCountdownSelected = computed(() => hasAddonKey('countdown'));
-const isGiftSelected      = computed(() => hasAddonKey('digital_gift'));
-const isLoveStorySelected  = computed(() => hasAddonKey('love_story'));
-const isLiveStreamSelected = computed(() => hasAddonKey('live_stream'));
 </script>
 
 <template>
@@ -110,25 +90,12 @@ const isLiveStreamSelected = computed(() => hasAddonKey('live_stream'));
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
                             </svg>
-                            Aktif · pengaturan di bawah
+                            Aktif · lihat pengaturan di kanan
                         </span>
                     </div>
                 </label>
             </div>
         </div>
 
-        <!-- ── Settings panels (shown only when an addon with settings is selected) ── -->
-        <template v-if="isMusicSelected || isGallerySelected || isMapsSelected || isCountdownSelected || isGiftSelected || isLoveStorySelected || isLiveStreamSelected">
-            <div class="divider text-xs text-base-content/40 my-2">Pengaturan Fitur Aktif</div>
-            <div class="space-y-4">
-                <MusicSettings      v-if="isMusicSelected" />
-                <GallerySettings    v-if="isGallerySelected" />
-                <MapsSettings       v-if="isMapsSelected" />
-                <CountdownSettings  v-if="isCountdownSelected" />
-                <GiftSettings       v-if="isGiftSelected" />
-                <LoveStorySettings  v-if="isLoveStorySelected" />
-                <LiveStreamSettings v-if="isLiveStreamSelected" />
-            </div>
-        </template>
     </div>
 </template>

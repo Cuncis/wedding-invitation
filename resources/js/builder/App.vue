@@ -8,6 +8,7 @@ import SectionEditor from './components/SectionEditor.vue';
 import ColorPicker from './components/ColorPicker.vue';
 import TypographyPicker from './components/TypographyPicker.vue';
 import PriceBreakdown from './components/PriceBreakdown.vue';
+import AddonSettingsPanel from './components/AddonSettingsPanel.vue';
 import PreviewFrame from './components/PreviewFrame.vue';
 import IconArt from './components/icons/IconArt.vue';
 import IconDocument from './components/icons/IconDocument.vue';
@@ -49,6 +50,16 @@ const tabs = [
     { key: 'fonts',     label: 'Font',    icon: 'fonts' },
 ];
 const activeTab = ref('theme');
+
+const SETTINGS_KEYS = ['music_player', 'photo_gallery', 'maps', 'countdown', 'digital_gift', 'love_story', 'live_stream'];
+
+const hasAddonSettings = computed(() => {
+    if (activeTab.value !== 'addon') return false;
+    const selectedIds = store.config.addon_ids ?? [];
+    return props.addons
+        .filter(a => selectedIds.includes(a.id))
+        .some(a => SETTINGS_KEYS.includes(a.key));
+});
 
 const saveStatus = computed(() => {
     if (store.isSaving) return { label: 'Menyimpan...', color: 'text-amber-600' };
@@ -134,9 +145,15 @@ const saveStatus = computed(() => {
                 <PreviewFrame :src="previewUrl" :reload-key="store.previewKey" />
             </main>
 
-            <!-- Right: pricing -->
-            <aside class="col-span-3 bg-white border-l border-slate-200 overflow-y-auto">
-                <PriceBreakdown :checkout-url="checkoutUrl" />
+            <!-- Right: addon settings OR pricing -->
+            <aside class="col-span-3 bg-white border-l border-slate-200 flex flex-col min-h-0">
+                <AddonSettingsPanel
+                    v-if="hasAddonSettings"
+                    :addons="addons"
+                    :checkout-url="checkoutUrl" />
+                <div v-else class="flex-1 overflow-y-auto">
+                    <PriceBreakdown :checkout-url="checkoutUrl" />
+                </div>
             </aside>
         </div>
     </div>
