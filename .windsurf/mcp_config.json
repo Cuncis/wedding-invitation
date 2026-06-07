@@ -1,0 +1,14 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "wsl",
+            "args": [
+                "-d",
+                "Ubuntu-24.04",
+                "bash",
+                "-c",
+                "cd /home/cuncis/laravel-project/wedding-invitation && php artisan boost:mcp"
+            ]
+        }
+    }
+}
