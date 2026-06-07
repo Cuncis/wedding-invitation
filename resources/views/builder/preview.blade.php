@@ -699,6 +699,249 @@
             background: #10b981;
         }
 
+        /* ─── E-Wallet list ─── */
+        .ewallet-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .ewallet-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            text-align: left;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--color-text);
+        }
+
+        .ewallet-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+
+        .ewallet-icon.gopay {
+            background: #00aed6;
+            color: #fff;
+        }
+
+        .ewallet-icon.dana {
+            background: #118eea;
+            color: #fff;
+        }
+
+        .ewallet-icon.ovo {
+            background: #4c3494;
+            color: #fff;
+        }
+
+        .ewallet-icon.shopeepay {
+            background: #f7441e;
+            color: #fff;
+        }
+
+        .ewallet-icon.linkaja {
+            background: #e82529;
+            color: #fff;
+        }
+
+        .ewallet-icon.qris {
+            background: #cc2128;
+            color: #fff;
+        }
+
+        .gift-section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin: 1.75rem 0 0.5rem;
+        }
+
+        /* ─── Live Streaming ─── */
+        .livestream-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            color: var(--color-text);
+        }
+
+        .livestream-embed {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #000;
+        }
+
+        .livestream-embed iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .livestream-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .livestream-body .ls-desc {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .livestream-schedule {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-secondary);
+            color: var(--color-accent);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            margin-bottom: 1.25rem;
+        }
+
+        .ls-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.8rem 2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            transition: opacity 0.2s;
+        }
+
+        .ls-btn:hover { opacity: 0.9; }
+
+        /* ─── Love Story Timeline ─── */
+        .timeline {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-item:nth-child(odd) .tl-card {
+            text-align: right;
+        }
+
+        .tl-dot {
+            position: absolute;
+            left: 50%;
+            top: 1.25rem;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            border: 3px solid var(--color-secondary);
+            box-shadow: 0 0 0 2px var(--color-primary);
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .tl-card {
+            width: calc(50% - 2rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+            color: var(--color-text);
+        }
+
+        .tl-date {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+
+        .tl-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .tl-desc {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .tl-photo {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tl-intro {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .timeline::before { left: 20px; }
+            .timeline-item,
+            .timeline-item:nth-child(odd) { flex-direction: column; padding-left: 3rem; }
+            .timeline-item:nth-child(odd) .tl-card { text-align: left; }
+            .tl-dot { left: 20px; }
+            .tl-card { width: 100%; }
+        }
+
         /* ─── Section 7 Wishes ─── */
         .wish-form {
             background: rgba(255, 255, 255, 0.95);
@@ -1174,9 +1417,11 @@
         <section class="section anim" style="background: var(--color-primary); padding: 3rem 1.5rem;">
             <div class="section-inner">
                 @if (!empty($countdownConfig['label']))
-                    <p class="text-sm uppercase tracking-widest text-white/70 mb-4" style="letter-spacing: 0.15em;">{{ $countdownConfig['label'] }}</p>
+                    <p class="text-sm uppercase tracking-widest text-white/70 mb-4" style="letter-spacing: 0.15em;">
+                        {{ $countdownConfig['label'] }}</p>
                 @endif
-                <div class="countdown" data-target="{{ $countdownConfig['target_date'] }}" data-label="{{ $countdownConfig['label'] ?? '' }}">
+                <div class="countdown" data-target="{{ $countdownConfig['target_date'] }}"
+                    data-label="{{ $countdownConfig['label'] ?? '' }}">
                     <div class="cd-box"><span class="num" data-cd="d">00</span><small>Hari</small></div>
                     <div class="cd-box"><span class="num" data-cd="h">00</span><small>Jam</small></div>
                     <div class="cd-box"><span class="num" data-cd="m">00</span><small>Menit</small></div>
@@ -1214,17 +1459,13 @@
                 <h2>Peta Lokasi</h2>
                 @if (!empty($mapsConfig['address']))
                     <div style="margin: 1.5rem 0 2rem;">
-                        <p class="text-sm" style="color: #163A51; font-style: italic; letter-spacing: 0.03em;">{{ $mapsConfig['address'] }}</p>
+                        <p class="text-sm" style="color: #163A51; font-style: italic; letter-spacing: 0.03em;">
+                            {{ $mapsConfig['address'] }}</p>
                     </div>
                 @endif
                 <div class="map-embed">
-                    <iframe
-                        src="{{ $mapsEmbedUrl }}"
-                        width="100%"
-                        height="350"
-                        style="border:0; border-radius: 0.5rem; display: block;"
-                        allowfullscreen=""
-                        loading="lazy"
+                    <iframe src="{{ $mapsEmbedUrl }}" width="100%" height="350"
+                        style="border:0; border-radius: 0.5rem; display: block;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
@@ -1264,7 +1505,68 @@
         </section>
     @endif
 
+    {{-- ════════════════════ Love Story ════════════════════ --}}
+    @if (in_array('love_story', $addonKeys))
+    @php
+        $loveStory = $content['love_story'] ?? [];
+        $lsHeading = $loveStory['heading'] ?? 'Kisah Cinta Kami';
+        $lsIntro   = $loveStory['intro'] ?? '';
+        $lsItems   = $loveStory['items'] ?? [];
+        $lsBg      = $sectionBg('love_story');
+    @endphp
+    <section class="section anim {{ $lsBg ? 'has-bg' : '' }}"
+        style="--overlay: 0.45; {{ $lsBg ? "background-image:url('$lsBg');" : '' }}">
+        @if ($lsBg) <div class="overlay"></div> @endif
+        <div class="section-inner">
+            <p class="subtitle">Our Journey</p>
+            <h2>{{ $lsHeading }}</h2>
+
+            @if ($lsIntro)
+                <p class="tl-intro">{{ $lsIntro }}</p>
+            @endif
+
+            @if (!empty($lsItems))
+                <div class="timeline">
+                    @foreach ($lsItems as $lsItem)
+                        <div class="timeline-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-card">
+                                @if (!empty($lsItem['photo']))
+                                    <img src="{{ $lsItem['photo'] }}" alt="{{ $lsItem['title'] ?? '' }}" class="tl-photo">
+                                @endif
+                                @if (!empty($lsItem['date']))
+                                    <p class="tl-date">{{ $lsItem['date'] }}</p>
+                                @endif
+                                @if (!empty($lsItem['title']))
+                                    <p class="tl-title">{{ $lsItem['title'] }}</p>
+                                @endif
+                                @if (!empty($lsItem['description']))
+                                    <p class="tl-desc">{{ $lsItem['description'] }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="timeline">
+                    @foreach ([['Maret 2019','Pertama Bertemu','Takdir mempertemukan kami di sebuah acara yang tak terduga.'],['Juni 2020','Mulai Berpacaran','Dengan penuh keberanian, ia mengungkapkan perasaannya.'],['Desember 2023','Lamaran','Di hari yang penuh bunga, ia berlutut dan bertanya: maukah kamu?']] as $demo)
+                        <div class="timeline-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-card">
+                                <p class="tl-date">{{ $demo[0] }}</p>
+                                <p class="tl-title">{{ $demo[1] }}</p>
+                                <p class="tl-desc">{{ $demo[2] }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </section>
+    @endif
+
     {{-- ════════════════════ Section 6: Wedding Gift ════════════════════ --}}
+    @if (in_array('digital_gift', $addonKeys))
     @php $bg = $sectionBg('gift'); @endphp
     <section class="section anim {{ $bg ? 'has-bg' : '' }}"
         style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
@@ -1292,6 +1594,9 @@
                 }
             @endphp
 
+            @if (!empty($banks))
+                <p class="gift-section-label">Rekening Bank</p>
+            @endif
             <div class="bank-list">
                 @foreach ($banks as $bank)
                     <div class="bank-card">
@@ -1313,8 +1618,43 @@
                     </div>
                 @endforeach
             </div>
+
+            @php
+                $ewalletLabels = [
+                    'gopay'     => 'GoPay',
+                    'dana'      => 'DANA',
+                    'ovo'       => 'OVO',
+                    'shopeepay' => 'ShopeePay',
+                    'linkaja'   => 'LinkAja',
+                    'qris'      => 'QRIS',
+                ];
+                $ewallets = $gift['ewallets'] ?? [];
+            @endphp
+
+            @if (!empty($ewallets))
+                <p class="gift-section-label">E-Wallet</p>
+                <div class="ewallet-list">
+                    @foreach ($ewallets as $ew)
+                        @php $providerKey = $ew['provider'] ?? 'qris'; @endphp
+                        <div class="ewallet-card">
+                            <div class="ewallet-icon {{ $providerKey }}">
+                                {{ strtoupper($providerKey === 'shopeepay' ? 'SPAY' : substr($providerKey, 0, 4)) }}
+                            </div>
+                            <div class="bank-meta">
+                                <p class="bname">{{ $ewalletLabels[$providerKey] ?? strtoupper($providerKey) }}</p>
+                                <p class="bno">{{ $ew['account_no'] ?? '—' }}</p>
+                                <p class="bholder">{{ $ew['account_holder'] ?? '' }}</p>
+                            </div>
+                            @if (!empty($ew['account_no']))
+                                <button type="button" class="copy-btn" data-copy="{{ $ew['account_no'] }}">Salin</button>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
+    @endif
 
     {{-- ════════════════════ Section 7: Ucapan & Doa Restu ════════════════════ --}}
     @php $bg = $sectionBg('wishes'); @endphp
@@ -1360,6 +1700,86 @@
             <p class="wishes-footer">{{ $wishesC['footer'] ?? 'Hope to see you soon, Stay safe and healthy!' }}</p>
         </div>
     </section>
+
+    {{-- ════════════════════ Live Streaming ════════════════════ --}}
+    @if (in_array('live_stream', $addonKeys))
+    @php
+        $ls        = $content['live_stream'] ?? [];
+        $lsHeading = $ls['heading']      ?? 'Saksikan Secara Online';
+        $lsDesc    = $ls['description']  ?? '';
+        $lsProvider= $ls['provider']     ?? 'youtube';
+        $lsUrl     = $ls['url']          ?? '';
+        $lsVideoId = $ls['video_id']     ?? null;
+        $lsDate    = $ls['start_date']   ?? '';
+        $lsTime    = $ls['start_time']   ?? '';
+        $lsLabel   = $ls['button_label'] ?? 'Tonton Live Streaming';
+        $lsBg      = $sectionBg('live_stream');
+
+        // Extract YouTube ID from URL if not already stored
+        if ($lsProvider === 'youtube' && $lsUrl && !$lsVideoId) {
+            if (preg_match('/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|v|live)\/)([A-Za-z0-9_-]{11})/i', $lsUrl, $m)) {
+                $lsVideoId = $m[1];
+            }
+        }
+
+        $lsEmbedUrl = $lsVideoId
+            ? "https://www.youtube.com/embed/{$lsVideoId}?autoplay=0&rel=0"
+            : null;
+
+        // Format schedule label
+        $lsSchedule = null;
+        if ($lsDate) {
+            try {
+                $lsSchedule = \Carbon\Carbon::parse($lsDate)->locale('id')->isoFormat('dddd, D MMMM YYYY');
+                if ($lsTime) $lsSchedule .= ' · ' . substr($lsTime, 0, 5) . ' WIB';
+            } catch (\Throwable $e) { $lsSchedule = $lsDate . ($lsTime ? ' · ' . $lsTime : ''); }
+        }
+    @endphp
+    @php $lsBgStyle = $lsBg ? "background-image:url('$lsBg');" : ''; @endphp
+    <section class="section anim {{ $lsBg ? 'has-bg' : '' }}"
+        style="--overlay: 0.55; {{ $lsBgStyle }}">
+        @if ($lsBg) <div class="overlay"></div> @endif
+        <div class="section-inner">
+            <p class="subtitle">Live Streaming</p>
+            <h2>{{ $lsHeading }}</h2>
+
+            <div class="livestream-card">
+                @if ($lsEmbedUrl)
+                    <div class="livestream-embed">
+                        <iframe src="{{ $lsEmbedUrl }}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen loading="lazy">
+                        </iframe>
+                    </div>
+                @endif
+
+                <div class="livestream-body">
+                    @if ($lsSchedule)
+                        <div class="livestream-schedule">
+                            📅 {{ $lsSchedule }}
+                        </div>
+                    @endif
+
+                    @if ($lsDesc)
+                        <p class="ls-desc">{{ $lsDesc }}</p>
+                    @endif
+
+                    @if ($lsUrl && $lsProvider === 'custom')
+                        <a href="{{ $lsUrl }}" target="_blank" rel="noopener" class="ls-btn">
+                            📺 {{ $lsLabel }}
+                        </a>
+                    @elseif ($lsUrl && $lsProvider === 'youtube')
+                        <a href="{{ $lsUrl }}" target="_blank" rel="noopener" class="ls-btn">
+                            ▶ Buka di YouTube
+                        </a>
+                    @else
+                        <p class="text-sm opacity-50 italic">Link live streaming belum ditambahkan.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
 
     {{-- ════════════════════ Section 8: Closing ════════════════════ --}}
     @php $bgClose = $sectionBg('closing'); @endphp

@@ -5,6 +5,9 @@ import MusicSettings from './addons/MusicSettings.vue';
 import GallerySettings from './addons/GallerySettings.vue';
 import MapsSettings from './addons/MapsSettings.vue';
 import CountdownSettings from './addons/CountdownSettings.vue';
+import GiftSettings from './addons/GiftSettings.vue';
+import LoveStorySettings from './addons/LoveStorySettings.vue';
+import LiveStreamSettings from './addons/LiveStreamSettings.vue';
 
 const props = defineProps({
     addons: { type: Array, required: true },
@@ -57,10 +60,13 @@ const hasAddonKey = (key) =>
         .filter(a => selectedIds.value.includes(a.id))
         .some(a => a.key === key);
 
-const isMusicSelected = computed(() => hasAddonKey('music_player'));
-const isGallerySelected = computed(() => hasAddonKey('photo_gallery'));
-const isMapsSelected = computed(() => hasAddonKey('maps'));
+const isMusicSelected    = computed(() => hasAddonKey('music_player'));
+const isGallerySelected  = computed(() => hasAddonKey('photo_gallery'));
+const isMapsSelected     = computed(() => hasAddonKey('maps'));
 const isCountdownSelected = computed(() => hasAddonKey('countdown'));
+const isGiftSelected      = computed(() => hasAddonKey('digital_gift'));
+const isLoveStorySelected  = computed(() => hasAddonKey('love_story'));
+const isLiveStreamSelected = computed(() => hasAddonKey('live_stream'));
 </script>
 
 <template>
@@ -73,6 +79,9 @@ const isCountdownSelected = computed(() => hasAddonKey('countdown'));
         <GallerySettings v-if="isGallerySelected" class="mb-5" />
         <MapsSettings v-if="isMapsSelected" class="mb-5" />
         <CountdownSettings v-if="isCountdownSelected" class="mb-5" />
+        <GiftSettings v-if="isGiftSelected" class="mb-5" />
+        <LoveStorySettings v-if="isLoveStorySelected" class="mb-5" />
+        <LiveStreamSettings v-if="isLiveStreamSelected" class="mb-5" />
 
         <div v-for="(items, category) in grouped" :key="category" class="mb-5">
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">{{ categoryLabels[category] || category }}</h3>

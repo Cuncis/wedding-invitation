@@ -70,7 +70,23 @@ const DEFAULT_CONFIG = {
         gift: {
             receiver_name: '',
             address: '',
-            banks: [], // [{ name, logo, account_no, account_holder }]
+            banks: [],    // [{ name, logo, account_no, account_holder }]
+            ewallets: [], // [{ provider, account_no, account_holder }]
+        },
+        love_story: {
+            heading: 'Kisah Cinta Kami',
+            intro: 'Sebuah perjalanan indah yang membawa kami ke hari yang paling berbahagia ini.',
+            items: [], // [{ date, title, description, photo }]
+        },
+        live_stream: {
+            heading: 'Saksikan Secara Online',
+            description: 'Bagi tamu yang tidak dapat hadir secara langsung, kami mengundang Anda untuk menyaksikan momen bahagia kami secara live.',
+            provider: 'youtube', // youtube | custom
+            url: '',
+            video_id: null,
+            start_date: '',
+            start_time: '',
+            button_label: 'Tonton Live Streaming',
         },
         wishes: {
             heading: 'Ucapan & Doa Restu',
