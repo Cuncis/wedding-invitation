@@ -94,36 +94,40 @@ const hasEmbed = computed(() => !!embedUrl.value);
 </script>
 
 <template>
-    <div class="mt-4 p-4 rounded-lg border-2 border-accent-300 bg-accent-50/40">
-        <div class="flex items-center gap-2 mb-3">
-            <IconMaps class="w-5 h-5 text-rose-500" />
-            <h3 class="text-sm font-bold text-slate-900">Pengaturan Google Maps</h3>
+    <div class="rounded-xl border-2 border-primary/20 bg-primary/3 p-4 space-y-3">
+        <!-- Header -->
+        <div class="flex items-center gap-2.5 pb-3 border-b border-primary/15">
+            <span class="inline-flex w-8 h-8 rounded-lg bg-primary/10 items-center justify-center shrink-0">
+                <IconMaps class="w-4 h-4 text-primary" />
+            </span>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-base-content leading-tight">Google Maps</p>
+                <p class="text-xs text-base-content/50">Tampilkan peta lokasi acara</p>
+            </div>
+            <span class="badge badge-xs badge-primary badge-outline shrink-0">Pengaturan</span>
         </div>
-        <p class="text-xs text-slate-600 mb-4">
-            Tempelkan tautan Google Maps untuk menampilkan peta di undangan.
-        </p>
 
         <!-- Address -->
-        <div class="mb-3">
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Alamat / Nama Tempat</label>
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Alamat / Nama Tempat</span></div>
             <input v-model="mapsAddress" type="text"
                 placeholder="Nama Venue, Kota"
-                class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md">
-        </div>
+                class="input input-sm input-bordered w-full">
+        </label>
 
-        <!-- Google Maps URL / Embed URL -->
-        <div class="mb-3">
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Link Google Maps</label>
+        <!-- Google Maps URL -->
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Link Google Maps</span></div>
             <input v-model="mapsEmbedUrl" type="url"
                 placeholder="https://www.google.com/maps/place/..."
-                class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md font-mono">
-            <p class="text-xs text-slate-500 mt-1">
-                Tempelkan tautan share atau embed dari Google Maps
-            </p>
-        </div>
+                class="input input-sm input-bordered w-full font-mono">
+            <div class="label py-0.5">
+                <span class="label-text-alt text-base-content/40">Tempel tautan share atau embed dari Google Maps</span>
+            </div>
+        </label>
 
         <!-- Map Preview -->
-        <div v-if="hasEmbed" class="mt-3 rounded-md overflow-hidden border border-slate-200">
+        <div v-if="hasEmbed" class="rounded-lg overflow-hidden border border-base-300">
             <iframe
                 :src="embedUrl"
                 width="100%"
@@ -134,16 +138,14 @@ const hasEmbed = computed(() => !!embedUrl.value);
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
-        <p v-else class="text-xs text-slate-400 mt-2 italic">
+        <p v-else class="text-xs text-base-content/40 italic">
             Masukkan link Google Maps untuk melihat pratinjau peta
         </p>
 
         <!-- Options -->
-        <div class="mt-4 space-y-2">
-            <label class="flex items-center gap-2 text-sm text-slate-700">
-                <input type="checkbox" v-model="mapsShowMarker" class="accent-rose-500" :checked="mapsShowMarker !== false">
-                Tampilkan marker di peta
-            </label>
-        </div>
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" v-model="mapsShowMarker" class="checkbox checkbox-xs checkbox-primary" :checked="mapsShowMarker !== false">
+            <span class="text-xs text-base-content">Tampilkan marker di peta</span>
+        </label>
     </div>
 </template>

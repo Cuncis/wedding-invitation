@@ -71,41 +71,64 @@ const isLiveStreamSelected = computed(() => hasAddonKey('live_stream'));
 
 <template>
     <div>
-        <h2 class="text-sm font-semibold text-slate-900 mb-1">Pilih Fitur Tambahan</h2>
-        <p class="text-xs text-slate-500 mb-3">Subtotal addon: <span class="font-semibold text-rose-600">{{ runningTotal }}</span></p>
+        <!-- ── Header ── -->
+        <h2 class="text-sm font-semibold text-base-content mb-0.5">Pilih Fitur Tambahan</h2>
+        <p class="text-xs text-base-content/50 mb-4">
+            Subtotal addon:
+            <span class="font-semibold text-primary">{{ runningTotal }}</span>
+        </p>
 
-        <!-- Per-addon settings render below the picker when their addon is checked. -->
-        <MusicSettings v-if="isMusicSelected" class="mb-5" />
-        <GallerySettings v-if="isGallerySelected" class="mb-5" />
-        <MapsSettings v-if="isMapsSelected" class="mb-5" />
-        <CountdownSettings v-if="isCountdownSelected" class="mb-5" />
-        <GiftSettings v-if="isGiftSelected" class="mb-5" />
-        <LoveStorySettings v-if="isLoveStorySelected" class="mb-5" />
-        <LiveStreamSettings v-if="isLiveStreamSelected" class="mb-5" />
-
+        <!-- ── Addon selector list ── -->
         <div v-for="(items, category) in grouped" :key="category" class="mb-5">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">{{ categoryLabels[category] || category }}</h3>
+            <h3 class="text-xs font-bold text-base-content/40 uppercase tracking-wider mb-2">
+                {{ categoryLabels[category] || category }}
+            </h3>
             <div class="space-y-2">
                 <label v-for="addon in items" :key="addon.id"
                     :class="[
-                        'flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition',
+                        'flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition select-none',
                         selectedIds.includes(addon.id)
-                            ? 'border-rose-500 bg-rose-50/30'
-                            : 'border-slate-200 hover:border-slate-300',
+                            ? 'border-primary bg-primary/5 shadow-sm'
+                            : 'border-base-300 bg-base-100 hover:border-primary/40',
                     ]">
                     <input type="checkbox"
                         :checked="selectedIds.includes(addon.id)"
                         @change="toggle(addon)"
-                        class="mt-1 accent-rose-500">
+                        class="checkbox checkbox-sm checkbox-primary mt-0.5 shrink-0">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between gap-2">
-                            <p class="text-sm font-semibold text-slate-900 truncate">{{ addon.name }}</p>
-                            <p class="text-sm font-medium text-rose-600 whitespace-nowrap">{{ formatRupiah(addon.price) }}</p>
+                            <p class="text-sm font-semibold text-base-content truncate">{{ addon.name }}</p>
+                            <span class="badge badge-sm badge-outline badge-primary font-semibold whitespace-nowrap shrink-0">
+                                {{ formatRupiah(addon.price) }}
+                            </span>
                         </div>
-                        <p v-if="addon.description" class="text-xs text-slate-500 mt-0.5">{{ addon.description }}</p>
+                        <p v-if="addon.description" class="text-xs text-base-content/50 mt-0.5 leading-snug">
+                            {{ addon.description }}
+                        </p>
+                        <span v-if="selectedIds.includes(addon.id)"
+                            class="inline-flex items-center gap-1 mt-1.5 text-xs text-primary font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                            </svg>
+                            Aktif · pengaturan di bawah
+                        </span>
                     </div>
                 </label>
             </div>
         </div>
+
+        <!-- ── Settings panels (shown only when an addon with settings is selected) ── -->
+        <template v-if="isMusicSelected || isGallerySelected || isMapsSelected || isCountdownSelected || isGiftSelected || isLoveStorySelected || isLiveStreamSelected">
+            <div class="divider text-xs text-base-content/40 my-2">Pengaturan Fitur Aktif</div>
+            <div class="space-y-4">
+                <MusicSettings      v-if="isMusicSelected" />
+                <GallerySettings    v-if="isGallerySelected" />
+                <MapsSettings       v-if="isMapsSelected" />
+                <CountdownSettings  v-if="isCountdownSelected" />
+                <GiftSettings       v-if="isGiftSelected" />
+                <LoveStorySettings  v-if="isLoveStorySelected" />
+                <LiveStreamSettings v-if="isLiveStreamSelected" />
+            </div>
+        </template>
     </div>
 </template>

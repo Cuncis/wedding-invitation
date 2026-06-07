@@ -54,81 +54,83 @@ const urlStatus = computed(() => {
 </script>
 
 <template>
-    <div class="mt-4 p-4 rounded-lg border-2 border-accent-300 bg-accent-50/40">
-        <div class="flex items-center gap-2 mb-3">
-            <IconMusic class="w-5 h-5 text-rose-500" />
-            <h3 class="text-sm font-bold text-slate-900">Pengaturan Music Player</h3>
+    <div class="rounded-xl border-2 border-primary/20 bg-primary/3 p-4 space-y-3">
+        <!-- Header -->
+        <div class="flex items-center gap-2.5 pb-3 border-b border-primary/15">
+            <span class="inline-flex w-8 h-8 rounded-lg bg-primary/10 items-center justify-center shrink-0">
+                <IconMusic class="w-4 h-4 text-primary" />
+            </span>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-base-content leading-tight">Music Player</p>
+                <p class="text-xs text-base-content/50">Musik latar otomatis dari YouTube</p>
+            </div>
+            <span class="badge badge-xs badge-primary badge-outline shrink-0">Pengaturan</span>
         </div>
-        <p class="text-xs text-slate-600 mb-4">
-            Tambahkan musik latar untuk undangan. Tempel URL YouTube apa saja —
-            kami otomatis ekstrak video-nya.
-        </p>
 
         <!-- Provider -->
-        <label class="block text-xs font-semibold text-slate-700 mb-1">Sumber Musik</label>
-        <select v-model="music.provider"
-            class="w-full mb-3 px-3 py-2 text-sm border border-slate-300 rounded-md bg-white">
-            <option value="youtube">YouTube</option>
-            <option value="spotify"    disabled>Spotify (segera)</option>
-            <option value="soundcloud" disabled>SoundCloud (segera)</option>
-            <option value="upload"     disabled>Upload MP3 (segera)</option>
-        </select>
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Sumber Musik</span></div>
+            <select v-model="music.provider" class="select select-sm select-bordered w-full">
+                <option value="youtube">YouTube</option>
+                <option value="spotify"    disabled>Spotify (segera)</option>
+                <option value="soundcloud" disabled>SoundCloud (segera)</option>
+                <option value="upload"     disabled>Upload MP3 (segera)</option>
+            </select>
+        </label>
 
         <!-- URL -->
-        <label class="block text-xs font-semibold text-slate-700 mb-1">
-            URL YouTube
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">URL YouTube</span></div>
+            <input v-model="music.url" type="url"
+                placeholder="https://youtu.be/dQw4w9WgXcQ"
+                class="input input-sm input-bordered w-full font-mono">
+            <div class="label py-0.5">
+                <span v-if="urlStatus" :class="['label-text-alt', urlStatus.ok ? 'text-success' : 'text-error']">{{ urlStatus.msg }}</span>
+                <span v-else class="label-text-alt text-base-content/40">youtu.be/... · youtube.com/watch?v=... · ID 11-karakter</span>
+            </div>
         </label>
-        <input v-model="music.url"
-            type="url"
-            placeholder="https://youtu.be/dQw4w9WgXcQ"
-            class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md font-mono">
-        <p v-if="urlStatus"
-            :class="['text-xs mt-1', urlStatus.ok ? 'text-emerald-600' : 'text-rose-600']">
-            {{ urlStatus.msg }}
-        </p>
-        <p v-else class="text-xs text-slate-500 mt-1">
-            Format yang didukung: <code>youtu.be/...</code>, <code>youtube.com/watch?v=...</code>,
-            <code>youtube.com/embed/...</code>, atau ID 11-karakter langsung.
-        </p>
 
         <!-- Thumbnail preview -->
-        <div v-if="thumbnailUrl" class="mt-3 rounded-md overflow-hidden border border-slate-200 bg-slate-100">
-            <img :src="thumbnailUrl" alt="Video preview" class="w-full h-32 object-cover">
+        <div v-if="thumbnailUrl" class="rounded-lg overflow-hidden border border-base-300">
+            <img :src="thumbnailUrl" alt="Video preview" class="w-full h-28 object-cover">
         </div>
 
         <!-- Title / Artist -->
-        <div class="grid grid-cols-2 gap-2 mt-3">
-            <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Lagu</label>
+        <div class="grid grid-cols-2 gap-2">
+            <label class="form-control">
+                <div class="label py-0.5"><span class="label-text text-xs">Judul Lagu</span></div>
                 <input v-model="music.title" type="text" placeholder="Perfect"
-                    class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md">
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Artis</label>
+                    class="input input-sm input-bordered w-full">
+            </label>
+            <label class="form-control">
+                <div class="label py-0.5"><span class="label-text text-xs">Artis</span></div>
                 <input v-model="music.artist" type="text" placeholder="Ed Sheeran"
-                    class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md">
-            </div>
+                    class="input input-sm input-bordered w-full">
+            </label>
         </div>
 
+        <div class="divider my-0 text-xs text-base-content/40">Opsi</div>
+
         <!-- Options -->
-        <div class="mt-4 space-y-2">
-            <label class="flex items-center gap-2 text-sm text-slate-700">
-                <input type="checkbox" v-model="music.autoplay" class="accent-accent-500">
-                Putar otomatis setelah tamu menekan tombol "Buka Undangan"
+        <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" v-model="music.autoplay" class="checkbox checkbox-xs checkbox-primary">
+                <span class="text-xs text-base-content">Putar otomatis saat tamu membuka undangan</span>
             </label>
-            <label class="flex items-center gap-2 text-sm text-slate-700">
-                <input type="checkbox" v-model="music.loop" class="accent-accent-500">
-                Loop (ulang terus menerus)
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" v-model="music.loop" class="checkbox checkbox-xs checkbox-primary">
+                <span class="text-xs text-base-content">Loop (ulang terus menerus)</span>
             </label>
         </div>
 
         <!-- Start-at -->
-        <div class="mt-3">
-            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                Mulai dari detik ke- <span class="text-slate-400 font-normal">(opsional)</span>
-            </label>
+        <label class="form-control">
+            <div class="label py-0.5">
+                <span class="label-text text-xs">Mulai dari detik ke-</span>
+                <span class="label-text-alt text-base-content/40">opsional</span>
+            </div>
             <input v-model.number="music.start_at" type="number" min="0" step="1"
-                class="w-32 px-3 py-2 text-sm border border-slate-300 rounded-md">
-        </div>
+                class="input input-sm input-bordered w-28">
+        </label>
     </div>
 </template>

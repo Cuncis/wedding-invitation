@@ -61,24 +61,35 @@ const saveStatus = computed(() => {
 <template>
     <div class="h-screen flex flex-col bg-slate-100">
         <!-- Top bar -->
-        <header class="flex items-center justify-between px-6 py-3 bg-white border-b border-slate-200">
-            <div class="flex items-center gap-4">
-                <a href="/dashboard" class="text-slate-500 hover:text-slate-700">←</a>
+        <header class="flex items-center justify-between px-4 py-2.5 bg-white border-b border-slate-200 shrink-0">
+            <div class="flex items-center gap-3">
+                <a href="/dashboard"
+                    class="btn btn-ghost btn-sm btn-circle text-slate-500"
+                    title="Kembali ke Dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+                    </svg>
+                </a>
                 <div>
-                    <h1 class="text-base font-semibold text-slate-900">
+                    <h1 class="text-sm font-semibold text-slate-900 leading-tight">
                         {{ invitationTitle }}
                     </h1>
-                    <p :class="['text-xs', saveStatus.color]">{{ saveStatus.label }}</p>
+                    <p :class="['text-xs leading-tight', saveStatus.color]">{{ saveStatus.label }}</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
                 <a :href="previewUrl" target="_blank"
-                    class="px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 border border-slate-300 rounded">
-                    Preview Baru
+                    class="btn btn-sm btn-ghost btn-outline border-slate-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Preview
                 </a>
-                <a :href="checkoutUrl"
-                    class="px-4 py-1.5 text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded">
-                    Lanjut ke Checkout
+                <a :href="checkoutUrl" class="btn btn-sm btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+                    </svg>
+                    Checkout
                 </a>
             </div>
         </header>
@@ -91,7 +102,7 @@ const saveStatus = computed(() => {
                     <button v-for="tab in tabs" :key="tab.key"
                         @click="activeTab = tab.key"
                         :class="[
-                            'flex flex-col items-center justify-center flex-1 min-w-[80px] px-3 py-3 text-xs font-medium transition border-b-2 gap-1',
+                            'flex flex-col items-center justify-center flex-1 min-w-20 px-3 py-3 text-xs font-medium transition border-b-2 gap-1',
                             activeTab === tab.key
                                 ? 'border-rose-500 text-rose-600 bg-rose-50/50'
                                 : 'border-transparent text-slate-500 hover:text-slate-800',

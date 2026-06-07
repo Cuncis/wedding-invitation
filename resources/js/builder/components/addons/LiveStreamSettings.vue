@@ -46,80 +46,82 @@ const thumbnailUrl = computed(() =>
 </script>
 
 <template>
-    <div class="rounded-xl border-2 border-rose-200 bg-rose-50/30 p-4 space-y-4">
-        <div class="flex items-center gap-2 mb-1">
-            <span class="text-base">📺</span>
-            <h3 class="text-sm font-semibold text-slate-800">Live Streaming</h3>
+    <div class="rounded-xl border-2 border-primary/20 bg-primary/3 p-4 space-y-3">
+        <!-- Header -->
+        <div class="flex items-center gap-2.5 pb-3 border-b border-primary/15">
+            <span class="inline-flex w-8 h-8 rounded-lg bg-primary/10 items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-primary">
+                    <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/>
+                </svg>
+            </span>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-base-content leading-tight">Live Streaming</p>
+                <p class="text-xs text-base-content/50">YouTube Live atau link kustom</p>
+            </div>
+            <span class="badge badge-xs badge-primary badge-outline shrink-0">Pengaturan</span>
         </div>
 
         <!-- Heading & Description -->
-        <label class="block">
-            <span class="text-xs font-medium text-slate-600">Judul Seksi</span>
-            <input v-model="ls.heading" type="text"
-                placeholder="Saksikan Secara Online"
-                class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Judul Seksi</span></div>
+            <input v-model="ls.heading" type="text" placeholder="Saksikan Secara Online"
+                class="input input-sm input-bordered w-full">
         </label>
-        <label class="block">
-            <span class="text-xs font-medium text-slate-600">Deskripsi</span>
-            <textarea v-model="ls.description" rows="3"
-                placeholder="Bagi tamu yang tidak dapat hadir..."
-                class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500"></textarea>
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Deskripsi</span></div>
+            <textarea v-model="ls.description" rows="3" placeholder="Bagi tamu yang tidak dapat hadir..."
+                class="textarea textarea-sm textarea-bordered w-full resize-none"></textarea>
         </label>
 
-        <hr class="border-slate-200">
+        <div class="divider my-0 text-xs text-base-content/40">Sumber Streaming</div>
 
         <!-- Provider -->
-        <label class="block">
-            <span class="text-xs font-medium text-slate-600">Platform</span>
-            <select v-model="ls.provider"
-                class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+        <label class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Platform</span></div>
+            <select v-model="ls.provider" class="select select-sm select-bordered w-full">
                 <option value="youtube">YouTube Live</option>
                 <option value="custom">Link Kustom (Zoom, Meet, dll.)</option>
             </select>
         </label>
 
         <!-- URL -->
-        <label class="block">
-            <span class="text-xs font-medium text-slate-600">
-                {{ ls.provider === 'youtube' ? 'URL YouTube Live' : 'URL Live Streaming' }}
-            </span>
+        <label class="form-control w-full">
+            <div class="label py-0.5">
+                <span class="label-text text-xs">{{ ls.provider === 'youtube' ? 'URL YouTube Live' : 'URL Live Streaming' }}</span>
+            </div>
             <input v-model="ls.url" type="url"
-                :placeholder="ls.provider === 'youtube' ? 'https://youtu.be/xxxxx atau https://youtube.com/live/xxxxx' : 'https://zoom.us/j/xxxxx'"
-                class="mt-1 w-full rounded border-slate-300 text-sm font-mono focus:border-rose-500 focus:ring-rose-500">
-            <p v-if="urlStatus"
-                :class="['text-xs mt-1', urlStatus.ok ? 'text-emerald-600' : 'text-rose-500']">
-                {{ urlStatus.msg }}
-            </p>
+                :placeholder="ls.provider === 'youtube' ? 'https://youtu.be/xxxxx' : 'https://zoom.us/j/xxxxx'"
+                class="input input-sm input-bordered w-full font-mono">
+            <div v-if="urlStatus" class="label py-0.5">
+                <span :class="['label-text-alt', urlStatus.ok ? 'text-success' : 'text-error']">{{ urlStatus.msg }}</span>
+            </div>
         </label>
 
         <!-- YouTube thumbnail preview -->
-        <div v-if="thumbnailUrl" class="rounded-lg overflow-hidden border border-slate-200">
+        <div v-if="thumbnailUrl" class="rounded-lg overflow-hidden border border-base-300">
             <img :src="thumbnailUrl" alt="Preview" class="w-full h-28 object-cover">
-            <p class="text-xs text-center text-slate-400 py-1">Thumbnail video</p>
+            <p class="text-xs text-center text-base-content/40 py-1">Thumbnail video</p>
         </div>
 
-        <hr class="border-slate-200">
+        <div class="divider my-0 text-xs text-base-content/40">Jadwal</div>
 
         <!-- Schedule -->
         <div class="grid grid-cols-2 gap-3">
-            <label class="block">
-                <span class="text-xs font-medium text-slate-600">Tanggal Tayang</span>
-                <input v-model="ls.start_date" type="date"
-                    class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+            <label class="form-control">
+                <div class="label py-0.5"><span class="label-text text-xs">Tanggal Tayang</span></div>
+                <input v-model="ls.start_date" type="date" class="input input-sm input-bordered w-full">
             </label>
-            <label class="block">
-                <span class="text-xs font-medium text-slate-600">Jam Mulai</span>
-                <input v-model="ls.start_time" type="time"
-                    class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+            <label class="form-control">
+                <div class="label py-0.5"><span class="label-text text-xs">Jam Mulai</span></div>
+                <input v-model="ls.start_time" type="time" class="input input-sm input-bordered w-full">
             </label>
         </div>
 
         <!-- Button label (custom only) -->
-        <label v-if="ls.provider === 'custom'" class="block">
-            <span class="text-xs font-medium text-slate-600">Label Tombol</span>
-            <input v-model="ls.button_label" type="text"
-                placeholder="Tonton Live Streaming"
-                class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+        <label v-if="ls.provider === 'custom'" class="form-control w-full">
+            <div class="label py-0.5"><span class="label-text text-xs">Label Tombol</span></div>
+            <input v-model="ls.button_label" type="text" placeholder="Tonton Live Streaming"
+                class="input input-sm input-bordered w-full">
         </label>
     </div>
 </template>

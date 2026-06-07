@@ -97,33 +97,36 @@ function onFileInput(e) {
 </script>
 
 <template>
-    <div class="mt-4 p-4 rounded-lg border-2 border-accent-300 bg-accent-50/40">
-        <div class="flex items-center gap-2 mb-3">
-            <IconGallery class="w-5 h-5 text-rose-500" />
-            <h3 class="text-sm font-bold text-slate-900">Pengaturan Galeri Foto</h3>
+    <div class="rounded-xl border-2 border-primary/20 bg-primary/3 p-4 space-y-3">
+        <!-- Header -->
+        <div class="flex items-center gap-2.5 pb-3 border-b border-primary/15">
+            <span class="inline-flex w-8 h-8 rounded-lg bg-primary/10 items-center justify-center shrink-0">
+                <IconGallery class="w-4 h-4 text-primary" />
+            </span>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-base-content leading-tight">Galeri Foto</p>
+                <p class="text-xs text-base-content/50">Unggah foto untuk galeri undangan</p>
+            </div>
+            <span class="badge badge-xs badge-primary badge-outline shrink-0">Pengaturan</span>
         </div>
-        <p class="text-xs text-slate-600 mb-4">
-            Unggah foto-foto untuk galeri. Gambar akan dikompres otomatis.
-        </p>
 
         <!-- Layout options -->
-        <div class="grid grid-cols-2 gap-3 mb-4">
-            <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Jumlah Kolom</label>
-                <select v-model="columns"
-                    class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md bg-white">
+        <div class="grid grid-cols-2 gap-3">
+            <label class="form-control">
+                <div class="label py-0.5"><span class="label-text text-xs">Jumlah Kolom</span></div>
+                <select v-model="columns" class="select select-sm select-bordered w-full">
                     <option :value="2">2 Kolom</option>
                     <option :value="3">3 Kolom</option>
                     <option :value="4">4 Kolom</option>
                 </select>
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Tampilan</label>
-                <div class="flex items-center gap-2 mt-2">
-                    <input type="checkbox" v-model="lightbox" id="lightbox-toggle" class="accent-accent-500">
-                    <label for="lightbox-toggle" class="text-sm text-slate-700">Aktifkan lightbox</label>
-                </div>
-            </div>
+            </label>
+            <label class="form-control">
+                <div class="label py-0.5"><span class="label-text text-xs">Lightbox</span></div>
+                <label class="flex items-center gap-2 cursor-pointer mt-1.5">
+                    <input type="checkbox" v-model="lightbox" id="lightbox-toggle" class="checkbox checkbox-xs checkbox-primary">
+                    <span class="text-xs text-base-content">Aktifkan lightbox</span>
+                </label>
+            </label>
         </div>
 
         <!-- Upload area -->
@@ -131,7 +134,7 @@ function onFileInput(e) {
             @drop="onDrop"
             @dragover.prevent
             @click="$refs.fileInput.click()"
-            class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center cursor-pointer hover:border-rose-400 hover:bg-rose-50/20 transition">
+            class="border-2 border-dashed border-primary/30 rounded-xl p-5 text-center cursor-pointer hover:border-primary/60 hover:bg-primary/5 transition">
             <input
                 ref="fileInput"
                 type="file"
@@ -139,34 +142,44 @@ function onFileInput(e) {
                 multiple
                 @change="onFileInput"
                 class="hidden">
-            <p class="text-sm text-slate-600">
-                <span class="text-rose-500 font-semibold">Klik atau drag foto</span> untuk upload
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-primary/50 mx-auto mb-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+            </svg>
+            <p class="text-xs text-base-content/70">
+                <span class="font-semibold text-primary">Klik atau drag foto</span> untuk upload
             </p>
-            <p class="text-xs text-slate-400 mt-1">JPG, PNG, WebP • Maks 10MB per foto</p>
+            <p class="text-xs text-base-content/40 mt-0.5">JPG, PNG, WebP · Maks 10MB per foto</p>
         </div>
 
-        <p v-if="uploadError" class="text-xs text-rose-600 mt-2">{{ uploadError }}</p>
+        <div v-if="uploadError" role="alert" class="alert alert-error py-2 text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>{{ uploadError }}</span>
+        </div>
 
         <!-- Uploading indicator -->
-        <div v-if="isUploading" class="flex items-center gap-2 mt-3 text-sm text-slate-600">
-            <span class="animate-spin">⏳</span> Mengunggah dan mengompres gambar...
+        <div v-if="isUploading" class="flex items-center gap-2 text-xs text-base-content/60">
+            <span class="loading loading-spinner loading-xs"></span>
+            Mengunggah dan mengompres gambar...
         </div>
-
-        <!-- Photo count -->
-        <p v-if="photos.length > 0" class="text-xs text-slate-500 mt-3">
-            {{ photos.length }} foto tersimpan
-        </p>
 
         <!-- Photo thumbnails -->
-        <div v-if="photos.length > 0" class="mt-3 grid grid-cols-4 gap-2">
-            <div v-for="(url, i) in photos" :key="i" class="relative group">
-                <img :src="url" class="w-full h-auto block rounded border border-slate-200">
-                <button
-                    @click="removePhoto(i)"
-                    class="absolute top-0 right-0 w-5 h-5 bg-rose-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition">
-                    ×
-                </button>
+        <template v-if="photos.length > 0">
+            <p class="text-xs text-base-content/50">{{ photos.length }} foto tersimpan</p>
+            <div class="grid grid-cols-4 gap-2">
+                <div v-for="(url, i) in photos" :key="i" class="relative group">
+                    <img :src="url" class="w-full aspect-square object-cover rounded-lg border border-base-300">
+                    <button
+                        @click="removePhoto(i)"
+                        type="button"
+                        class="absolute top-0.5 right-0.5 btn btn-xs btn-circle btn-error opacity-0 group-hover:opacity-100 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </div>
+        </template>
     </div>
 </template>

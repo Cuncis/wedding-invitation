@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "daisyui";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -50,4 +51,28 @@
     --color-rose-800: var(--color-brand-800);
     --color-rose-900: var(--color-brand-900);
     --color-rose-950: var(--color-brand-950);
+}
+
+/* ── DaisyUI brand theme — maps DaisyUI semantic tokens to brand palette ── */
+:root,
+[data-theme] {
+    --color-primary:         oklch(33% 0.077 224);
+    --color-primary-content: oklch(98% 0.004 224);
+    --color-secondary:       oklch(55% 0.060 224);
+    --color-secondary-content: oklch(98% 0.004 224);
+    --color-accent:          oklch(80% 0.170 87);
+    --color-accent-content:  oklch(22% 0.055 87);
+    --color-neutral:         oklch(25% 0.045 224);
+    --color-neutral-content: oklch(98% 0 0);
+    --color-base-100:        oklch(100% 0 0);
+    --color-base-200:        oklch(97% 0.003 224);
+    --color-base-300:        oklch(93% 0.006 224);
+    --color-base-content:    oklch(25% 0.040 224);
+    --color-info:            oklch(70% 0.140 225);
+    --color-success:         oklch(65% 0.190 150);
+    --color-warning:         oklch(82% 0.165 80);
+    --color-error:           oklch(60% 0.200 30);
+    --rounded-btn:           0.5rem;
+    --rounded-box:           0.75rem;
+    --rounded-badge:         0.75rem;
 }
