@@ -1,10 +1,19 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
-    src:       { type: String, required: true },
+    src: { type: String, required: true },
     reloadKey: { type: Number, default: 0 },
 });
+
+const emit = defineEmits(['load']);
+
+const iframeEl = ref(null);
+defineExpose({ iframeEl });
+
+function onIframeLoad() {
+    emit('load');
+}
 
 // Append a cache-buster query so the iframe reloads on auto-save.
 const fullSrc = computed(() => {
@@ -21,11 +30,8 @@ const fullSrc = computed(() => {
             <span class="w-3 h-3 rounded-full bg-green-400"></span>
             <span class="ml-3 text-xs text-slate-600 font-mono truncate">preview · live</span>
         </div>
-        <iframe
-            :src="fullSrc"
-            :key="reloadKey"
-            class="flex-1 w-full bg-white rounded-b-lg shadow-lg border-0"
-            title="Live preview"
+        <iframe ref="iframeEl" :src="fullSrc" :key="reloadKey" @load="onIframeLoad"
+            class="flex-1 w-full bg-white rounded-b-lg shadow-lg border-0" title="Live preview"
             sandbox="allow-same-origin allow-scripts">
         </iframe>
     </div>

@@ -2097,6 +2097,18 @@
         })();
     </script>
 
+    <script>
+        window.addEventListener('message', function (event) {
+            if (!event.data || event.data.type !== 'preview:colors') return;
+            var c = event.data.colors || {};
+            var root = document.documentElement;
+            if (c.primary)   root.style.setProperty('--color-primary',   c.primary);
+            if (c.secondary) root.style.setProperty('--color-secondary', c.secondary);
+            if (c.accent)    root.style.setProperty('--color-accent',    c.accent);
+            if (c.text)      root.style.setProperty('--color-text',      c.text);
+        });
+    </script>
+
 </body>
 
 </html>

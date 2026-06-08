@@ -6,118 +6,121 @@ const store = useBuilderStore();
 
 <template>
     <div class="space-y-5">
-        <h2 class="text-sm font-semibold text-slate-900">Konten Undangan</h2>
+        <div>
+            <h2 class="text-sm font-semibold text-base-content mb-0.5">Konten Undangan</h2>
+            <p class="text-xs text-base-content/50 mb-4">Lengkapi detail konten undangan Anda</p>
+        </div>
 
         <!-- Cover -->
-        <details open class="rounded-lg border border-slate-200">
-            <summary class="px-3 py-2 text-xs font-semibold text-slate-700 cursor-pointer">Cover</summary>
-            <div class="p-3 space-y-3 border-t border-slate-200">
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Pembuka (mis. Bismillah...)</span>
+        <details open class="rounded-xl border-2 border-base-300">
+            <summary class="px-3 py-2.5 text-xs font-bold text-base-content/60 uppercase tracking-wider cursor-pointer">Cover</summary>
+            <div class="p-4 space-y-3 border-t border-base-200">
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Pembuka (mis. Bismillah...)</span></div>
                     <input v-model="store.config.content.cover.opening_text"
                         type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Tagline</span>
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Tagline</span></div>
                     <input v-model="store.config.content.cover.tagline"
                         type="text" placeholder="Save the Date"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
             </div>
         </details>
 
         <!-- Couple -->
-        <details open class="rounded-lg border border-slate-200">
-            <summary class="px-3 py-2 text-xs font-semibold text-slate-700 cursor-pointer">Mempelai</summary>
-            <div class="p-3 space-y-3 border-t border-slate-200">
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Nama Lengkap Pria</span>
+        <details open class="rounded-xl border-2 border-base-300">
+            <summary class="px-3 py-2.5 text-xs font-bold text-base-content/60 uppercase tracking-wider cursor-pointer">Mempelai</summary>
+            <div class="p-4 space-y-3 border-t border-base-200">
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Nama Lengkap Pria</span></div>
                     <input v-model="store.config.content.couple.groom_fullname" type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Putra dari</span>
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Putra dari</span></div>
                     <input v-model="store.config.content.couple.groom_parents" type="text"
                         placeholder="Bpk. Ahmad &amp; Ibu Siti"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Nama Lengkap Wanita</span>
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Nama Lengkap Wanita</span></div>
                     <input v-model="store.config.content.couple.bride_fullname" type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Putri dari</span>
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Putri dari</span></div>
                     <input v-model="store.config.content.couple.bride_parents" type="text"
                         placeholder="Bpk. Hasan &amp; Ibu Rina"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
             </div>
         </details>
 
         <!-- Event - Akad -->
-        <details class="rounded-lg border border-slate-200">
-            <summary class="px-3 py-2 text-xs font-semibold text-slate-700 cursor-pointer">Akad Nikah</summary>
-            <div class="p-3 grid grid-cols-2 gap-3 border-t border-slate-200">
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Tanggal</span>
+        <details class="rounded-xl border-2 border-base-300">
+            <summary class="px-3 py-2.5 text-xs font-bold text-base-content/60 uppercase tracking-wider cursor-pointer">Akad Nikah</summary>
+            <div class="p-4 grid grid-cols-2 gap-3 border-t border-base-200">
+                <label class="form-control">
+                    <div class="label py-0.5"><span class="label-text text-xs">Tanggal</span></div>
                     <input v-model="store.config.content.event.akad.date" type="date"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Jam</span>
+                <label class="form-control">
+                    <div class="label py-0.5"><span class="label-text text-xs">Jam</span></div>
                     <input v-model="store.config.content.event.akad.time" type="time"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="col-span-2 block">
-                    <span class="text-xs font-medium text-slate-600">Lokasi</span>
+                <label class="form-control col-span-2">
+                    <div class="label py-0.5"><span class="label-text text-xs">Lokasi</span></div>
                     <input v-model="store.config.content.event.akad.venue" type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="col-span-2 block">
-                    <span class="text-xs font-medium text-slate-600">Alamat</span>
+                <label class="form-control col-span-2">
+                    <div class="label py-0.5"><span class="label-text text-xs">Alamat</span></div>
                     <input v-model="store.config.content.event.akad.address" type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
             </div>
         </details>
 
         <!-- Event - Resepsi -->
-        <details class="rounded-lg border border-slate-200">
-            <summary class="px-3 py-2 text-xs font-semibold text-slate-700 cursor-pointer">Resepsi</summary>
-            <div class="p-3 grid grid-cols-2 gap-3 border-t border-slate-200">
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Tanggal</span>
+        <details class="rounded-xl border-2 border-base-300">
+            <summary class="px-3 py-2.5 text-xs font-bold text-base-content/60 uppercase tracking-wider cursor-pointer">Resepsi</summary>
+            <div class="p-4 grid grid-cols-2 gap-3 border-t border-base-200">
+                <label class="form-control">
+                    <div class="label py-0.5"><span class="label-text text-xs">Tanggal</span></div>
                     <input v-model="store.config.content.event.resepsi.date" type="date"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Jam</span>
+                <label class="form-control">
+                    <div class="label py-0.5"><span class="label-text text-xs">Jam</span></div>
                     <input v-model="store.config.content.event.resepsi.time" type="time"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="col-span-2 block">
-                    <span class="text-xs font-medium text-slate-600">Lokasi</span>
+                <label class="form-control col-span-2">
+                    <div class="label py-0.5"><span class="label-text text-xs">Lokasi</span></div>
                     <input v-model="store.config.content.event.resepsi.venue" type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
-                <label class="col-span-2 block">
-                    <span class="text-xs font-medium text-slate-600">Alamat</span>
+                <label class="form-control col-span-2">
+                    <div class="label py-0.5"><span class="label-text text-xs">Alamat</span></div>
                     <input v-model="store.config.content.event.resepsi.address" type="text"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500">
+                        class="input input-sm input-bordered w-full">
                 </label>
             </div>
         </details>
 
         <!-- Closing -->
-        <details class="rounded-lg border border-slate-200">
-            <summary class="px-3 py-2 text-xs font-semibold text-slate-700 cursor-pointer">Penutup</summary>
-            <div class="p-3 border-t border-slate-200">
-                <label class="block">
-                    <span class="text-xs font-medium text-slate-600">Pesan Penutup</span>
+        <details class="rounded-xl border-2 border-base-300">
+            <summary class="px-3 py-2.5 text-xs font-bold text-base-content/60 uppercase tracking-wider cursor-pointer">Penutup</summary>
+            <div class="p-4 border-t border-base-200">
+                <label class="form-control w-full">
+                    <div class="label py-0.5"><span class="label-text text-xs">Pesan Penutup</span></div>
                     <textarea v-model="store.config.content.closing.thank_you" rows="3"
-                        class="mt-1 w-full rounded border-slate-300 text-sm focus:border-rose-500 focus:ring-rose-500"></textarea>
+                        class="textarea textarea-bordered textarea-sm w-full"></textarea>
                 </label>
             </div>
         </details>
