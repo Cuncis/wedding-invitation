@@ -67,6 +67,19 @@ watch(
     { deep: true },
 );
 
+watch(
+    () => [store.config.content?.couple?.groom_photo, store.config.content?.couple?.bride_photo],
+    ([groomPhoto, bridePhoto]) => {
+        const iframe = previewFrame.value?.iframeEl;
+        if (iframe?.contentWindow) {
+            iframe.contentWindow.postMessage(
+                { type: 'preview:couplePhotos', groomPhoto, bridePhoto },
+                '*',
+            );
+        }
+    },
+);
+
 const invitationTitle = computed(() => {
     const groom = props.invitation.groom_name;
     const bride = props.invitation.bride_name;

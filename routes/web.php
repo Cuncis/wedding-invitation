@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/builder/{invitation}/edit', [BuilderController::class, 'edit'])->name('builder.edit');
     Route::put('/builder/{invitation}/config', [BuilderController::class, 'updateConfig'])->name('builder.config');
     Route::post('/builder/{invitation}/gallery/upload', [BuilderController::class, 'uploadGalleryImage'])->name('builder.gallery.upload');
+    Route::post('/builder/{invitation}/couple/upload', [BuilderController::class, 'uploadCouplePhoto'])->name('builder.couple.upload');
     Route::get('/builder/{invitation}/preview', [BuilderController::class, 'preview'])->name('builder.preview');
 
     Route::get('/invitations/{invitation}/checkout', [OrderController::class, 'showCheckout'])->name('checkout.show');

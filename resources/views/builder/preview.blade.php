@@ -45,8 +45,9 @@
 
     // Build a Google Calendar event URL from a date + time + venue.
     $gcalUrl = function (array $e, string $title) {
-        if (empty($e['date']))
+        if (empty($e['date'])) {
             return null;
+        }
         try {
             $date = $e['date'];
             $time = $e['time'] ?? '00:00';
@@ -54,12 +55,16 @@
             $end = $start->copy()->addHours(2);
             $fmt = 'Ymd\THis';
             $dates = $start->format($fmt) . '/' . $end->format($fmt);
-            return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-                . '&text=' . urlencode($title)
-                . '&dates=' . $dates
-                . '&details=' . urlencode($title)
-                . '&location=' . urlencode(($e['venue'] ?? '') . ' ' . ($e['address'] ?? ''))
-                . '&ctz=Asia/Jakarta';
+            return 'https://calendar.google.com/calendar/render?action=TEMPLATE' .
+                '&text=' .
+                urlencode($title) .
+                '&dates=' .
+                $dates .
+                '&details=' .
+                urlencode($title) .
+                '&location=' .
+                urlencode(($e['venue'] ?? '') . ' ' . ($e['address'] ?? '')) .
+                '&ctz=Asia/Jakarta';
         } catch (\Throwable $ex) {
             return null;
         }
@@ -84,17 +89,13 @@
     <style>
         :root {
             --color-primary:
-                {{ $primary }}
-            ;
+                {{ $primary }};
             --color-secondary:
-                {{ $secondary }}
-            ;
+                {{ $secondary }};
             --color-accent:
-                {{ $accent }}
-            ;
+                {{ $accent }};
             --color-text:
-                {{ $text }}
-            ;
+                {{ $text }};
             --font-heading: '{{ $headingFont }}', serif;
             --font-body: '{{ $bodyFont }}', sans-serif;
         }
@@ -831,11 +832,13 @@
             padding: 0.8rem 2rem;
             border-radius: 999px;
             text-decoration: none;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
             transition: opacity 0.2s;
         }
 
-        .ls-btn:hover { opacity: 0.9; }
+        .ls-btn:hover {
+            opacity: 0.9;
+        }
 
         /* ─── Love Story Timeline ─── */
         .timeline {
@@ -934,12 +937,27 @@
         }
 
         @media (max-width: 600px) {
-            .timeline::before { left: 20px; }
+            .timeline::before {
+                left: 20px;
+            }
+
             .timeline-item,
-            .timeline-item:nth-child(odd) { flex-direction: column; padding-left: 3rem; }
-            .timeline-item:nth-child(odd) .tl-card { text-align: left; }
-            .tl-dot { left: 20px; }
-            .tl-card { width: 100%; }
+            .timeline-item:nth-child(odd) {
+                flex-direction: column;
+                padding-left: 3rem;
+            }
+
+            .timeline-item:nth-child(odd) .tl-card {
+                text-align: left;
+            }
+
+            .tl-dot {
+                left: 20px;
+            }
+
+            .tl-card {
+                width: 100%;
+            }
         }
 
         /* ─── Section 7 Wishes ─── */
@@ -1211,8 +1229,7 @@
             animation-delay: 0.3s;
         }
 
-        {{ '@' }}
-        keyframes fadeInUp {
+        {{ '@' }} keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -1242,9 +1259,8 @@
 <body>
 
     {{-- ════════════════════ Section 1: Cover gate ════════════════════ --}}
-    <div class="cover-gate" id="cover-gate" @if ($sectionBg('cover'))
-        style="background-image:url('{{ $sectionBg('cover') }}'); background-size:cover; background-position:center;"
-    @endif>
+    <div class="cover-gate" id="cover-gate"
+        @if ($sectionBg('cover')) style="background-image:url('{{ $sectionBg('cover') }}'); background-size:cover; background-position:center;" @endif>
         <div class="cover-photos">
             @if (!empty($cover['photo_1']))
                 <div class="cover-photo" style="background-image:url('{{ $cover['photo_1'] }}')"></div>
@@ -1286,7 +1302,8 @@
     <section class="section anim {{ $bg ? 'has-bg' : '' }}"
         style="--overlay: {{ $doa['overlay'] ?? 0.45 }}; {{ $bg ? "background-image:url('$bg');" : '' }}">
         @if ($bg)
-        <div class="overlay"></div> @endif
+            <div class="overlay"></div>
+        @endif
         <div class="section-inner">
             <p class="subtitle">Pembuka</p>
             <h2>{{ $doa['heading'] ?? 'Doa & Pengantar' }}</h2>
@@ -1301,7 +1318,8 @@
     <section class="section anim {{ $bg ? 'has-bg' : '' }}"
         style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
         @if ($bg)
-        <div class="overlay"></div> @endif
+            <div class="overlay"></div>
+        @endif
         <div class="section-inner">
             <p class="subtitle">Mempelai</p>
             <h2>The Wedding Couple</h2>
@@ -1318,10 +1336,13 @@
                         $socials = $couple[$who . '_social'] ?? [];
                     @endphp
                     <div class="couple-card">
-                        <div class="couple-photo" @if ($photo) style="background-image:url('{{ $photo }}')" @endif>
-                            @if (!$photo) {{ $who === 'groom' ? '🤵' : '👰' }} @endif
+                        <div class="couple-photo"
+                            @if ($photo) style="background-image:url('{{ $photo }}')" @endif>
+                            <span class="couple-photo-emoji"
+                                @if ($photo) style="display:none" @endif>{{ $who === 'groom' ? '🤵' : '👰' }}</span>
                         </div>
-                        <p class="subtitle" style="color:var(--color-accent); margin-bottom:0.4rem;">{{ $label }}</p>
+                        <p class="subtitle" style="color:var(--color-accent); margin-bottom:0.4rem;">
+                            {{ $label }}</p>
                         <h3 class="couple-name">
                             {{ $name ?: ($who === 'groom' ? 'Nama Mempelai Pria' : 'Nama Mempelai Wanita') }}
                         </h3>
@@ -1331,16 +1352,16 @@
                         @if (array_filter($socials))
                             <div class="couple-social">
                                 @if (!empty($socials['instagram']))
-                                    <a href="https://instagram.com/{{ ltrim($socials['instagram'], '@') }}" target="_blank"
-                                        rel="noopener" title="Instagram">IG</a>
+                                    <a href="https://instagram.com/{{ ltrim($socials['instagram'], '@') }}"
+                                        target="_blank" rel="noopener" title="Instagram">IG</a>
                                 @endif
                                 @if (!empty($socials['facebook']))
                                     <a href="{{ Str::startsWith($socials['facebook'], 'http') ? $socials['facebook'] : 'https://facebook.com/' . $socials['facebook'] }}"
                                         target="_blank" rel="noopener" title="Facebook">FB</a>
                                 @endif
                                 @if (!empty($socials['tiktok']))
-                                    <a href="https://tiktok.com/@{{ ltrim($socials['tiktok'], '@') }}" target="_blank"
-                                        rel="noopener" title="TikTok">TT</a>
+                                    <a href="https://tiktok.com/@{{ ltrim($socials['tiktok'], '@') }}" target="_blank" rel="noopener"
+                                        title="TikTok">TT</a>
                                 @endif
                                 @if (!empty($socials['twitter']))
                                     <a href="https://twitter.com/{{ ltrim($socials['twitter'], '@') }}" target="_blank"
@@ -1362,7 +1383,8 @@
     <section class="section anim {{ $bg ? 'has-bg' : '' }}"
         style="--overlay: 0.55; {{ $bg ? "background-image:url('$bg');" : '' }}">
         @if ($bg)
-        <div class="overlay"></div> @endif
+            <div class="overlay"></div>
+        @endif
         <div class="section-inner">
             <p class="subtitle">Save the Date</p>
             <h2>Acara Pernikahan</h2>
@@ -1386,7 +1408,9 @@
                         @endif
                         <p class="when">
                             {{ !empty($e['day']) ? $e['day'] . ', ' : '' }}{{ $e['date'] ?? '—' }}
-                            @if (!empty($e['time'])) · {{ $e['time'] }} WIB @endif
+                            @if (!empty($e['time']))
+                                · {{ $e['time'] }} WIB
+                            @endif
                         </p>
                         @if (!empty($e['address']))
                             <p class="addr">{{ $e['address'] }}</p>
@@ -1395,15 +1419,20 @@
                             @php
                                 $maps = $e['maps_url'] ?? null;
                                 if (!$maps && !empty($e['address'])) {
-                                    $maps = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($e['address']);
+                                    $maps =
+                                        'https://www.google.com/maps/search/?api=1&query=' . urlencode($e['address']);
                                 }
-                                $cal = $e['calendar_url'] ?? $gcalUrl($e, ($invitation->coupleNames() ?: 'Wedding') . ' — ' . $meta[0]);
+                                $cal =
+                                    $e['calendar_url'] ??
+                                    $gcalUrl($e, ($invitation->coupleNames() ?: 'Wedding') . ' — ' . $meta[0]);
                             @endphp
                             @if ($maps)
-                                <a href="{{ $maps }}" target="_blank" rel="noopener" class="btn-pill">📍 Kunjungi Lokasi</a>
+                                <a href="{{ $maps }}" target="_blank" rel="noopener" class="btn-pill">📍
+                                    Kunjungi Lokasi</a>
                             @endif
                             @if ($cal)
-                                <a href="{{ $cal }}" target="_blank" rel="noopener" class="btn-pill ghost">📅 Save Date</a>
+                                <a href="{{ $cal }}" target="_blank" rel="noopener" class="btn-pill ghost">📅
+                                    Save Date</a>
                             @endif
                         </div>
                     </div>
@@ -1438,12 +1467,21 @@
             $mapsAddress = $mapsConfig['address'] ?? null;
             $mapsRawUrl = $mapsConfig['embed_url'] ?? null;
             if ($mapsAddress) {
-                $mapsEmbedUrl = 'https://maps.google.com/maps?q=' . urlencode($mapsAddress) . '&t=&z=17&ie=UTF8&iwloc=&output=embed';
+                $mapsEmbedUrl =
+                    'https://maps.google.com/maps?q=' .
+                    urlencode($mapsAddress) .
+                    '&t=&z=17&ie=UTF8&iwloc=&output=embed';
             } elseif ($mapsRawUrl) {
-                if (str_contains($mapsRawUrl, 'maps.google.com/maps?q=') || str_contains($mapsRawUrl, 'maps.google.com/embed?')) {
+                if (
+                    str_contains($mapsRawUrl, 'maps.google.com/maps?q=') ||
+                    str_contains($mapsRawUrl, 'maps.google.com/embed?')
+                ) {
                     $mapsEmbedUrl = $mapsRawUrl;
                 } else {
-                    $mapsEmbedUrl = 'https://maps.google.com/maps?q=' . urlencode($mapsRawUrl) . '&t=&z=17&ie=UTF8&iwloc=&output=embed';
+                    $mapsEmbedUrl =
+                        'https://maps.google.com/maps?q=' .
+                        urlencode($mapsRawUrl) .
+                        '&t=&z=17&ie=UTF8&iwloc=&output=embed';
                 }
             }
         }
@@ -1453,7 +1491,8 @@
         <section class="section anim {{ $bg ? 'has-bg' : '' }}"
             style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
             @if ($bg)
-            <div class="overlay"></div> @endif
+                <div class="overlay"></div>
+            @endif
             <div class="section-inner">
                 <p class="subtitle">Location</p>
                 <h2>Peta Lokasi</h2>
@@ -1483,11 +1522,13 @@
         <section class="section anim {{ $bg ? 'has-bg' : '' }}"
             style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
             @if ($bg)
-            <div class="overlay"></div> @endif
+                <div class="overlay"></div>
+            @endif
             <div class="section-inner">
                 <p class="subtitle">Our Moments</p>
                 <h2>Galeri Foto</h2>
-                <div class="gallery-grid" id="gallery-grid" @if($galleryLightbox) data-lightbox="true" @endif
+                <div class="gallery-grid" id="gallery-grid"
+                    @if ($galleryLightbox) data-lightbox="true" @endif
                     style="grid-template-columns: repeat({{ $galleryColumns }}, 1fr);">
                     @if (!empty($gallerySafe))
                         @foreach ($gallerySafe as $photo)
@@ -1507,153 +1548,170 @@
 
     {{-- ════════════════════ Love Story ════════════════════ --}}
     @if (in_array('love_story', $addonKeys))
-    @php
-        $loveStory = $content['love_story'] ?? [];
-        $lsHeading = $loveStory['heading'] ?? 'Kisah Cinta Kami';
-        $lsIntro   = $loveStory['intro'] ?? '';
-        $lsItems   = $loveStory['items'] ?? [];
-        $lsBg      = $sectionBg('love_story');
-    @endphp
-    <section class="section anim {{ $lsBg ? 'has-bg' : '' }}"
-        style="--overlay: 0.45; {{ $lsBg ? "background-image:url('$lsBg');" : '' }}">
-        @if ($lsBg) <div class="overlay"></div> @endif
-        <div class="section-inner">
-            <p class="subtitle">Our Journey</p>
-            <h2>{{ $lsHeading }}</h2>
-
-            @if ($lsIntro)
-                <p class="tl-intro">{{ $lsIntro }}</p>
+        @php
+            $loveStory = $content['love_story'] ?? [];
+            $lsHeading = $loveStory['heading'] ?? 'Kisah Cinta Kami';
+            $lsIntro = $loveStory['intro'] ?? '';
+            $lsItems = $loveStory['items'] ?? [];
+            $lsBg = $sectionBg('love_story');
+        @endphp
+        <section class="section anim {{ $lsBg ? 'has-bg' : '' }}"
+            style="--overlay: 0.45; {{ $lsBg ? "background-image:url('$lsBg');" : '' }}">
+            @if ($lsBg)
+                <div class="overlay"></div>
             @endif
+            <div class="section-inner">
+                <p class="subtitle">Our Journey</p>
+                <h2>{{ $lsHeading }}</h2>
 
-            @if (!empty($lsItems))
-                <div class="timeline">
-                    @foreach ($lsItems as $lsItem)
-                        <div class="timeline-item">
-                            <div class="tl-dot"></div>
-                            <div class="tl-card">
-                                @if (!empty($lsItem['photo']))
-                                    <img src="{{ $lsItem['photo'] }}" alt="{{ $lsItem['title'] ?? '' }}" class="tl-photo">
-                                @endif
-                                @if (!empty($lsItem['date']))
-                                    <p class="tl-date">{{ $lsItem['date'] }}</p>
-                                @endif
-                                @if (!empty($lsItem['title']))
-                                    <p class="tl-title">{{ $lsItem['title'] }}</p>
-                                @endif
-                                @if (!empty($lsItem['description']))
-                                    <p class="tl-desc">{{ $lsItem['description'] }}</p>
-                                @endif
+                @if ($lsIntro)
+                    <p class="tl-intro">{{ $lsIntro }}</p>
+                @endif
+
+                @if (!empty($lsItems))
+                    <div class="timeline">
+                        @foreach ($lsItems as $lsItem)
+                            <div class="timeline-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-card">
+                                    @if (!empty($lsItem['photo']))
+                                        <img src="{{ $lsItem['photo'] }}" alt="{{ $lsItem['title'] ?? '' }}"
+                                            class="tl-photo">
+                                    @endif
+                                    @if (!empty($lsItem['date']))
+                                        <p class="tl-date">{{ $lsItem['date'] }}</p>
+                                    @endif
+                                    @if (!empty($lsItem['title']))
+                                        <p class="tl-title">{{ $lsItem['title'] }}</p>
+                                    @endif
+                                    @if (!empty($lsItem['description']))
+                                        <p class="tl-desc">{{ $lsItem['description'] }}</p>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="timeline">
-                    @foreach ([['Maret 2019','Pertama Bertemu','Takdir mempertemukan kami di sebuah acara yang tak terduga.'],['Juni 2020','Mulai Berpacaran','Dengan penuh keberanian, ia mengungkapkan perasaannya.'],['Desember 2023','Lamaran','Di hari yang penuh bunga, ia berlutut dan bertanya: maukah kamu?']] as $demo)
-                        <div class="timeline-item">
-                            <div class="tl-dot"></div>
-                            <div class="tl-card">
-                                <p class="tl-date">{{ $demo[0] }}</p>
-                                <p class="tl-title">{{ $demo[1] }}</p>
-                                <p class="tl-desc">{{ $demo[2] }}</p>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="timeline">
+                        @foreach ([['Maret 2019', 'Pertama Bertemu', 'Takdir mempertemukan kami di sebuah acara yang tak terduga.'], ['Juni 2020', 'Mulai Berpacaran', 'Dengan penuh keberanian, ia mengungkapkan perasaannya.'], ['Desember 2023', 'Lamaran', 'Di hari yang penuh bunga, ia berlutut dan bertanya: maukah kamu?']] as $demo)
+                            <div class="timeline-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-card">
+                                    <p class="tl-date">{{ $demo[0] }}</p>
+                                    <p class="tl-title">{{ $demo[1] }}</p>
+                                    <p class="tl-desc">{{ $demo[2] }}</p>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-    </section>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </section>
     @endif
 
     {{-- ════════════════════ Section 6: Wedding Gift ════════════════════ --}}
     @if (in_array('digital_gift', $addonKeys))
-    @php $bg = $sectionBg('gift'); @endphp
-    <section class="section anim {{ $bg ? 'has-bg' : '' }}"
-        style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
-        @if ($bg)
-        <div class="overlay"></div> @endif
-        <div class="section-inner">
-            <p class="subtitle">Wedding Gift</p>
-            <h2>Tanda Kasih</h2>
-
-            @if (!empty($gift['receiver_name']) || !empty($gift['address']))
-                <div class="gift-receiver">
-                    <p class="label">Penerima Kado</p>
-                    <p class="name">{{ $gift['receiver_name'] ?? '—' }}</p>
-                    <p class="addr">{{ $gift['address'] ?? '' }}</p>
-                </div>
+        @php $bg = $sectionBg('gift'); @endphp
+        <section class="section anim {{ $bg ? 'has-bg' : '' }}"
+            style="--overlay: 0.5; {{ $bg ? "background-image:url('$bg');" : '' }}">
+            @if ($bg)
+                <div class="overlay"></div>
             @endif
+            <div class="section-inner">
+                <p class="subtitle">Wedding Gift</p>
+                <h2>Tanda Kasih</h2>
 
-            @php
-                $banks = $gift['banks'] ?? [];
-                if (empty($banks)) {
-                    $banks = [
-                        ['name' => 'BCA', 'account_no' => '1234567890', 'account_holder' => 'a.n. Nama Mempelai', 'logo' => null],
-                        ['name' => 'Mandiri', 'account_no' => '0987654321', 'account_holder' => 'a.n. Nama Mempelai', 'logo' => null],
-                    ];
-                }
-            @endphp
-
-            @if (!empty($banks))
-                <p class="gift-section-label">Rekening Bank</p>
-            @endif
-            <div class="bank-list">
-                @foreach ($banks as $bank)
-                    <div class="bank-card">
-                        <div class="bank-logo">
-                            @if (!empty($bank['logo']))
-                                <img src="{{ $bank['logo'] }}" alt="{{ $bank['name'] ?? '' }}">
-                            @else
-                                {{ strtoupper(substr($bank['name'] ?? '?', 0, 4)) }}
-                            @endif
-                        </div>
-                        <div class="bank-meta">
-                            <p class="bname">{{ $bank['name'] ?? 'Bank' }}</p>
-                            <p class="bno">{{ $bank['account_no'] ?? '—' }}</p>
-                            <p class="bholder">{{ $bank['account_holder'] ?? '' }}</p>
-                        </div>
-                        @if (!empty($bank['account_no']))
-                            <button type="button" class="copy-btn" data-copy="{{ $bank['account_no'] }}">Salin</button>
-                        @endif
+                @if (!empty($gift['receiver_name']) || !empty($gift['address']))
+                    <div class="gift-receiver">
+                        <p class="label">Penerima Kado</p>
+                        <p class="name">{{ $gift['receiver_name'] ?? '—' }}</p>
+                        <p class="addr">{{ $gift['address'] ?? '' }}</p>
                     </div>
-                @endforeach
-            </div>
+                @endif
 
-            @php
-                $ewalletLabels = [
-                    'gopay'     => 'GoPay',
-                    'dana'      => 'DANA',
-                    'ovo'       => 'OVO',
-                    'shopeepay' => 'ShopeePay',
-                    'linkaja'   => 'LinkAja',
-                    'qris'      => 'QRIS',
-                ];
-                $ewallets = $gift['ewallets'] ?? [];
-            @endphp
+                @php
+                    $banks = $gift['banks'] ?? [];
+                    if (empty($banks)) {
+                        $banks = [
+                            [
+                                'name' => 'BCA',
+                                'account_no' => '1234567890',
+                                'account_holder' => 'a.n. Nama Mempelai',
+                                'logo' => null,
+                            ],
+                            [
+                                'name' => 'Mandiri',
+                                'account_no' => '0987654321',
+                                'account_holder' => 'a.n. Nama Mempelai',
+                                'logo' => null,
+                            ],
+                        ];
+                    }
+                @endphp
 
-            @if (!empty($ewallets))
-                <p class="gift-section-label">E-Wallet</p>
-                <div class="ewallet-list">
-                    @foreach ($ewallets as $ew)
-                        @php $providerKey = $ew['provider'] ?? 'qris'; @endphp
-                        <div class="ewallet-card">
-                            <div class="ewallet-icon {{ $providerKey }}">
-                                {{ strtoupper($providerKey === 'shopeepay' ? 'SPAY' : substr($providerKey, 0, 4)) }}
+                @if (!empty($banks))
+                    <p class="gift-section-label">Rekening Bank</p>
+                @endif
+                <div class="bank-list">
+                    @foreach ($banks as $bank)
+                        <div class="bank-card">
+                            <div class="bank-logo">
+                                @if (!empty($bank['logo']))
+                                    <img src="{{ $bank['logo'] }}" alt="{{ $bank['name'] ?? '' }}">
+                                @else
+                                    {{ strtoupper(substr($bank['name'] ?? '?', 0, 4)) }}
+                                @endif
                             </div>
                             <div class="bank-meta">
-                                <p class="bname">{{ $ewalletLabels[$providerKey] ?? strtoupper($providerKey) }}</p>
-                                <p class="bno">{{ $ew['account_no'] ?? '—' }}</p>
-                                <p class="bholder">{{ $ew['account_holder'] ?? '' }}</p>
+                                <p class="bname">{{ $bank['name'] ?? 'Bank' }}</p>
+                                <p class="bno">{{ $bank['account_no'] ?? '—' }}</p>
+                                <p class="bholder">{{ $bank['account_holder'] ?? '' }}</p>
                             </div>
-                            @if (!empty($ew['account_no']))
-                                <button type="button" class="copy-btn" data-copy="{{ $ew['account_no'] }}">Salin</button>
+                            @if (!empty($bank['account_no']))
+                                <button type="button" class="copy-btn"
+                                    data-copy="{{ $bank['account_no'] }}">Salin</button>
                             @endif
                         </div>
                     @endforeach
                 </div>
-            @endif
-        </div>
-    </section>
+
+                @php
+                    $ewalletLabels = [
+                        'gopay' => 'GoPay',
+                        'dana' => 'DANA',
+                        'ovo' => 'OVO',
+                        'shopeepay' => 'ShopeePay',
+                        'linkaja' => 'LinkAja',
+                        'qris' => 'QRIS',
+                    ];
+                    $ewallets = $gift['ewallets'] ?? [];
+                @endphp
+
+                @if (!empty($ewallets))
+                    <p class="gift-section-label">E-Wallet</p>
+                    <div class="ewallet-list">
+                        @foreach ($ewallets as $ew)
+                            @php $providerKey = $ew['provider'] ?? 'qris'; @endphp
+                            <div class="ewallet-card">
+                                <div class="ewallet-icon {{ $providerKey }}">
+                                    {{ strtoupper($providerKey === 'shopeepay' ? 'SPAY' : substr($providerKey, 0, 4)) }}
+                                </div>
+                                <div class="bank-meta">
+                                    <p class="bname">{{ $ewalletLabels[$providerKey] ?? strtoupper($providerKey) }}
+                                    </p>
+                                    <p class="bno">{{ $ew['account_no'] ?? '—' }}</p>
+                                    <p class="bholder">{{ $ew['account_holder'] ?? '' }}</p>
+                                </div>
+                                @if (!empty($ew['account_no']))
+                                    <button type="button" class="copy-btn"
+                                        data-copy="{{ $ew['account_no'] }}">Salin</button>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </section>
     @endif
 
     {{-- ════════════════════ Section 7: Ucapan & Doa Restu ════════════════════ --}}
@@ -1661,7 +1719,8 @@
     <section class="section anim {{ $bg ? 'has-bg' : '' }}"
         style="--overlay: 0.55; {{ $bg ? "background-image:url('$bg');" : '' }}">
         @if ($bg)
-        <div class="overlay"></div> @endif
+            <div class="overlay"></div>
+        @endif
         <div class="section-inner">
             <p class="subtitle">Send Your Wishes</p>
             <h2>{{ $wishesC['heading'] ?? 'Ucapan & Doa Restu' }}</h2>
@@ -1682,17 +1741,18 @@
             </form>
 
             @php
-                $wishesForJs = $wishes->map(function ($w) {
-                    return [
-                        'name' => $w['name'],
-                        'message' => $w['message'],
-                        'attending' => $w['attending'],
-                        'when' => $w['created_at']->diffForHumans(),
-                    ];
-                })->values();
+                $wishesForJs = $wishes
+                    ->map(function ($w) {
+                        return [
+                            'name' => $w['name'],
+                            'message' => $w['message'],
+                            'attending' => $w['attending'],
+                            'when' => $w['created_at']->diffForHumans(),
+                        ];
+                    })
+                    ->values();
             @endphp
-            <div class="wish-list" id="wish-list"
-                data-wishes='{!! $wishesForJs->toJson(JSON_HEX_APOS | JSON_HEX_QUOT) !!}'>
+            <div class="wish-list" id="wish-list" data-wishes='{!! $wishesForJs->toJson(JSON_HEX_APOS | JSON_HEX_QUOT) !!}'>
                 {{-- Filled by JS for pagination support --}}
             </div>
             <div class="pagination" id="wish-pagination"></div>
@@ -1703,89 +1763,93 @@
 
     {{-- ════════════════════ Live Streaming ════════════════════ --}}
     @if (in_array('live_stream', $addonKeys))
-    @php
-        $ls        = $content['live_stream'] ?? [];
-        $lsHeading = $ls['heading']      ?? 'Saksikan Secara Online';
-        $lsDesc    = $ls['description']  ?? '';
-        $lsProvider= $ls['provider']     ?? 'youtube';
-        $lsUrl     = $ls['url']          ?? '';
-        $lsVideoId = $ls['video_id']     ?? null;
-        $lsDate    = $ls['start_date']   ?? '';
-        $lsTime    = $ls['start_time']   ?? '';
-        $lsLabel   = $ls['button_label'] ?? 'Tonton Live Streaming';
-        $lsBg      = $sectionBg('live_stream');
+        @php
+            $ls = $content['live_stream'] ?? [];
+            $lsHeading = $ls['heading'] ?? 'Saksikan Secara Online';
+            $lsDesc = $ls['description'] ?? '';
+            $lsProvider = $ls['provider'] ?? 'youtube';
+            $lsUrl = $ls['url'] ?? '';
+            $lsVideoId = $ls['video_id'] ?? null;
+            $lsDate = $ls['start_date'] ?? '';
+            $lsTime = $ls['start_time'] ?? '';
+            $lsLabel = $ls['button_label'] ?? 'Tonton Live Streaming';
+            $lsBg = $sectionBg('live_stream');
 
-        // Extract YouTube ID from URL if not already stored
-        if ($lsProvider === 'youtube' && $lsUrl && !$lsVideoId) {
-            if (preg_match('/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|v|live)\/)([A-Za-z0-9_-]{11})/i', $lsUrl, $m)) {
-                $lsVideoId = $m[1];
+            // Extract YouTube ID from URL if not already stored
+            if ($lsProvider === 'youtube' && $lsUrl && !$lsVideoId) {
+                if (
+                    preg_match('/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|v|live)\/)([A-Za-z0-9_-]{11})/i', $lsUrl, $m)
+                ) {
+                    $lsVideoId = $m[1];
+                }
             }
-        }
 
-        $lsEmbedUrl = $lsVideoId
-            ? "https://www.youtube.com/embed/{$lsVideoId}?autoplay=0&rel=0"
-            : null;
+            $lsEmbedUrl = $lsVideoId ? "https://www.youtube.com/embed/{$lsVideoId}?autoplay=0&rel=0" : null;
 
-        // Format schedule label
-        $lsSchedule = null;
-        if ($lsDate) {
-            try {
-                $lsSchedule = \Carbon\Carbon::parse($lsDate)->locale('id')->isoFormat('dddd, D MMMM YYYY');
-                if ($lsTime) $lsSchedule .= ' · ' . substr($lsTime, 0, 5) . ' WIB';
-            } catch (\Throwable $e) { $lsSchedule = $lsDate . ($lsTime ? ' · ' . $lsTime : ''); }
-        }
-    @endphp
-    @php $lsBgStyle = $lsBg ? "background-image:url('$lsBg');" : ''; @endphp
-    <section class="section anim {{ $lsBg ? 'has-bg' : '' }}"
-        style="--overlay: 0.55; {{ $lsBgStyle }}">
-        @if ($lsBg) <div class="overlay"></div> @endif
-        <div class="section-inner">
-            <p class="subtitle">Live Streaming</p>
-            <h2>{{ $lsHeading }}</h2>
+            // Format schedule label
+            $lsSchedule = null;
+            if ($lsDate) {
+                try {
+                    $lsSchedule = \Carbon\Carbon::parse($lsDate)->locale('id')->isoFormat('dddd, D MMMM YYYY');
+                    if ($lsTime) {
+                        $lsSchedule .= ' · ' . substr($lsTime, 0, 5) . ' WIB';
+                    }
+                } catch (\Throwable $e) {
+                    $lsSchedule = $lsDate . ($lsTime ? ' · ' . $lsTime : '');
+                }
+            }
+        @endphp
+        @php $lsBgStyle = $lsBg ? "background-image:url('$lsBg');" : ''; @endphp
+        <section class="section anim {{ $lsBg ? 'has-bg' : '' }}" style="--overlay: 0.55; {{ $lsBgStyle }}">
+            @if ($lsBg)
+                <div class="overlay"></div>
+            @endif
+            <div class="section-inner">
+                <p class="subtitle">Live Streaming</p>
+                <h2>{{ $lsHeading }}</h2>
 
-            <div class="livestream-card">
-                @if ($lsEmbedUrl)
-                    <div class="livestream-embed">
-                        <iframe src="{{ $lsEmbedUrl }}"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen loading="lazy">
-                        </iframe>
-                    </div>
-                @endif
-
-                <div class="livestream-body">
-                    @if ($lsSchedule)
-                        <div class="livestream-schedule">
-                            📅 {{ $lsSchedule }}
+                <div class="livestream-card">
+                    @if ($lsEmbedUrl)
+                        <div class="livestream-embed">
+                            <iframe src="{{ $lsEmbedUrl }}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
+                            </iframe>
                         </div>
                     @endif
 
-                    @if ($lsDesc)
-                        <p class="ls-desc">{{ $lsDesc }}</p>
-                    @endif
+                    <div class="livestream-body">
+                        @if ($lsSchedule)
+                            <div class="livestream-schedule">
+                                📅 {{ $lsSchedule }}
+                            </div>
+                        @endif
 
-                    @if ($lsUrl && $lsProvider === 'custom')
-                        <a href="{{ $lsUrl }}" target="_blank" rel="noopener" class="ls-btn">
-                            📺 {{ $lsLabel }}
-                        </a>
-                    @elseif ($lsUrl && $lsProvider === 'youtube')
-                        <a href="{{ $lsUrl }}" target="_blank" rel="noopener" class="ls-btn">
-                            ▶ Buka di YouTube
-                        </a>
-                    @else
-                        <p class="text-sm opacity-50 italic">Link live streaming belum ditambahkan.</p>
-                    @endif
+                        @if ($lsDesc)
+                            <p class="ls-desc">{{ $lsDesc }}</p>
+                        @endif
+
+                        @if ($lsUrl && $lsProvider === 'custom')
+                            <a href="{{ $lsUrl }}" target="_blank" rel="noopener" class="ls-btn">
+                                📺 {{ $lsLabel }}
+                            </a>
+                        @elseif ($lsUrl && $lsProvider === 'youtube')
+                            <a href="{{ $lsUrl }}" target="_blank" rel="noopener" class="ls-btn">
+                                ▶ Buka di YouTube
+                            </a>
+                        @else
+                            <p class="text-sm opacity-50 italic">Link live streaming belum ditambahkan.</p>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     {{-- ════════════════════ Section 8: Closing ════════════════════ --}}
     @php $bgClose = $sectionBg('closing'); @endphp
-    <footer class="closing anim" @if ($bgClose)
-        style="background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ $bgClose }}'); background-size:cover; background-position:center;"
-    @endif>
+    <footer class="closing anim"
+        @if ($bgClose) style="background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ $bgClose }}'); background-size:cover; background-position:center;" @endif>
         <h2>{{ $closing['heading'] ?? 'Terima Kasih' }}</h2>
         <p class="thanks">{{ $closing['thank_you'] ?? 'Atas Kehadiran & Doa Restunya' }}</p>
         <p class="signature">— {{ $invitation->coupleNames() }} —</p>
@@ -1838,13 +1902,16 @@
     @endif
 
     <script>
-        (function () {
+        (function() {
             // ─── Cover gate ───
             var coverBtn = document.getElementById('open-invitation-btn');
             if (coverBtn) {
-                coverBtn.addEventListener('click', function () {
+                coverBtn.addEventListener('click', function() {
                     document.body.classList.add('invitation-opened');
-                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'instant'
+                    });
                     // Start the music if autoplay is enabled and the player has booted.
                     // The click here counts as a user gesture so autoplay is allowed
                     // by the browser even without muting.
@@ -1856,6 +1923,7 @@
             var cd = document.querySelector('.countdown');
             if (cd) {
                 var target = new Date(cd.dataset.target).getTime();
+
                 function tick() {
                     var diff = Math.max(0, target - Date.now());
                     var d = Math.floor(diff / 86400000),
@@ -1867,62 +1935,77 @@
                     cd.querySelector('[data-cd="m"]').textContent = String(m).padStart(2, '0');
                     cd.querySelector('[data-cd="s"]').textContent = String(s).padStart(2, '0');
                 }
-                tick(); setInterval(tick, 1000);
+                tick();
+                setInterval(tick, 1000);
             }
 
             // ─── Gallery lightbox ───
             var lb = document.getElementById('lightbox');
             var lbImg = document.getElementById('lightbox-img');
-            document.querySelectorAll('#gallery-grid .cell[data-src]').forEach(function (cell) {
-                cell.addEventListener('click', function () {
+            document.querySelectorAll('#gallery-grid .cell[data-src]').forEach(function(cell) {
+                cell.addEventListener('click', function() {
                     lbImg.src = cell.dataset.src;
                     lb.classList.add('open');
                 });
             });
             if (lb) {
-                lb.addEventListener('click', function (e) {
+                lb.addEventListener('click', function(e) {
                     if (e.target === lb || e.target.id === 'lightbox-close') {
                         lb.classList.remove('open');
                         lbImg.src = '';
                     }
                 });
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape') { lb.classList.remove('open'); lbImg.src = ''; }
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        lb.classList.remove('open');
+                        lbImg.src = '';
+                    }
                 });
             }
 
             // ─── Copy bank ───
             var toast = document.getElementById('toast');
+
             function showToast(msg) {
                 if (!toast) return;
                 toast.textContent = msg;
                 toast.classList.add('show');
                 clearTimeout(showToast._t);
-                showToast._t = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+                showToast._t = setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 1800);
             }
-            document.querySelectorAll('.copy-btn').forEach(function (btn) {
-                btn.addEventListener('click', function () {
+            document.querySelectorAll('.copy-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
                     var val = btn.dataset.copy || '';
-                    var done = function () {
+                    var done = function() {
                         btn.classList.add('copied');
                         var prev = btn.textContent;
                         btn.textContent = '✓ Tersalin';
                         showToast('Nomor rekening disalin');
-                        setTimeout(function () {
+                        setTimeout(function() {
                             btn.classList.remove('copied');
                             btn.textContent = prev;
                         }, 1800);
                     };
                     if (navigator.clipboard && window.isSecureContext) {
-                        navigator.clipboard.writeText(val).then(done).catch(function () {
+                        navigator.clipboard.writeText(val).then(done).catch(function() {
                             var ta = document.createElement('textarea');
-                            ta.value = val; document.body.appendChild(ta);
-                            ta.select(); document.execCommand('copy'); ta.remove(); done();
+                            ta.value = val;
+                            document.body.appendChild(ta);
+                            ta.select();
+                            document.execCommand('copy');
+                            ta.remove();
+                            done();
                         });
                     } else {
                         var ta = document.createElement('textarea');
-                        ta.value = val; document.body.appendChild(ta);
-                        ta.select(); document.execCommand('copy'); ta.remove(); done();
+                        ta.value = val;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        ta.remove();
+                        done();
                     }
                 });
             });
@@ -1932,46 +2015,69 @@
             var pagEl = document.getElementById('wish-pagination');
             if (listEl && pagEl) {
                 var wishes = [];
-                try { wishes = JSON.parse(listEl.dataset.wishes || '[]'); } catch (e) { wishes = []; }
-                var perPage = 10, page = 1;
+                try {
+                    wishes = JSON.parse(listEl.dataset.wishes || '[]');
+                } catch (e) {
+                    wishes = [];
+                }
+                var perPage = 10,
+                    page = 1;
                 var pageCount = Math.max(1, Math.ceil(wishes.length / perPage));
 
                 function escapeHtml(s) {
-                    return String(s).replace(/[&<>"']/g, function (c) {
-                        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+                    return String(s).replace(/[&<>"']/g, function(c) {
+                        return ({
+                            '&': '&amp;',
+                            '<': '&lt;',
+                            '>': '&gt;',
+                            '"': '&quot;',
+                            "'": '&#39;'
+                        })[c];
                     });
                 }
+
                 function render() {
                     var start = (page - 1) * perPage;
                     var items = wishes.slice(start, start + perPage);
                     if (!items.length) {
-                        listEl.innerHTML = '<div class="wish-item" style="text-align:center;opacity:0.6"><p class="msg">Belum ada ucapan. Jadilah yang pertama!</p></div>';
+                        listEl.innerHTML =
+                            '<div class="wish-item" style="text-align:center;opacity:0.6"><p class="msg">Belum ada ucapan. Jadilah yang pertama!</p></div>';
                     } else {
-                        listEl.innerHTML = items.map(function (w) {
+                        listEl.innerHTML = items.map(function(w) {
                             var attClass = w.attending === 'tidak_hadir' ? 'att no' : 'att';
-                            var attText = w.attending === 'tidak_hadir' ? 'Tidak Hadir' : (w.attending === 'ragu' ? 'Masih Ragu' : 'Hadir');
-                            return ''
-                                + '<div class="wish-item">'
-                                + '<div class="wish-item-head">'
-                                + '<span class="who">' + escapeHtml(w.name) + '<span class="' + attClass + '">' + attText + '</span></span>'
-                                + '<span class="meta">' + escapeHtml(w.when || '') + '</span>'
-                                + '</div>'
-                                + '<p class="msg">' + escapeHtml(w.message) + '</p>'
-                                + '</div>';
+                            var attText = w.attending === 'tidak_hadir' ? 'Tidak Hadir' : (w.attending ===
+                                'ragu' ? 'Masih Ragu' : 'Hadir');
+                            return '' +
+                                '<div class="wish-item">' +
+                                '<div class="wish-item-head">' +
+                                '<span class="who">' + escapeHtml(w.name) + '<span class="' + attClass + '">' +
+                                attText + '</span></span>' +
+                                '<span class="meta">' + escapeHtml(w.when || '') + '</span>' +
+                                '</div>' +
+                                '<p class="msg">' + escapeHtml(w.message) + '</p>' +
+                                '</div>';
                         }).join('');
                     }
                     // Pagination buttons
                     var html = '<button data-act="prev" ' + (page === 1 ? 'disabled' : '') + '>‹</button>';
                     for (var i = 1; i <= pageCount; i++) {
-                        html += '<button data-page="' + i + '" class="' + (i === page ? 'active' : '') + '">' + i + '</button>';
+                        html += '<button data-page="' + i + '" class="' + (i === page ? 'active' : '') + '">' + i +
+                            '</button>';
                     }
                     html += '<button data-act="next" ' + (page === pageCount ? 'disabled' : '') + '>›</button>';
                     pagEl.innerHTML = html;
-                    pagEl.querySelectorAll('button').forEach(function (b) {
-                        b.addEventListener('click', function () {
-                            if (b.dataset.act === 'prev' && page > 1) { page--; render(); }
-                            else if (b.dataset.act === 'next' && page < pageCount) { page++; render(); }
-                            else if (b.dataset.page) { page = parseInt(b.dataset.page, 10); render(); }
+                    pagEl.querySelectorAll('button').forEach(function(b) {
+                        b.addEventListener('click', function() {
+                            if (b.dataset.act === 'prev' && page > 1) {
+                                page--;
+                                render();
+                            } else if (b.dataset.act === 'next' && page < pageCount) {
+                                page++;
+                                render();
+                            } else if (b.dataset.page) {
+                                page = parseInt(b.dataset.page, 10);
+                                render();
+                            }
                         });
                     });
                 }
@@ -2000,23 +2106,33 @@
                 function createPlayer() {
                     ytPlayer = new YT.Player('yt-player-host', {
                         videoId: videoId,
-                        width: '1', height: '1',
+                        width: '1',
+                        height: '1',
                         playerVars: {
-                            controls: 0, disablekb: 1, modestbranding: 1, rel: 0,
-                            playsinline: 1, fs: 0, iv_load_policy: 3,
+                            controls: 0,
+                            disablekb: 1,
+                            modestbranding: 1,
+                            rel: 0,
+                            playsinline: 1,
+                            fs: 0,
+                            iv_load_policy: 3,
                             start: startAt,
                             // Loop a single video requires playlist=videoId.
                             loop: wantLoop ? 1 : 0,
                             playlist: wantLoop ? videoId : undefined,
                         },
                         events: {
-                            onReady: function () {
+                            onReady: function() {
                                 ytReady = true;
-                                if (pendingPlay) { ytPlayer.playVideo(); pendingPlay = false; }
+                                if (pendingPlay) {
+                                    ytPlayer.playVideo();
+                                    pendingPlay = false;
+                                }
                             },
-                            onStateChange: function (e) {
+                            onStateChange: function(e) {
                                 if (e.data === YT.PlayerState.PLAYING) musicBtn.textContent = '⏸';
-                                else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) musicBtn.textContent = '▶';
+                                else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState
+                                    .ENDED) musicBtn.textContent = '▶';
                             },
                         },
                     });
@@ -2026,14 +2142,17 @@
                 // If the API already loaded (e.g. cached), bootstrap immediately.
                 if (window.YT && window.YT.Player) createPlayer();
 
-                musicBtn.addEventListener('click', function () {
-                    if (!ytReady || !ytPlayer) { pendingPlay = true; return; }
+                musicBtn.addEventListener('click', function() {
+                    if (!ytReady || !ytPlayer) {
+                        pendingPlay = true;
+                        return;
+                    }
                     var state = ytPlayer.getPlayerState();
                     if (state === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
                     else ytPlayer.playVideo();
                 });
 
-                window.__musicAutoplayOnOpen = function () {
+                window.__musicAutoplayOnOpen = function() {
                     if (!wantAutoplay) return;
                     if (ytReady && ytPlayer) ytPlayer.playVideo();
                     else pendingPlay = true;
@@ -2044,15 +2163,20 @@
             var animKey = '{{ $animationKey }}';
             document.body.classList.add('anim-' + animKey);
             if (animKey === 'standard' || animKey === 'premium') {
-                window.addEventListener('load', function () {
+                window.addEventListener('load', function() {
                     if (typeof gsap === 'undefined') return;
                     gsap.registerPlugin(ScrollTrigger);
-                    gsap.utils.toArray('.anim').forEach(function (el) {
+                    gsap.utils.toArray('.anim').forEach(function(el) {
                         gsap.to(el, {
-                            opacity: 1, y: 0,
+                            opacity: 1,
+                            y: 0,
                             duration: animKey === 'premium' ? 1.1 : 0.8,
                             ease: animKey === 'premium' ? 'power3.out' : 'power2.out',
-                            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+                            scrollTrigger: {
+                                trigger: el,
+                                start: 'top 88%',
+                                toggleActions: 'play none none none'
+                            },
                         });
                     });
 
@@ -2062,11 +2186,18 @@
                         canvas.id = 'petals-canvas';
                         document.body.appendChild(canvas);
                         var ctx = canvas.getContext('2d');
-                        function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+
+                        function resize() {
+                            canvas.width = innerWidth;
+                            canvas.height = innerHeight;
+                        }
                         resize();
                         window.addEventListener('resize', resize);
-                        var pc = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#c8756a';
-                        var petals = Array.from({ length: 26 }, function () {
+                        var pc = getComputedStyle(document.documentElement).getPropertyValue('--color-primary')
+                            .trim() || '#c8756a';
+                        var petals = Array.from({
+                            length: 26
+                        }, function() {
                             return {
                                 x: Math.random() * innerWidth,
                                 y: Math.random() * innerHeight - innerHeight,
@@ -2078,21 +2209,32 @@
                                 opacity: 0.5 + Math.random() * 0.5,
                             };
                         });
+
                         function draw() {
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
-                            petals.forEach(function (p) {
-                                p.y += p.speed; p.x += p.drift; p.angle += p.spin;
-                                if (p.y > canvas.height + 20) { p.y = -20; p.x = Math.random() * canvas.width; }
-                                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.angle);
-                                ctx.globalAlpha = p.opacity; ctx.fillStyle = pc;
-                                ctx.beginPath(); ctx.ellipse(0, 0, p.r, p.r * 1.8, 0, 0, Math.PI * 2); ctx.fill();
+                            petals.forEach(function(p) {
+                                p.y += p.speed;
+                                p.x += p.drift;
+                                p.angle += p.spin;
+                                if (p.y > canvas.height + 20) {
+                                    p.y = -20;
+                                    p.x = Math.random() * canvas.width;
+                                }
+                                ctx.save();
+                                ctx.translate(p.x, p.y);
+                                ctx.rotate(p.angle);
+                                ctx.globalAlpha = p.opacity;
+                                ctx.fillStyle = pc;
+                                ctx.beginPath();
+                                ctx.ellipse(0, 0, p.r, p.r * 1.8, 0, 0, Math.PI * 2);
+                                ctx.fill();
                                 ctx.restore();
                             });
                             requestAnimationFrame(draw);
                         }
                         draw();
                     @endif
-        });
+                });
             }
         })();
     </script>
@@ -2105,20 +2247,38 @@
             var link = document.createElement('link');
             link.id = id;
             link.rel = 'stylesheet';
-            link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(family) + ':wght@400;600;700&display=swap';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(family) +
+                ':wght@400;600;700&display=swap';
             document.head.appendChild(link);
         }
 
-        window.addEventListener('message', function (event) {
+        window.addEventListener('message', function(event) {
             if (!event.data) return;
             var root = document.documentElement;
 
             if (event.data.type === 'preview:colors') {
                 var c = event.data.colors || {};
-                if (c.primary)   root.style.setProperty('--color-primary',   c.primary);
+                if (c.primary) root.style.setProperty('--color-primary', c.primary);
                 if (c.secondary) root.style.setProperty('--color-secondary', c.secondary);
-                if (c.accent)    root.style.setProperty('--color-accent',    c.accent);
-                if (c.text)      root.style.setProperty('--color-text',      c.text);
+                if (c.accent) root.style.setProperty('--color-accent', c.accent);
+                if (c.text) root.style.setProperty('--color-text', c.text);
+            }
+
+            if (event.data.type === 'preview:couplePhotos') {
+                var cards = document.querySelectorAll('.couple-card');
+                cards.forEach(function(card, i) {
+                    var url = i === 0 ? event.data.groomPhoto : event.data.bridePhoto;
+                    var photoEl = card.querySelector('.couple-photo');
+                    var emoji = card.querySelector('.couple-photo-emoji');
+                    if (!photoEl) return;
+                    if (url) {
+                        photoEl.style.backgroundImage = "url('" + url + "')";
+                        if (emoji) emoji.style.display = 'none';
+                    } else {
+                        photoEl.style.backgroundImage = '';
+                        if (emoji) emoji.style.display = '';
+                    }
+                });
             }
 
             if (event.data.type === 'preview:typography') {

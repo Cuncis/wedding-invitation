@@ -119,6 +119,45 @@ class BuilderController extends Controller
     }
 
     /**
+     * POST /builder/{invitation}/couple/upload — upload groom or bride photo.
+     */
+    public function uploadCouplePhoto(Request $request, Invitation $invitation): JsonResponse
+    {
+        try {
+            $this->authorize('update', $invitation);
+
+            $request->validate([
+                'photo' => 'required|image|max:8192',
+                'role' => 'required|in:groom,bride',
+            ]);
+
+            $role = $request->input('role');
+            $file = $request->file('photo');
+            $filename = Str::uuid().'.jpg';
+            $path = 'couple/'.$invitation->id.'/'.$role.'/'.$filename;
+
+            $manager = new ImageManager(new Driver);
+            $image = $manager->decode($file->getPathname());
+            $image->orient();
+            if ($image->width() > 800) {
+                $image->resize(800, null);
+            }
+            $encoded = $image->encode(new JpegEncoder(85));
+
+            Storage::disk('r2')->put($path, (string) $encoded, ['visibility' => 'public']);
+
+            $base = rtrim(config('services.r2.public_url', ''), '/');
+            $url = $base ? $base.'/'.$path : null;
+
+            return response()->json(['url' => $url]);
+        } catch (\Throwable $e) {
+            Log::error('Couple photo upload failed', ['error' => $e->getMessage()]);
+
+            return response()->json(['error' => 'Upload gagal. Silakan coba lagi.'], 500);
+        }
+    }
+
+    /**
      * GET /builder/{invitation}/preview — iframe preview (no auth check for UX).
      */
     public function preview(Invitation $invitation): View
