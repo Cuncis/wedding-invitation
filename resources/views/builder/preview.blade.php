@@ -2098,14 +2098,40 @@
     </script>
 
     <script>
+        function loadGoogleFont(family) {
+            if (!family) return;
+            var id = 'gf-' + family.replace(/\s+/g, '-');
+            if (document.getElementById(id)) return;
+            var link = document.createElement('link');
+            link.id = id;
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(family) + ':wght@400;600;700&display=swap';
+            document.head.appendChild(link);
+        }
+
         window.addEventListener('message', function (event) {
-            if (!event.data || event.data.type !== 'preview:colors') return;
-            var c = event.data.colors || {};
+            if (!event.data) return;
             var root = document.documentElement;
-            if (c.primary)   root.style.setProperty('--color-primary',   c.primary);
-            if (c.secondary) root.style.setProperty('--color-secondary', c.secondary);
-            if (c.accent)    root.style.setProperty('--color-accent',    c.accent);
-            if (c.text)      root.style.setProperty('--color-text',      c.text);
+
+            if (event.data.type === 'preview:colors') {
+                var c = event.data.colors || {};
+                if (c.primary)   root.style.setProperty('--color-primary',   c.primary);
+                if (c.secondary) root.style.setProperty('--color-secondary', c.secondary);
+                if (c.accent)    root.style.setProperty('--color-accent',    c.accent);
+                if (c.text)      root.style.setProperty('--color-text',      c.text);
+            }
+
+            if (event.data.type === 'preview:typography') {
+                var t = event.data.typography || {};
+                if (t.heading) {
+                    loadGoogleFont(t.heading);
+                    root.style.setProperty('--font-heading', "'" + t.heading + "', serif");
+                }
+                if (t.body) {
+                    loadGoogleFont(t.body);
+                    root.style.setProperty('--font-body', "'" + t.body + "', sans-serif");
+                }
+            }
         });
     </script>
 

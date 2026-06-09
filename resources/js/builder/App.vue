@@ -40,13 +40,30 @@ function postColorsToPreview(colors) {
     }
 }
 
+function postTypographyToPreview(typography) {
+    const iframe = previewFrame.value?.iframeEl;
+    if (iframe?.contentWindow) {
+        iframe.contentWindow.postMessage(
+            { type: 'preview:typography', typography },
+            '*',
+        );
+    }
+}
+
 function onPreviewLoad() {
     postColorsToPreview(store.config.colors);
+    postTypographyToPreview(store.config.typography);
 }
 
 watch(
     () => store.config.colors,
     (colors) => postColorsToPreview(colors),
+    { deep: true },
+);
+
+watch(
+    () => store.config.typography,
+    (typography) => postTypographyToPreview(typography),
     { deep: true },
 );
 
