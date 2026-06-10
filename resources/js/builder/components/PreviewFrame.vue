@@ -9,10 +9,17 @@ const props = defineProps({
 const emit = defineEmits(['load']);
 
 const iframeEl = ref(null);
-defineExpose({ iframeEl });
+defineExpose({ iframeEl, postToIframe });
 
 function onIframeLoad() {
     emit('load');
+}
+
+function postToIframe(data) {
+    const el = iframeEl.value;
+    if (el?.contentWindow) {
+        el.contentWindow.postMessage(data, '*');
+    }
 }
 
 // Append a cache-buster query so the iframe reloads on auto-save.

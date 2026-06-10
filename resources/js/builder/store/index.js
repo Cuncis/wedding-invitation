@@ -142,6 +142,7 @@ export const useBuilderStore = defineStore('builder', () => {
     const pricing = ref(null);
     const isPricing = ref(false);
     const previewKey = ref(0);
+    const configVersion = ref(0);
     let booted = false;
 
     function init(id, initialConfig, inv) {
@@ -205,6 +206,7 @@ export const useBuilderStore = defineStore('builder', () => {
     watch(config, () => {
         if (!booted) return;
         isDirty.value = true;
+        configVersion.value++;
         save();
     }, { deep: true });
 
@@ -235,6 +237,7 @@ export const useBuilderStore = defineStore('builder', () => {
         pricing,
         isPricing,
         previewKey,
+        configVersion,
         init,
         refreshPricing,
     };

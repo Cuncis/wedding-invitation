@@ -30,24 +30,16 @@ const store = useBuilderStore();
 
 const previewFrame = ref(null);
 
+function sendToPreview(data) {
+    previewFrame.value?.postToIframe(data);
+}
+
 function postColorsToPreview(colors) {
-    const iframe = previewFrame.value?.iframeEl;
-    if (iframe?.contentWindow) {
-        iframe.contentWindow.postMessage(
-            { type: 'preview:colors', colors },
-            '*',
-        );
-    }
+    sendToPreview({ type: 'preview:colors', colors });
 }
 
 function postTypographyToPreview(typography) {
-    const iframe = previewFrame.value?.iframeEl;
-    if (iframe?.contentWindow) {
-        iframe.contentWindow.postMessage(
-            { type: 'preview:typography', typography },
-            '*',
-        );
-    }
+    sendToPreview({ type: 'preview:typography', typography });
 }
 
 function onPreviewLoad() {
@@ -56,13 +48,13 @@ function onPreviewLoad() {
 }
 
 watch(
-    () => store.config.colors,
+    () => ({ ...store.config.colors }),
     (colors) => postColorsToPreview(colors),
     { deep: true },
 );
 
 watch(
-    () => store.config.typography,
+    () => ({ ...store.config.typography }),
     (typography) => postTypographyToPreview(typography),
     { deep: true },
 );
@@ -70,13 +62,7 @@ watch(
 watch(
     () => [store.config.content?.couple?.groom_photo, store.config.content?.couple?.bride_photo],
     ([groomPhoto, bridePhoto]) => {
-        const iframe = previewFrame.value?.iframeEl;
-        if (iframe?.contentWindow) {
-            iframe.contentWindow.postMessage(
-                { type: 'preview:couplePhotos', groomPhoto, bridePhoto },
-                '*',
-            );
-        }
+        sendToPreview({ type: 'preview:couplePhotos', groomPhoto, bridePhoto });
     },
 );
 
@@ -190,7 +176,8 @@ const saveStatus = computed(() => {
                     <AddonPanel v-if="activeTab === 'addon'" :addons="addons" />
                     <AnimationPicker v-if="activeTab === 'animation'" :packs="animationPacks" />
                     <ColorPicker v-if="activeTab === 'colors'" />
-                    <TypographyPicker v-if="activeTab === 'fonts'" />
+                    <TypographyPicker v-if="activeTab === 'fonts'"
+                        @font-changed="postTypographyToPreview(store.config.typography)" />
                 </div>
             </aside>
 

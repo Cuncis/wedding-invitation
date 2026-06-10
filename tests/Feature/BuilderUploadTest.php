@@ -6,12 +6,21 @@ use App\Models\Invitation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class BuilderUploadTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Disable R2 in tests so uploadDisk() falls back to 'public'
+        Config::set('filesystems.disks.r2.bucket', null);
+    }
 
     public function test_unauthenticated_user_cannot_upload_couple_photo(): void
     {
