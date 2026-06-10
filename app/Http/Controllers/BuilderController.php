@@ -22,6 +22,30 @@ class BuilderController extends Controller
     public function __construct(private readonly MusicService $musicService) {}
 
     /**
+     * Resolve the upload disk to use: R2 if configured, public otherwise.
+     */
+    private function uploadDisk(): string
+    {
+        return config('filesystems.disks.r2.bucket') ? 'r2' : 'public';
+    }
+
+    /**
+     * Resolve the public URL for a file stored on the upload disk.
+     */
+    private function uploadUrl(string $path): string
+    {
+        $disk = $this->uploadDisk();
+
+        if ($disk === 'r2') {
+            $base = rtrim(config('services.r2.public_url', ''), '/');
+
+            return $base ? $base.'/'.$path : '';
+        }
+
+        return Storage::disk('public')->url($path);
+    }
+
+    /**
      * GET /builder/{invitation}/edit — show the Vue builder SPA.
      */
     public function edit(Invitation $invitation): View
@@ -83,18 +107,18 @@ class BuilderController extends Controller
      */
     public function uploadGalleryImage(Request $request, Invitation $invitation): JsonResponse
     {
+        $this->authorize('update', $invitation);
+
+        $request->validate([
+            'photo' => 'required|image|max:20480', // 20MB max
+        ]);
+
         try {
-            $this->authorize('update', $invitation);
-
-            $request->validate([
-                'photo' => 'required|image|max:20480', // 20MB max
-            ]);
-
             $file = $request->file('photo');
             $filename = Str::uuid().'.jpg';
             $path = 'gallery/'.$invitation->id.'/'.$filename;
 
-            // Compress image: max 1200px wide, 80% quality, output as webp
+            // Compress image: max 1200px wide, 80% quality
             $manager = new ImageManager(new Driver);
             $image = $manager->decode($file->getPathname());
             $image->orient(); // fix EXIF rotation
@@ -103,12 +127,10 @@ class BuilderController extends Controller
             }
             $encoded = $image->encode(new JpegEncoder(80));
 
-            // Always use R2 for gallery uploads
-            $diskName = 'r2';
-            Storage::disk($diskName)->put($path, (string) $encoded, ['visibility' => 'public']);
+            $disk = $this->uploadDisk();
+            Storage::disk($disk)->put($path, (string) $encoded, ['visibility' => 'public']);
 
-            $base = rtrim(config('services.r2.public_url', ''), '/');
-            $url = $base ? $base.'/'.$path : null;
+            $url = $this->uploadUrl($path);
 
             return response()->json(['url' => $url]);
         } catch (\Throwable $e) {
@@ -123,14 +145,14 @@ class BuilderController extends Controller
      */
     public function uploadCouplePhoto(Request $request, Invitation $invitation): JsonResponse
     {
+        $this->authorize('update', $invitation);
+
+        $request->validate([
+            'photo' => 'required|image|max:8192',
+            'role' => 'required|in:groom,bride',
+        ]);
+
         try {
-            $this->authorize('update', $invitation);
-
-            $request->validate([
-                'photo' => 'required|image|max:8192',
-                'role' => 'required|in:groom,bride',
-            ]);
-
             $role = $request->input('role');
             $file = $request->file('photo');
             $filename = Str::uuid().'.jpg';
@@ -144,10 +166,10 @@ class BuilderController extends Controller
             }
             $encoded = $image->encode(new JpegEncoder(85));
 
-            Storage::disk('r2')->put($path, (string) $encoded, ['visibility' => 'public']);
+            $disk = $this->uploadDisk();
+            Storage::disk($disk)->put($path, (string) $encoded, ['visibility' => 'public']);
 
-            $base = rtrim(config('services.r2.public_url', ''), '/');
-            $url = $base ? $base.'/'.$path : null;
+            $url = $this->uploadUrl($path);
 
             return response()->json(['url' => $url]);
         } catch (\Throwable $e) {
@@ -180,10 +202,10 @@ class BuilderController extends Controller
 
         // Mock wishes (ucapan & doa restu) — preview only. Real feature comes later.
         $wishes = collect([
-            ['name' => 'Andi Pratama',   'message' => 'Selamat menempuh hidup baru! Semoga menjadi keluarga sakinah, mawaddah, warahmah.', 'attending' => 'hadir',       'created_at' => now()->subHours(2)],
-            ['name' => 'Sari Wulandari', 'message' => 'Barakallahu lakuma wa baraka alaykuma. Selamat ya kalian berdua!',                       'attending' => 'hadir',       'created_at' => now()->subHours(5)],
-            ['name' => 'Budi Santoso',   'message' => 'Maaf belum bisa hadir, doa terbaik selalu untuk kalian berdua.',                          'attending' => 'tidak_hadir', 'created_at' => now()->subDay()],
-            ['name' => 'Dewi Lestari',   'message' => 'Selamat ya! Akhirnya hari yang ditunggu-tunggu tiba juga. \xF0\x9F\xA5\xB0',              'attending' => 'hadir',       'created_at' => now()->subDays(2)],
+            ['name' => 'Andi Pratama', 'message' => 'Selamat menempuh hidup baru! Semoga menjadi keluarga sakinah, mawaddah, warahmah.', 'attending' => 'hadir', 'created_at' => now()->subHours(2)],
+            ['name' => 'Sari Wulandari', 'message' => 'Barakallahu lakuma wa baraka alaykuma. Selamat ya kalian berdua!', 'attending' => 'hadir', 'created_at' => now()->subHours(5)],
+            ['name' => 'Budi Santoso', 'message' => 'Maaf belum bisa hadir, doa terbaik selalu untuk kalian berdua.', 'attending' => 'tidak_hadir', 'created_at' => now()->subDay()],
+            ['name' => 'Dewi Lestari', 'message' => 'Selamat ya! Akhirnya hari yang ditunggu-tunggu tiba juga. \xF0\x9F\xA5\xB0', 'attending' => 'hadir', 'created_at' => now()->subDays(2)],
         ]);
 
         $optionalAddons = Addon::whereIn('key', ['maps', 'countdown'])
