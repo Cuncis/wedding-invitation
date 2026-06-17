@@ -1,5 +1,6 @@
 @php
     use Illuminate\Support\Str;
+    use App\Models\AnimationPack;
 
     $config = $invitation->config;
     $theme = $config?->theme;
@@ -89,13 +90,17 @@
     <style>
         :root {
             --color-primary:
-                {{ $primary }};
+                {{ $primary }}
+            ;
             --color-secondary:
-                {{ $secondary }};
+                {{ $secondary }}
+            ;
             --color-accent:
-                {{ $accent }};
+                {{ $accent }}
+            ;
             --color-text:
-                {{ $text }};
+                {{ $text }}
+            ;
             --font-heading: '{{ $headingFont }}', serif;
             --font-body: '{{ $bodyFont }}', sans-serif;
         }
@@ -1229,7 +1234,8 @@
             animation-delay: 0.3s;
         }
 
-        {{ '@' }} keyframes fadeInUp {
+        {{ '@' }}
+        keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -1253,14 +1259,30 @@
             pointer-events: none;
             z-index: 9999;
         }
+
+        /* ─── Animation: Free (fade-in) ─── */
+        @if ($animationKey === AnimationPack::KEY_FREE || $animationKey === AnimationPack::KEY_STANDARD || $animationKey === AnimationPack::KEY_PREMIUM)
+            .anim {
+                opacity: 0;
+                transform: translateY(24px);
+                transition: opacity 0.7s ease, transform 0.7s ease;
+            }
+
+            .anim.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        @endif
     </style>
 </head>
 
 <body>
 
     {{-- ════════════════════ Section 1: Cover gate ════════════════════ --}}
-    <div class="cover-gate" id="cover-gate"
-        @if ($sectionBg('cover')) style="background-image:url('{{ $sectionBg('cover') }}'); background-size:cover; background-position:center;" @endif>
+    <div class="cover-gate" id="cover-gate" @if ($sectionBg('cover'))
+        style="background-image:url('{{ $sectionBg('cover') }}'); background-size:cover; background-position:center;"
+    @endif>
         <div class="cover-photos">
             @if (!empty($cover['photo_1']))
                 <div class="cover-photo" style="background-image:url('{{ $cover['photo_1'] }}')"></div>
@@ -1336,13 +1358,13 @@
                         $socials = $couple[$who . '_social'] ?? [];
                     @endphp
                     <div class="couple-card">
-                        <div class="couple-photo"
-                            @if ($photo) style="background-image:url('{{ $photo }}')" @endif>
-                            <span class="couple-photo-emoji"
-                                @if ($photo) style="display:none" @endif>{{ $who === 'groom' ? '🤵' : '👰' }}</span>
+                        <div class="couple-photo" @if ($photo) style="background-image:url('{{ $photo }}')" @endif>
+                            <span class="couple-photo-emoji" @if ($photo) style="display:none"
+                            @endif>{{ $who === 'groom' ? '🤵' : '👰' }}</span>
                         </div>
                         <p class="subtitle" style="color:var(--color-accent); margin-bottom:0.4rem;">
-                            {{ $label }}</p>
+                            {{ $label }}
+                        </p>
                         <h3 class="couple-name">
                             {{ $name ?: ($who === 'groom' ? 'Nama Mempelai Pria' : 'Nama Mempelai Wanita') }}
                         </h3>
@@ -1352,16 +1374,16 @@
                         @if (array_filter($socials))
                             <div class="couple-social">
                                 @if (!empty($socials['instagram']))
-                                    <a href="https://instagram.com/{{ ltrim($socials['instagram'], '@') }}"
-                                        target="_blank" rel="noopener" title="Instagram">IG</a>
+                                    <a href="https://instagram.com/{{ ltrim($socials['instagram'], '@') }}" target="_blank"
+                                        rel="noopener" title="Instagram">IG</a>
                                 @endif
                                 @if (!empty($socials['facebook']))
                                     <a href="{{ Str::startsWith($socials['facebook'], 'http') ? $socials['facebook'] : 'https://facebook.com/' . $socials['facebook'] }}"
                                         target="_blank" rel="noopener" title="Facebook">FB</a>
                                 @endif
                                 @if (!empty($socials['tiktok']))
-                                    <a href="https://tiktok.com/@{{ ltrim($socials['tiktok'], '@') }}" target="_blank" rel="noopener"
-                                        title="TikTok">TT</a>
+                                    <a href="https://tiktok.com/@{{ ltrim($socials['tiktok'], '@') }}" target="_blank"
+                                        rel="noopener" title="TikTok">TT</a>
                                 @endif
                                 @if (!empty($socials['twitter']))
                                     <a href="https://twitter.com/{{ ltrim($socials['twitter'], '@') }}" target="_blank"
@@ -1447,7 +1469,8 @@
             <div class="section-inner">
                 @if (!empty($countdownConfig['label']))
                     <p class="text-sm uppercase tracking-widest text-white/70 mb-4" style="letter-spacing: 0.15em;">
-                        {{ $countdownConfig['label'] }}</p>
+                        {{ $countdownConfig['label'] }}
+                    </p>
                 @endif
                 <div class="countdown" data-target="{{ $countdownConfig['target_date'] }}"
                     data-label="{{ $countdownConfig['label'] ?? '' }}">
@@ -1499,7 +1522,8 @@
                 @if (!empty($mapsConfig['address']))
                     <div style="margin: 1.5rem 0 2rem;">
                         <p class="text-sm" style="color: #163A51; font-style: italic; letter-spacing: 0.03em;">
-                            {{ $mapsConfig['address'] }}</p>
+                            {{ $mapsConfig['address'] }}
+                        </p>
                     </div>
                 @endif
                 <div class="map-embed">
@@ -1527,8 +1551,7 @@
             <div class="section-inner">
                 <p class="subtitle">Our Moments</p>
                 <h2>Galeri Foto</h2>
-                <div class="gallery-grid" id="gallery-grid"
-                    @if ($galleryLightbox) data-lightbox="true" @endif
+                <div class="gallery-grid" id="gallery-grid" @if ($galleryLightbox) data-lightbox="true" @endif
                     style="grid-template-columns: repeat({{ $galleryColumns }}, 1fr);">
                     @if (!empty($gallerySafe))
                         @foreach ($gallerySafe as $photo)
@@ -1575,8 +1598,7 @@
                                 <div class="tl-dot"></div>
                                 <div class="tl-card">
                                     @if (!empty($lsItem['photo']))
-                                        <img src="{{ $lsItem['photo'] }}" alt="{{ $lsItem['title'] ?? '' }}"
-                                            class="tl-photo">
+                                        <img src="{{ $lsItem['photo'] }}" alt="{{ $lsItem['title'] ?? '' }}" class="tl-photo">
                                     @endif
                                     @if (!empty($lsItem['date']))
                                         <p class="tl-date">{{ $lsItem['date'] }}</p>
@@ -1668,8 +1690,7 @@
                                 <p class="bholder">{{ $bank['account_holder'] ?? '' }}</p>
                             </div>
                             @if (!empty($bank['account_no']))
-                                <button type="button" class="copy-btn"
-                                    data-copy="{{ $bank['account_no'] }}">Salin</button>
+                                <button type="button" class="copy-btn" data-copy="{{ $bank['account_no'] }}">Salin</button>
                             @endif
                         </div>
                     @endforeach
@@ -1703,8 +1724,7 @@
                                     <p class="bholder">{{ $ew['account_holder'] ?? '' }}</p>
                                 </div>
                                 @if (!empty($ew['account_no']))
-                                    <button type="button" class="copy-btn"
-                                        data-copy="{{ $ew['account_no'] }}">Salin</button>
+                                    <button type="button" class="copy-btn" data-copy="{{ $ew['account_no'] }}">Salin</button>
                                 @endif
                             </div>
                         @endforeach
@@ -1752,7 +1772,8 @@
                     })
                     ->values();
             @endphp
-            <div class="wish-list" id="wish-list" data-wishes='{!! $wishesForJs->toJson(JSON_HEX_APOS | JSON_HEX_QUOT) !!}'>
+            <div class="wish-list" id="wish-list"
+                data-wishes='{!! $wishesForJs->toJson(JSON_HEX_APOS | JSON_HEX_QUOT) !!}'>
                 {{-- Filled by JS for pagination support --}}
             </div>
             <div class="pagination" id="wish-pagination"></div>
@@ -1848,8 +1869,9 @@
 
     {{-- ════════════════════ Section 8: Closing ════════════════════ --}}
     @php $bgClose = $sectionBg('closing'); @endphp
-    <footer class="closing anim"
-        @if ($bgClose) style="background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ $bgClose }}'); background-size:cover; background-position:center;" @endif>
+    <footer class="closing anim" @if ($bgClose)
+        style="background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ $bgClose }}'); background-size:cover; background-position:center;"
+    @endif>
         <h2>{{ $closing['heading'] ?? 'Terima Kasih' }}</h2>
         <p class="thanks">{{ $closing['thank_you'] ?? 'Atas Kehadiran & Doa Restunya' }}</p>
         <p class="signature">— {{ $invitation->coupleNames() }} —</p>
@@ -1902,11 +1924,11 @@
     @endif
 
     <script>
-        (function() {
+        (function () {
             // ─── Cover gate ───
             var coverBtn = document.getElementById('open-invitation-btn');
             if (coverBtn) {
-                coverBtn.addEventListener('click', function() {
+                coverBtn.addEventListener('click', function () {
                     document.body.classList.add('invitation-opened');
                     window.scrollTo({
                         top: 0,
@@ -1942,20 +1964,20 @@
             // ─── Gallery lightbox ───
             var lb = document.getElementById('lightbox');
             var lbImg = document.getElementById('lightbox-img');
-            document.querySelectorAll('#gallery-grid .cell[data-src]').forEach(function(cell) {
-                cell.addEventListener('click', function() {
+            document.querySelectorAll('#gallery-grid .cell[data-src]').forEach(function (cell) {
+                cell.addEventListener('click', function () {
                     lbImg.src = cell.dataset.src;
                     lb.classList.add('open');
                 });
             });
             if (lb) {
-                lb.addEventListener('click', function(e) {
+                lb.addEventListener('click', function (e) {
                     if (e.target === lb || e.target.id === 'lightbox-close') {
                         lb.classList.remove('open');
                         lbImg.src = '';
                     }
                 });
-                document.addEventListener('keydown', function(e) {
+                document.addEventListener('keydown', function (e) {
                     if (e.key === 'Escape') {
                         lb.classList.remove('open');
                         lbImg.src = '';
@@ -1971,25 +1993,25 @@
                 toast.textContent = msg;
                 toast.classList.add('show');
                 clearTimeout(showToast._t);
-                showToast._t = setTimeout(function() {
+                showToast._t = setTimeout(function () {
                     toast.classList.remove('show');
                 }, 1800);
             }
-            document.querySelectorAll('.copy-btn').forEach(function(btn) {
-                btn.addEventListener('click', function() {
+            document.querySelectorAll('.copy-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
                     var val = btn.dataset.copy || '';
-                    var done = function() {
+                    var done = function () {
                         btn.classList.add('copied');
                         var prev = btn.textContent;
                         btn.textContent = '✓ Tersalin';
                         showToast('Nomor rekening disalin');
-                        setTimeout(function() {
+                        setTimeout(function () {
                             btn.classList.remove('copied');
                             btn.textContent = prev;
                         }, 1800);
                     };
                     if (navigator.clipboard && window.isSecureContext) {
-                        navigator.clipboard.writeText(val).then(done).catch(function() {
+                        navigator.clipboard.writeText(val).then(done).catch(function () {
                             var ta = document.createElement('textarea');
                             ta.value = val;
                             document.body.appendChild(ta);
@@ -2025,7 +2047,7 @@
                 var pageCount = Math.max(1, Math.ceil(wishes.length / perPage));
 
                 function escapeHtml(s) {
-                    return String(s).replace(/[&<>"']/g, function(c) {
+                    return String(s).replace(/[&<>"']/g, function (c) {
                         return ({
                             '&': '&amp;',
                             '<': '&lt;',
@@ -2043,7 +2065,7 @@
                         listEl.innerHTML =
                             '<div class="wish-item" style="text-align:center;opacity:0.6"><p class="msg">Belum ada ucapan. Jadilah yang pertama!</p></div>';
                     } else {
-                        listEl.innerHTML = items.map(function(w) {
+                        listEl.innerHTML = items.map(function (w) {
                             var attClass = w.attending === 'tidak_hadir' ? 'att no' : 'att';
                             var attText = w.attending === 'tidak_hadir' ? 'Tidak Hadir' : (w.attending ===
                                 'ragu' ? 'Masih Ragu' : 'Hadir');
@@ -2066,8 +2088,8 @@
                     }
                     html += '<button data-act="next" ' + (page === pageCount ? 'disabled' : '') + '>›</button>';
                     pagEl.innerHTML = html;
-                    pagEl.querySelectorAll('button').forEach(function(b) {
-                        b.addEventListener('click', function() {
+                    pagEl.querySelectorAll('button').forEach(function (b) {
+                        b.addEventListener('click', function () {
                             if (b.dataset.act === 'prev' && page > 1) {
                                 page--;
                                 render();
@@ -2122,14 +2144,14 @@
                             playlist: wantLoop ? videoId : undefined,
                         },
                         events: {
-                            onReady: function() {
+                            onReady: function () {
                                 ytReady = true;
                                 if (pendingPlay) {
                                     ytPlayer.playVideo();
                                     pendingPlay = false;
                                 }
                             },
-                            onStateChange: function(e) {
+                            onStateChange: function (e) {
                                 if (e.data === YT.PlayerState.PLAYING) musicBtn.textContent = '⏸';
                                 else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState
                                     .ENDED) musicBtn.textContent = '▶';
@@ -2142,7 +2164,7 @@
                 // If the API already loaded (e.g. cached), bootstrap immediately.
                 if (window.YT && window.YT.Player) createPlayer();
 
-                musicBtn.addEventListener('click', function() {
+                musicBtn.addEventListener('click', function () {
                     if (!ytReady || !ytPlayer) {
                         pendingPlay = true;
                         return;
@@ -2152,7 +2174,7 @@
                     else ytPlayer.playVideo();
                 });
 
-                window.__musicAutoplayOnOpen = function() {
+                window.__musicAutoplayOnOpen = function () {
                     if (!wantAutoplay) return;
                     if (ytReady && ytPlayer) ytPlayer.playVideo();
                     else pendingPlay = true;
@@ -2163,10 +2185,10 @@
             var animKey = '{{ $animationKey }}';
             document.body.classList.add('anim-' + animKey);
             if (animKey === 'standard' || animKey === 'premium') {
-                window.addEventListener('load', function() {
+                window.addEventListener('load', function () {
                     if (typeof gsap === 'undefined') return;
                     gsap.registerPlugin(ScrollTrigger);
-                    gsap.utils.toArray('.anim').forEach(function(el) {
+                    gsap.utils.toArray('.anim').forEach(function (el) {
                         gsap.to(el, {
                             opacity: 1,
                             y: 0,
@@ -2197,7 +2219,7 @@
                             .trim() || '#c8756a';
                         var petals = Array.from({
                             length: 26
-                        }, function() {
+                        }, function () {
                             return {
                                 x: Math.random() * innerWidth,
                                 y: Math.random() * innerHeight - innerHeight,
@@ -2212,7 +2234,7 @@
 
                         function draw() {
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
-                            petals.forEach(function(p) {
+                            petals.forEach(function (p) {
                                 p.y += p.speed;
                                 p.x += p.drift;
                                 p.angle += p.spin;
@@ -2239,6 +2261,33 @@
         })();
     </script>
 
+    @if ($animationKey === AnimationPack::KEY_FREE || $animationKey === AnimationPack::KEY_STANDARD || $animationKey === AnimationPack::KEY_PREMIUM)
+    <script>
+        (function () {
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            function observeAll() {
+                document.querySelectorAll('.anim').forEach(function (el) {
+                    observer.observe(el);
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', observeAll);
+            } else {
+                observeAll();
+            }
+        })();
+    </script>
+    @endif
+
     <script>
         function loadGoogleFont(family) {
             if (!family) return;
@@ -2252,7 +2301,7 @@
             document.head.appendChild(link);
         }
 
-        window.addEventListener('message', function(event) {
+        window.addEventListener('message', function (event) {
             if (!event.data) return;
             var root = document.documentElement;
 
@@ -2266,7 +2315,7 @@
 
             if (event.data.type === 'preview:couplePhotos') {
                 var cards = document.querySelectorAll('.couple-card');
-                cards.forEach(function(card, i) {
+                cards.forEach(function (card, i) {
                     var url = i === 0 ? event.data.groomPhoto : event.data.bridePhoto;
                     var photoEl = card.querySelector('.couple-photo');
                     var emoji = card.querySelector('.couple-photo-emoji');

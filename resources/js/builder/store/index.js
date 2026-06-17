@@ -152,9 +152,13 @@ export const useBuilderStore = defineStore('builder', () => {
         // Deep merge defaults with whatever the server gave us.
         config.value = mergeDeep(structuredClone(DEFAULT_CONFIG), initialConfig || {});
 
+        // Mark as already saved — the config was just loaded from the server.
+        lastSavedAt.value = new Date();
+        isDirty.value = false;
+
         // Allow Vue to commit the assignment before we attach watchers,
         // otherwise the initial fill counts as "dirty".
-        setTimeout(() => { booted = true; refreshPricing(); }, 0);
+        setTimeout(() => { booted = true; isDirty.value = false; refreshPricing(); }, 0);
     }
 
     function mergeDeep(target, source) {
@@ -168,7 +172,7 @@ export const useBuilderStore = defineStore('builder', () => {
         return target;
     }
 
-    const save = debounce(async () => {
+    async function saveNow() {
         if (!invitationId.value) return;
         isSaving.value = true;
         try {
@@ -177,11 +181,13 @@ export const useBuilderStore = defineStore('builder', () => {
             lastSavedAt.value = new Date();
             previewKey.value++;
         } catch (e) {
-            console.error('Auto-save failed', e);
+            console.error('Save failed', e);
         } finally {
             isSaving.value = false;
         }
-    }, 1500);
+    }
+
+    const save = debounce(saveNow, 1500);
 
     async function refreshPricing() {
         isPricing.value = true;
@@ -207,7 +213,6 @@ export const useBuilderStore = defineStore('builder', () => {
         if (!booted) return;
         isDirty.value = true;
         configVersion.value++;
-        save();
     }, { deep: true });
 
     watch(
@@ -221,7 +226,6 @@ export const useBuilderStore = defineStore('builder', () => {
         () => {
             if (!booted) return;
             isDirty.value = true;
-            save();
             debouncedPricing();
         },
         { deep: true },
@@ -239,6 +243,7 @@ export const useBuilderStore = defineStore('builder', () => {
         previewKey,
         configVersion,
         init,
+        saveNow,
         refreshPricing,
     };
 });
