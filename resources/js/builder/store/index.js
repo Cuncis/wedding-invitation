@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
+import { ref, watch, toRaw } from 'vue';
 import axios from 'axios';
 
 function debounce(fn, ms) {
@@ -176,7 +176,8 @@ export const useBuilderStore = defineStore('builder', () => {
         if (!invitationId.value) return;
         isSaving.value = true;
         try {
-            await axios.put(`/builder/${invitationId.value}/config`, config.value);
+            const payload = JSON.parse(JSON.stringify(config.value));
+            await axios.put(`/builder/${invitationId.value}/config`, payload);
             isDirty.value = false;
             lastSavedAt.value = new Date();
             previewKey.value++;
