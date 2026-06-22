@@ -11,7 +11,7 @@ const headingFonts = [
 ];
 const bodyFonts = [
     'Lato', 'Open Sans', 'Roboto', 'Inter',
-    'Source Sans 3', 'Nunito', 'Poppins', 'Manrope',
+    'Source Sans 3', 'Nunito', 'Poppins', 'Manrope', 'Google Sans',
 ];
 
 const headingOpen = ref(false);
@@ -43,6 +43,8 @@ function pickBody(font) {
     bodyOpen.value = false;
     emit('fontChanged');
 }
+
+
 </script>
 
 <template>
