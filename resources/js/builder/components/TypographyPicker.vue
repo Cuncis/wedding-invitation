@@ -7,7 +7,7 @@ const emit = defineEmits(['fontChanged']);
 
 const headingFonts = [
     'Playfair Display', 'Cormorant Garamond', 'Cinzel', 'Great Vibes',
-    'Marcellus', 'Italiana', 'DM Serif Display', 'Lora', 'Bodoni Moda',
+    'Marcellus', 'Italiana', 'DM Serif Display', 'Lora', 'Bodoni Moda', 'Allura',
 ];
 const bodyFonts = [
     'Lato', 'Open Sans', 'Roboto', 'Inter',
