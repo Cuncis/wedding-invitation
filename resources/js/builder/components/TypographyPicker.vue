@@ -11,7 +11,7 @@ const headingFonts = [
 ];
 const bodyFonts = [
     'Lato', 'Open Sans', 'Roboto', 'Inter',
-    'Source Sans 3', 'Nunito', 'Poppins', 'Manrope', 'Montserrat', 'Google Sans',
+    'Source Sans 3', 'Nunito', 'Poppins', 'Manrope', 'Montserrat', 'Google Sans', 'DM Sans',
 ];
 
 const headingOpen = ref(false);
