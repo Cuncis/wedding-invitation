@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450" role="img" aria-label="Floral Garden theme preview">
+  <defs>
+    <linearGradient id="fg-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f4ec"/>
+      <stop offset="1" stop-color="#ede7d6"/>
+    </linearGradient>
+    <linearGradient id="fg-leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a9a6a"/>
+      <stop offset="1" stop-color="#5a7a4e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="450" fill="url(#fg-bg)"/>
+  <rect x="28" y="28" width="544" height="394" fill="none" stroke="#5a7a4e" stroke-width="0.9" opacity="0.5"/>
+
+  <!-- top botanical sprig -->
+  <g transform="translate(300 78)" stroke="#5a7a4e" stroke-width="1.3" fill="url(#fg-leaf)">
+    <line x1="-70" y1="0" x2="70" y2="0" stroke-width="1.1"/>
+    <g>
+      <path d="M-58 0 q-14 -12 -30 -6 q12 12 30 6 z"/>
+      <path d="M-32 0 q-12 -12 -28 -8 q10 12 28 8 z"/>
+      <path d="M58 0 q14 -12 30 -6 q-12 12 -30 6 z"/>
+      <path d="M32 0 q12 -12 28 -8 q-10 12 -28 8 z"/>
+    </g>
+    <circle cx="0" cy="0" r="6" fill="#c9a96e" stroke="none"/>
+  </g>
+
+  <!-- bottom botanical sprig (mirror) -->
+  <g transform="translate(300 372) scale(1 -1)" stroke="#5a7a4e" stroke-width="1.3" fill="url(#fg-leaf)">
+    <line x1="-60" y1="0" x2="60" y2="0" stroke-width="1.1"/>
+    <path d="M-48 0 q-12 -10 -26 -6 q10 10 26 6 z"/>
+    <path d="M48 0 q12 -10 26 -6 q-10 10 -26 6 z"/>
+    <circle cx="0" cy="0" r="5" fill="#c9a96e" stroke="none"/>
+  </g>
+
+  <!-- side leaves -->
+  <g fill="url(#fg-leaf)" opacity="0.85">
+    <path d="M70 200 q-26 -16 -36 18 q30 8 36 -18 z"/>
+    <path d="M530 250 q26 -16 36 18 q-30 8 -36 -18 z"/>
+  </g>
+
+  <text x="300" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="14" letter-spacing="5" fill="#7a8a5a">TOGETHER WITH THEIR FAMILIES</text>
+
+  <text x="300" y="222" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="50" fill="#2d3a2a">Citra</text>
+  <text x="300" y="258" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#c9a96e">&amp;</text>
+  <text x="300" y="306" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="50" fill="#2d3a2a">Dimas</text>
+
+  <text x="300" y="350" text-anchor="middle" font-family="Georgia, serif" font-size="16" letter-spacing="3" fill="#4a6040">Floral Garden</text>
+  <text x="300" y="378" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="3" fill="#8a9a6a">12 DESEMBER 2026</text>
+</svg>

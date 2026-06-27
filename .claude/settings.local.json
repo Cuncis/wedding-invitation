@@ -4,7 +4,13 @@
       "Bash(php artisan *)",
       "Bash(composer show *)",
       "Bash(composer require *)",
-      "Bash(grep -n 'maps.*addon\\\\|maps.*section\\\\|$maps\\\\b' /home/cuncis/laravel-project/wedding-invitation/resources/views/builder/preview.blade.php)"
+      "Bash(grep -n 'maps.*addon\\\\|maps.*section\\\\|$maps\\\\b' /home/cuncis/laravel-project/wedding-invitation/resources/views/builder/preview.blade.php)",
+      "mcp__laravel-boost__database-query",
+      "Bash(php -r ' *)",
+      "Bash(vendor/bin/pint --dirty --format agent)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
 }

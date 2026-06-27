@@ -14,7 +14,7 @@ class ThemeSeeder extends Seeder
                 'name' => 'Elegant Rose',
                 'slug' => 'elegant-rose',
                 'description' => 'Tema floral romantis dengan nuansa pink rose dan tipografi serif yang elegan.',
-                'preview_image' => 'themes/elegant-rose.jpg',
+                'preview_image' => '/images/themes/elegant-rose.svg',
                 'base_price' => 99000,
                 'default_colors' => [
                     'primary' => '#c8756a',
@@ -33,7 +33,7 @@ class ThemeSeeder extends Seeder
                 'name' => 'Modern Minimalist',
                 'slug' => 'modern-minimalist',
                 'description' => 'Desain bersih dengan banyak white space dan tipografi modern sans-serif.',
-                'preview_image' => 'themes/modern-minimalist.jpg',
+                'preview_image' => '/images/themes/modern-minimalist.svg',
                 'base_price' => 119000,
                 'default_colors' => [
                     'primary' => '#1a1a1a',
@@ -52,7 +52,7 @@ class ThemeSeeder extends Seeder
                 'name' => 'Floral Garden',
                 'slug' => 'floral-garden',
                 'description' => 'Tema kebun bunga dengan ilustrasi botanical dan palet hijau alami.',
-                'preview_image' => 'themes/floral-garden.jpg',
+                'preview_image' => '/images/themes/floral-garden.svg',
                 'base_price' => 109000,
                 'default_colors' => [
                     'primary' => '#5a7a4e',
@@ -70,7 +70,7 @@ class ThemeSeeder extends Seeder
         ];
 
         foreach ($themes as $theme) {
-            Theme::firstOrCreate(['slug' => $theme['slug']], $theme);
+            Theme::updateOrCreate(['slug' => $theme['slug']], $theme);
         }
     }
 }

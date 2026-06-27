@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450" role="img" aria-label="Classic theme preview">
+  <defs>
+    <linearGradient id="cl-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf8f3"/>
+      <stop offset="1" stop-color="#f3ece0"/>
+    </linearGradient>
+    <linearGradient id="cl-gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#caa45a"/>
+      <stop offset="0.5" stop-color="#e8cf94"/>
+      <stop offset="1" stop-color="#caa45a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="450" fill="url(#cl-bg)"/>
+  <rect x="26" y="26" width="548" height="398" fill="none" stroke="url(#cl-gold)" stroke-width="1.5"/>
+  <rect x="34" y="34" width="532" height="382" fill="none" stroke="#caa45a" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- corner flourishes -->
+  <g stroke="#caa45a" stroke-width="1.4" fill="none" opacity="0.8">
+    <path d="M34 70 Q34 34 70 34"/>
+    <path d="M566 70 Q566 34 530 34"/>
+    <path d="M34 380 Q34 416 70 416"/>
+    <path d="M566 380 Q566 416 530 416"/>
+  </g>
+
+  <text x="300" y="120" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="15" letter-spacing="7" fill="#9a7b3d">THE WEDDING OF</text>
+
+  <!-- monogram -->
+  <circle cx="300" cy="205" r="52" fill="none" stroke="url(#cl-gold)" stroke-width="1.4"/>
+  <text x="300" y="222" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-style="italic" fill="#b8923f">A&amp;B</text>
+
+  <text x="300" y="312" text-anchor="middle" font-family="Georgia, serif" font-size="40" fill="#3a322a">Classic</text>
+
+  <g stroke="#caa45a" stroke-width="1.2">
+    <line x1="200" y1="338" x2="270" y2="338"/>
+    <line x1="330" y1="338" x2="400" y2="338"/>
+  </g>
+  <path d="M300 332 l8 6 -8 6 -8 -6 z" fill="#caa45a"/>
+
+  <text x="300" y="378" text-anchor="middle" font-family="Georgia, serif" font-size="15" letter-spacing="4" fill="#7a6a52">12 . 12 . 2026</text>
+</svg>
