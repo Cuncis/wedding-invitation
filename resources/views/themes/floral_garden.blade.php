@@ -8,17 +8,17 @@
 .fg-hero {
     min-height: 100vh; display: flex; flex-direction: column;
     align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem;
-    background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 40%, #f0fdf4 100%);
+    background: #f0fdf4;
 }
 .fg-hero h1 { font-family: var(--font-h); font-size: clamp(2.5rem, 7vw, 5rem); color: #14532d; }
 .fg-hero .amp { font-family: var(--font-h); font-size: clamp(1.5rem, 4vw, 3rem); color: #16a34a; }
 .fg-leaf { display: inline-block; font-size: 2.5rem; margin: 1rem 0; }
 .fg-section { max-width: 640px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
 .fg-section h2 { font-family: var(--font-h); font-size: 2rem; color: #14532d; margin-bottom: 1.5rem; }
-.fg-card { background: white; border-radius: 1rem; padding: 2rem; margin: 1rem 0; border: 1px solid #bbf7d0; box-shadow: 0 4px 12px rgba(21,128,61,0.06); }
+.fg-card { background: white; border-radius: 0.5rem; padding: 2rem; margin: 1rem 0; border: 1px solid #bbf7d0; }
 .fg-card h3 { font-family: var(--font-h); font-size: 1.4rem; color: #166534; margin-bottom: 0.5rem; }
 .fg-card p { color: #374151; font-size: 0.9rem; line-height: 1.7; }
-.fg-event { background: #14532d; color: white; border-radius: 1rem; padding: 2rem; margin: 1rem 0; }
+.fg-event { background: #14532d; color: white; border-radius: 0.5rem; padding: 2rem; margin: 1rem 0; }
 .fg-event h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
 .fg-event p { opacity: 0.85; font-size: 0.9rem; line-height: 1.6; }
 </style>

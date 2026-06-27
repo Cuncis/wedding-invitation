@@ -72,7 +72,7 @@
         @endif
 
         <form method="POST" action="{{ route('rsvp.store', $invitation->slug) }}"
-            style="background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            style="background: white; border-radius: 0.5rem; padding: 2rem; border: 1px solid #e5e7eb;">
             @csrf
 
             <div style="margin-bottom: 1rem;">

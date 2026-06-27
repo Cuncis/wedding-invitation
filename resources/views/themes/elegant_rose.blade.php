@@ -10,7 +10,7 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center; padding: 3rem 2rem;
-    background: linear-gradient(160deg, var(--secondary) 0%, #fff5f5 60%, var(--secondary) 100%);
+    background: var(--secondary);
     position: relative; overflow: hidden;
 }
 .er-cover::before {
@@ -22,10 +22,10 @@
 .er-divider { width: 80px; height: 2px; background: var(--primary); margin: 1.5rem auto; opacity: 0.4; }
 .er-section { max-width: 640px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
 .er-section h2 { font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem; }
-.er-card { background: white; border-radius: 1rem; padding: 2rem; margin: 1rem 0; box-shadow: 0 4px 20px rgba(200,117,106,0.08); border: 1px solid rgba(200,117,106,0.12); }
+.er-card { background: white; border-radius: 0.5rem; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(200,117,106,0.12); }
 .er-card h3 { font-family: var(--font-h); font-size: 1.5rem; color: var(--primary); margin-bottom: 0.75rem; }
 .er-card p { color: var(--text); line-height: 1.7; font-size: 0.95rem; }
-.er-event { background: var(--primary); color: white; border-radius: 1rem; padding: 2rem; margin: 1rem 0; }
+.er-event { background: var(--primary); color: white; border-radius: 0.5rem; padding: 2rem; margin: 1rem 0; }
 .er-event h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
 .er-event .date { font-size: 1.1rem; margin: 0.5rem 0; opacity: 0.9; }
 </style>

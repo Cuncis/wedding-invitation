@@ -21,7 +21,7 @@
 .mm-section h2 { font-family: var(--font-h); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; }
 .mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 500px) { .mm-grid { grid-template-columns: 1fr; } }
-.mm-card { border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.5rem; }
+.mm-card { border: 1px solid #e5e7eb; border-radius: 0.375rem; padding: 1.5rem; }
 .mm-card .name { font-family: var(--font-h); font-size: 1.4rem; color: #111; margin-bottom: 0.25rem; }
 .mm-card .sub { font-size: 0.85rem; color: #6b7280; }
 .mm-event { padding: 1.5rem; border-left: 3px solid var(--primary); margin-bottom: 1rem; }

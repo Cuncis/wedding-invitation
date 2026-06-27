@@ -147,7 +147,7 @@
             justify-content: center;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(180deg, var(--color-secondary), #fff);
+            background: var(--color-secondary);
             transition: transform 0.9s cubic-bezier(.7, 0, .3, 1), opacity 0.7s ease;
         }
 
@@ -167,11 +167,10 @@
         .cover-photo {
             width: 110px;
             height: 150px;
-            border-radius: 1rem;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 0.5rem;
+            background: var(--color-secondary);
             background-size: cover;
             background-position: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
         .cover-photo:nth-child(2) {
@@ -230,18 +229,16 @@
             background: var(--color-primary);
             color: white;
             border: none;
-            border-radius: 999px;
+            border-radius: 0.5rem;
             padding: 0.85rem 2rem;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s;
         }
 
         .cover-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
         }
 
         /* ─── Generic section ─── */
@@ -330,9 +327,8 @@
         .couple-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(6px);
-            border-radius: 1.25rem;
+            border-radius: 0.5rem;
             padding: 1.75rem 1.5rem;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
             color: var(--color-text);
         }
 
@@ -341,11 +337,10 @@
             height: 130px;
             border-radius: 50%;
             margin: 0 auto 1rem;
-            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            background: var(--color-secondary);
             background-size: cover;
             background-position: center;
             border: 4px solid white;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -415,7 +410,7 @@
         .cd-box {
             background: var(--color-primary);
             color: white;
-            border-radius: 0.75rem;
+            border-radius: 0.375rem;
             padding: 0.85rem 1rem;
             min-width: 72px;
             text-align: center;
@@ -450,11 +445,10 @@
 
         .event-card {
             background: rgba(255, 255, 255, 0.96);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             padding: 1.5rem;
             text-align: left;
             color: var(--color-text);
-            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
         }
 
         .event-card .label {
@@ -496,7 +490,7 @@
             background: var(--color-primary);
             color: white;
             border: none;
-            border-radius: 999px;
+            border-radius: 0.5rem;
             padding: 0.55rem 1.1rem;
             font-size: 0.8rem;
             font-weight: 600;
@@ -525,9 +519,9 @@
 
         .gallery-grid .cell {
             height: 200px;
-            border-radius: 0.5rem;
+            border-radius: 0.375rem;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            background: var(--color-secondary);
             cursor: zoom-in;
             position: relative;
         }
@@ -572,8 +566,7 @@
         .lightbox img {
             max-width: 100%;
             max-height: 92vh;
-            border-radius: 0.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-radius: 0.375rem;
         }
 
         .lightbox .close-btn {
@@ -593,12 +586,10 @@
         /* ─── Section 6 Gift ─── */
         .gift-receiver {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            text-align: left;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            color: var(--color-text);
+            text-align: left;            color: var(--color-text);
         }
 
         .gift-receiver .label {
@@ -628,11 +619,9 @@
 
         .bank-card {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             padding: 1.25rem;
-            text-align: left;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            display: flex;
+            text-align: left;            display: flex;
             align-items: center;
             gap: 1rem;
             color: var(--color-text);
@@ -641,7 +630,7 @@
         .bank-logo {
             width: 56px;
             height: 56px;
-            border-radius: 0.75rem;
+            border-radius: 0.375rem;
             background: var(--color-secondary);
             display: flex;
             align-items: center;
@@ -692,7 +681,7 @@
             background: var(--color-primary);
             color: white;
             border: none;
-            border-radius: 999px;
+            border-radius: 0.5rem;
             padding: 0.45rem 1rem;
             font-size: 0.75rem;
             font-weight: 600;
@@ -714,11 +703,9 @@
 
         .ewallet-card {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             padding: 1.25rem;
-            text-align: left;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            display: flex;
+            text-align: left;            display: flex;
             align-items: center;
             gap: 1rem;
             color: var(--color-text);
@@ -727,7 +714,7 @@
         .ewallet-icon {
             width: 56px;
             height: 56px;
-            border-radius: 0.75rem;
+            border-radius: 0.375rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -779,10 +766,8 @@
         /* ─── Live Streaming ─── */
         .livestream-card {
             background: rgba(255, 255, 255, 0.97);
-            border-radius: 1.25rem;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            color: var(--color-text);
+            border-radius: 0.5rem;
+            overflow: hidden;            color: var(--color-text);
         }
 
         .livestream-embed {
@@ -835,9 +820,8 @@
             font-weight: 600;
             font-size: 0.95rem;
             padding: 0.8rem 2rem;
-            border-radius: 999px;
+            border-radius: 0.5rem;
             text-decoration: none;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
             transition: opacity 0.2s;
         }
 
@@ -858,7 +842,8 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
+            background: var(--color-primary);
+            opacity: 0.25;
             transform: translateX(-50%);
         }
 
@@ -896,9 +881,8 @@
         .tl-card {
             width: calc(50% - 2rem);
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             padding: 1.25rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
             color: var(--color-text);
         }
 
@@ -929,7 +913,7 @@
             width: 100%;
             height: 160px;
             object-fit: cover;
-            border-radius: 0.75rem;
+            border-radius: 0.375rem;
             margin-bottom: 0.75rem;
         }
 
@@ -968,12 +952,10 @@
         /* ─── Section 7 Wishes ─── */
         .wish-form {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            text-align: left;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            color: var(--color-text);
+            text-align: left;            color: var(--color-text);
         }
 
         .wish-form label {
@@ -993,7 +975,7 @@
             width: 100%;
             padding: 0.65rem 0.9rem;
             border: 1.5px solid #e2e8f0;
-            border-radius: 0.6rem;
+            border-radius: 0.375rem;
             font-size: 0.9rem;
             font-family: inherit;
             color: var(--color-text);
@@ -1012,7 +994,7 @@
             color: white;
             border: none;
             padding: 0.85rem;
-            border-radius: 0.75rem;
+            border-radius: 0.375rem;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
@@ -1024,11 +1006,9 @@
 
         .wish-item {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 0.85rem;
+            border-radius: 0.5rem;
             padding: 1rem 1.2rem;
-            margin-bottom: 0.65rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-            color: var(--color-text);
+            margin-bottom: 0.65rem;            color: var(--color-text);
         }
 
         .wish-item-head {
@@ -1084,7 +1064,7 @@
             cursor: pointer;
             width: 32px;
             height: 32px;
-            border-radius: 0.5rem;
+            border-radius: 0.375rem;
             font-size: 0.8rem;
             font-weight: 600;
         }
@@ -1114,7 +1094,7 @@
         /* ─── Section 8 Closing ─── */
         .closing {
             padding: 5rem 1.5rem 4rem;
-            background: linear-gradient(180deg, var(--color-primary), var(--color-accent));
+            background: var(--color-primary);
             color: white;
             text-align: center;
         }
@@ -1164,7 +1144,6 @@
             align-items: center;
             gap: 1rem;
             padding: 0.6rem 1.25rem;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .music-btn {
@@ -1528,7 +1507,7 @@
                 @endif
                 <div class="map-embed">
                     <iframe src="{{ $mapsEmbedUrl }}" width="100%" height="350"
-                        style="border:0; border-radius: 0.5rem; display: block;" allowfullscreen="" loading="lazy"
+                        style="border:0; border-radius: 0.375rem; display: block;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
